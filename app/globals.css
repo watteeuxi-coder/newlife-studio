@@ -1,3 +1,115 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --font-display: 'Space Grotesk';
+  --font-mono: 'JetBrains Mono';
+  --accent-rgb: 34, 211, 238;
+  --glow-soft: 0 0 0 1px rgba(var(--accent-rgb), 0.18),
+               0 24px 70px -28px rgba(var(--accent-rgb), 0.45);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #05070d;
+  color: #e9eef7;
+  font-family: var(--font-display), -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Gradient text utility */
+.grad-text {
+  background: linear-gradient(135deg, #22d3ee 0%, #7df0ff 50%, #22d3ee 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Cursor blink for typewriter */
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: #22d3ee;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+}
+
+/* Background grid */
+.bg-grid::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(120, 160, 210, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120, 160, 210, 0.04) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Noise overlay */
+.noise::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.03;
+}
+
+/* Section spacing — z-index: 1 ensures sections paint above fixed canvas (z-index: 0) */
+section {
+  padding: 96px 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Wrap (max-width container) */
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Kicker label */
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #22d3ee;
+  margin-bottom: 16px;
+}
+
+/* Section head */
+.section-head {
+  max-width: 600px;
+  margin-bottom: 56px;
+}
+
+.section-head h2 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  color: #e9eef7;
+}
+
+.section-head p {
+  color: #aab6cc;
+  line-height: 1.7;
+}
