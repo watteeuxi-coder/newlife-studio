@@ -3,6 +3,7 @@
 
 import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { SITE_CONFIG } from '@/lib/config'
 
 export interface ModalPlan {
   name: string
@@ -39,12 +40,21 @@ export default function ForfaitModal({ plan, onClose }: Props) {
     return () => window.removeEventListener('keydown', handler)
   }, [plan, onClose])
 
+  useEffect(() => {
+    if (plan) {
+      document.body.style.overflow = 'hidden'
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [plan])
+
   const waMessage = plan
     ? encodeURIComponent(
         `Bonjour NEWLIFE STUDIO, je suis intéressé par le forfait ${plan.name} à ${plan.price}`
       )
     : ''
-  const waHref = `https://wa.me/33769892000?text=${waMessage}`
+  const waHref = `https://wa.me/${SITE_CONFIG.waNumber}?text=${waMessage}`
 
   return (
     <AnimatePresence>
@@ -59,6 +69,8 @@ export default function ForfaitModal({ plan, onClose }: Props) {
         >
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
           <motion.div
+            role="dialog"
+            aria-modal="true"
             className="relative z-10 w-full max-w-lg rounded-2xl border border-accent/40 bg-white/[0.06] backdrop-blur-xl p-8 overflow-y-auto max-h-[90vh]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
