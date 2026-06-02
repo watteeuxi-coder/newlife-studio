@@ -14,8 +14,8 @@ export function useCountUp(target: number, duration = 1500) {
     const step = (timestamp: number) => {
       if (!startTime) startTime = timestamp
       const progress = Math.min((timestamp - startTime) / duration, 1)
-      setCount(Math.floor(progress * target))
       if (progress < 1) {
+        setCount(Math.floor(progress * target))
         rafId = requestAnimationFrame(step)
       } else {
         setCount(target)
