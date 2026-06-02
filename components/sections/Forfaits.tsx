@@ -74,7 +74,7 @@ export default function Forfaits() {
     <section id="forfaits">
       <div className="wrap">
         <motion.div
-          ref={headRef}
+          ref={headRef as any}
           className="section-head mx-auto text-center"
           initial={{ opacity: 0, y: 30 }}
           animate={headVisible ? { opacity: 1, y: 0 } : {}}

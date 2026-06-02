@@ -133,7 +133,7 @@ export default function Services() {
     <section id="services">
       <div className="wrap">
         <motion.div
-          ref={headRef}
+          ref={headRef as any}
           className="section-head"
           initial={{ opacity: 0, y: 30 }}
           animate={headVisible ? { opacity: 1, y: 0 } : {}}
