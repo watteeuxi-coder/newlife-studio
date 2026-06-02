@@ -52,15 +52,15 @@ export default function Temoignages() {
               transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
               className="flex flex-col gap-4 rounded-2xl border border-accent/[0.15] bg-white/[0.04] backdrop-blur-xl p-6 hover:border-accent/40 hover:shadow-[0_0_30px_rgba(34,211,238,0.08)] transition-all"
             >
-              <div className="flex gap-0.5 text-accent text-base leading-none">
+              <div className="flex gap-0.5 text-accent text-base leading-none" aria-label={`${t.stars} sur 5 étoiles`}>
                 {'★'.repeat(t.stars)}
               </div>
-              <p className="text-text-dim text-sm leading-relaxed flex-1">
+              <blockquote className="text-text-dim text-sm leading-relaxed flex-1">
                 &ldquo;{t.text}&rdquo;
-              </p>
+              </blockquote>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-accent/20 text-accent font-bold flex items-center justify-center text-sm flex-shrink-0">
-                  {t.name[0]}
+                  {t.name[0] ?? '?'}
                 </div>
                 <div>
                   <div className="text-text-base text-sm font-semibold">{t.name}</div>
