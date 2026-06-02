@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
-import { waLink } from '@/lib/config'
+import { useState } from 'react'
+import ForfaitModal, { type ModalPlan } from '@/components/ui/ForfaitModal'
 
 const PLANS = [
   {
@@ -68,7 +69,7 @@ function CheckIcon() {
 
 export default function Forfaits() {
   const [headRef, headVisible] = useScrollReveal()
-  const wa = waLink()
+  const [openPlan, setOpenPlan] = useState<ModalPlan | null>(null)
 
   return (
     <section id="forfaits">
@@ -123,10 +124,8 @@ export default function Forfaits() {
                 ))}
               </ul>
 
-              <a
-                href={wa}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => setOpenPlan({ name: plan.name, price: plan.price, features: plan.features })}
                 className={`flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold transition-colors ${
                   plan.ctaStyle === 'primary'
                     ? 'bg-accent text-void hover:bg-accent-bright'
@@ -134,10 +133,11 @@ export default function Forfaits() {
                 }`}
               >
                 {plan.cta}
-              </a>
+              </button>
             </motion.article>
           ))}
         </div>
+        <ForfaitModal plan={openPlan} onClose={() => setOpenPlan(null)} />
       </div>
     </section>
   )
