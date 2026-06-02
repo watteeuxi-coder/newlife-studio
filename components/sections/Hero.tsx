@@ -2,12 +2,13 @@
 
 import { motion } from 'framer-motion'
 import { useTypewriter } from '@/hooks/useTypewriter'
+import { useCountUp } from '@/hooks/useCountUp'
 import { waLink } from '@/lib/config'
 
 const STATS = [
-  { n: '5–10j', l: 'Livraison express' },
-  { n: 'dès 299€', l: 'Sans abonnement caché' },
-  { n: '100%', l: 'Responsive mobile' },
+  { target: 3, suffix: '+', label: 'Projets livrés' },
+  { target: 100, suffix: '%', label: 'Clients satisfaits' },
+  { target: 5, suffix: 'j', label: 'Délai moyen' },
 ]
 
 const CONSOLE_LINES = [
@@ -26,6 +27,16 @@ function fadeUp(delay = 0) {
     animate: { opacity: 1, y: 0 },
     transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1], delay },
   }
+}
+
+function StatCounter({ target, suffix, label }: { target: number; suffix: string; label: string }) {
+  const [count, ref] = useCountUp(target)
+  return (
+    <div ref={ref as any}>
+      <div className="text-xl font-bold text-accent">{count}{suffix}</div>
+      <div className="text-xs text-text-muted mt-0.5">{label}</div>
+    </div>
+  )
 }
 
 export default function Hero() {
@@ -102,10 +113,7 @@ export default function Hero() {
               {...fadeUp(0.4)}
             >
               {STATS.map((s) => (
-                <div key={s.l}>
-                  <div className="text-xl font-bold text-accent">{s.n}</div>
-                  <div className="text-xs text-text-muted mt-0.5">{s.l}</div>
-                </div>
+                <StatCounter key={s.label} target={s.target} suffix={s.suffix} label={s.label} />
               ))}
             </motion.div>
           </div>
