@@ -6,6 +6,7 @@ import Hero from '@/components/sections/Hero'
 import Services from '@/components/sections/Services'
 import Forfaits from '@/components/sections/Forfaits'
 import Portfolio from '@/components/sections/Portfolio'
+import Temoignages from '@/components/sections/Temoignages'
 import Pourquoi from '@/components/sections/Pourquoi'
 import Faq from '@/components/sections/Faq'
 import Contact from '@/components/sections/Contact'
@@ -25,6 +26,7 @@ export default function Page() {
         <Services />
         <Forfaits />
         <Portfolio />
+        <Temoignages />
         <Pourquoi />
         <Faq />
         <Contact />
