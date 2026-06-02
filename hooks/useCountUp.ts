@@ -9,14 +9,20 @@ export function useCountUp(target: number, duration = 1500) {
 
   useEffect(() => {
     if (!isInView) return
+    let rafId: number
     let startTime: number | null = null
     const step = (timestamp: number) => {
       if (!startTime) startTime = timestamp
       const progress = Math.min((timestamp - startTime) / duration, 1)
       setCount(Math.floor(progress * target))
-      if (progress < 1) requestAnimationFrame(step)
+      if (progress < 1) {
+        rafId = requestAnimationFrame(step)
+      } else {
+        setCount(target)
+      }
     }
-    requestAnimationFrame(step)
+    rafId = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(rafId)
   }, [isInView, target, duration])
 
   return [count, ref] as const
