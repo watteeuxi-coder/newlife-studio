@@ -50,9 +50,10 @@ export default function Hero() {
     >
       {/* Aurora background blobs */}
       <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 1 }}>
-        <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-accent/10 blur-[120px] animate-aurora-1" />
-        <div className="absolute bottom-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-accent/[0.08] blur-[100px] animate-aurora-2" />
-        <div className="absolute top-[40%] left-[40%] w-[400px] h-[400px] rounded-full bg-accent/[0.06] blur-[80px] animate-aurora-3" />
+        {/* Un seul blob animé sur mobile — les blurs géants coûtent cher en GPU */}
+        <div className="absolute top-[-20%] left-[-10%] w-[400px] h-[400px] md:w-[600px] md:h-[600px] rounded-full bg-accent/10 blur-[80px] md:blur-[120px] animate-aurora-1" />
+        <div className="hidden md:block absolute bottom-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-accent/[0.08] blur-[100px] animate-aurora-2" />
+        <div className="hidden md:block absolute top-[40%] left-[40%] w-[400px] h-[400px] rounded-full bg-accent/[0.06] blur-[80px] animate-aurora-3" />
       </div>
 
       <div className="wrap relative w-full" style={{ zIndex: 2 }}>
@@ -93,7 +94,7 @@ export default function Hero() {
                 href={wa}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-void font-semibold hover:bg-accent-bright transition-colors"
+                className="flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-void font-semibold hover:bg-accent-bright hover:shadow-[0_8px_30px_-8px_rgba(34,211,238,0.5)] active:scale-[0.98] transition-all"
               >
                 <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
                   <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24z" />
@@ -102,7 +103,7 @@ export default function Hero() {
               </a>
               <a
                 href="#forfaits"
-                className="flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 text-text-dim hover:border-accent/50 hover:text-text-base transition-colors"
+                className="flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 text-text-dim hover:border-accent/50 hover:text-text-base hover:bg-white/[0.04] active:scale-[0.98] transition-all"
               >
                 Voir les forfaits →
               </a>

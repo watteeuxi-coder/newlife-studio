@@ -70,7 +70,7 @@ export default function Header() {
           href={wa}
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden md:flex items-center gap-2 px-4 py-2 rounded-full bg-accent text-void text-sm font-semibold hover:bg-accent-bright transition-colors"
+          className="hidden md:flex items-center gap-2 px-4 py-2 rounded-full bg-accent text-void text-sm font-semibold hover:bg-accent-bright active:scale-[0.98] transition-all"
         >
           <WaIcon className="w-4 h-4" />
           WhatsApp

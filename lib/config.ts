@@ -1,4 +1,5 @@
 export const SITE_CONFIG = {
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://newlife-studio.vercel.app',
   waNumber: '33769892000',
   waText:
     "Bonjour NEWLIFE STUDIO ! Je viens de votre site et j'aimerais discuter de mon projet.",
