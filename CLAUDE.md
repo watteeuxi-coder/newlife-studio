@@ -20,7 +20,9 @@ Site vitrine one-page du studio web freelance NEWLIFE STUDIO. Objectif du site :
 
 Structure du site (multi-pages, spec `docs/superpowers/specs/2026-11-09-multi-pages-design.md`) :
 - `app/layout.tsx` porte le commun : fonds fixes (grille, bruit, `ParticleCanvas` désactivé sur mobile et en reduced-motion), `Header`, `<main>`, `ProjectCta` (bloc « Discuter de ton projet », WhatsApp seul sur `/contact`), `Footer`, bouton WhatsApp flottant.
-- Pages : `/` (Hero), `/offre` (Services → Forfaits → Pourquoi → FAQ), `/concepts` (3 démos, `Portfolio.tsx` : pas des clients), `/contact` (formulaire), `/a-propos`, `/mentions-legales`, `/confidentialite` (en préparation, noindex, hors sitemap).
+- Pages : `/` (Hero → Pour qui → aperçu des concepts → Comment ça se passe), `/offre` (Services → Forfaits → Pourquoi → FAQ), `/concepts` (3 démos, `Portfolio.tsx` : pas des clients), `/contact` (formulaire), `/a-propos`, `/mentions-legales`, `/confidentialite` (en préparation, noindex, hors sitemap).
+- Données des démos : `lib/projects.ts` (partagées entre `/concepts` et l'accueil).
+- Infos réelles validées par l'utilisateur : livré en 5 à 10 jours **après réception des contenus**, selon la formule ; réponse sous 24h ; acompte au démarrage, solde à la livraison ; **2 séries de retouches incluses** ; zone Rouen et alentours.
 - Liste des pages : `lib/nav.ts`. Metadata d'une page : `pageMetadata()` de `lib/seo.ts`. Un seul h1 par page (prop `titleAs="h1"` sur la première section). La 1re section d'une page (hors hero) reçoit une marge haute qui compense le header fixe (`globals.css`).
 
 ## Palette (exacte)
