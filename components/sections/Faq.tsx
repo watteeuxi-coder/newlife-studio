@@ -11,7 +11,7 @@ export function FaqItem({ item, index }: { item: FaqEntry; index: number }) {
   return (
     <motion.div
       {...revealItem(index)}
-      className="rounded-xl border border-line bg-surface overflow-hidden shadow-soft"
+      className="spot rounded-xl border border-line bg-surface overflow-hidden shadow-soft"
     >
       <button
         onClick={() => setOpen((o) => !o)}
@@ -61,7 +61,7 @@ export default function Faq() {
           <h2>Je réponds à <span className="grad-text">tes doutes</span></h2>
         </motion.div>
 
-        <div className="max-w-3xl mx-auto space-y-3">
+        <div className="spot-group max-w-3xl mx-auto space-y-3">
           {FAQ.map((item, i) => (
             <FaqItem key={item.q} item={item} index={i} />
           ))}

@@ -31,12 +31,12 @@ export default function Portfolio({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+        <div className="spot-group grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
           {PROJECTS.map((p, i) => (
             <motion.article
               key={p.title}
               {...revealItem(i)}
-              className="group flex flex-col rounded-2xl border border-line bg-surface overflow-hidden shadow-soft hover:border-accent/40 hover:-translate-y-1 transition-all duration-300"
+              className="spot group flex flex-col rounded-2xl border border-line bg-surface overflow-hidden shadow-soft hover:border-accent/40 hover:-translate-y-1 transition-all duration-300"
             >
               {/* Screenshot */}
               <a

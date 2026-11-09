@@ -6,6 +6,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import ProjectCta from '@/components/layout/ProjectCta'
 import MotionProvider from '@/components/layout/MotionProvider'
+import Spotlight from '@/components/layout/Spotlight'
 import './globals.css'
 
 const spaceGrotesk = Space_Grotesk({
@@ -75,6 +76,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
             {/* Bouton WhatsApp flottant (mobile) */}
             <WhatsAppButton />
+            <Spotlight />
           </MotionProvider>
         </div>
       </body>

@@ -16,7 +16,7 @@ export default function Inclus() {
           <p>Quelle que soit la formule, ces bases sont toujours là.</p>
         </motion.div>
 
-        <motion.div {...revealItem(0)} className="rounded-2xl border border-line bg-surface p-6 sm:p-8 shadow-soft">
+        <motion.div {...revealItem(0)} className="spot rounded-2xl border border-line bg-surface p-6 sm:p-8 shadow-soft">
           <ul className="grid gap-x-10 gap-y-6 sm:grid-cols-2">
             {INCLUDED.map((item) => (
               <li key={item.title} className="flex gap-3">

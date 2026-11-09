@@ -42,12 +42,12 @@ export default function PourQui() {
           </p>
         </motion.div>
 
-        <ul className="grid gap-4 sm:grid-cols-2">
+        <ul className="spot-group grid gap-4 sm:grid-cols-2">
           {PROFILES.map((p, i) => (
             <motion.li
               key={p.who}
               {...revealItem(i)}
-              className="rounded-2xl border border-line bg-surface p-6 shadow-soft"
+              className="spot rounded-2xl border border-line bg-surface p-6 shadow-soft"
             >
               <div>
                 <h3 className="text-text-base text-lg font-semibold">{p.who}</h3>

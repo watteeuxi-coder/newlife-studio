@@ -21,14 +21,14 @@ export default function ConceptsPreview() {
         </motion.div>
 
         {/* scroll-px-6 = px-6 : sinon le snap colle la 1re carte au bord de l'écran */}
-        <ul className="flex gap-4 overflow-x-auto snap-x snap-mandatory -mx-6 px-6 scroll-px-6 pb-2 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:mx-0 md:px-0 md:pb-0">
+        <ul className="spot-group flex gap-4 overflow-x-auto snap-x snap-mandatory -mx-6 px-6 scroll-px-6 pb-2 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:mx-0 md:px-0 md:pb-0">
           {PROJECTS.map((p, i) => (
             <motion.li key={p.title} {...revealItem(i)} className="snap-start shrink-0 w-[80%] sm:w-[55%] md:w-auto">
               <a
                 href={p.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative block rounded-2xl border border-line overflow-hidden hover:border-accent/25 transition-colors"
+                className="spot group block rounded-2xl border border-line overflow-hidden hover:border-accent/25 transition-colors"
               >
                 <div className="h-44 p-4 bg-void">
                   <ProjectShot title={p.title} image={p.image} bg={p.bg} sizes="(min-width: 768px) 33vw, 80vw" />

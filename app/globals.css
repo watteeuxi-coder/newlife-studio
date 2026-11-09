@@ -276,3 +276,40 @@ main > section:first-child:not(#top) {
     padding-bottom: 48px;
   }
 }
+
+/* Spotlight des cartes (components/layout/Spotlight.tsx) : halo #22D3EE très transparent sous le contenu
+   + bord éclairé près du curseur. Actif seulement si .spot-ready (vraie souris, pas de reduced-motion). */
+.spot {
+  position: relative;
+  isolation: isolate;
+}
+.spot-ready .spot::after,
+.spot-ready .spot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+/* Halo : derrière le texte (z-index -1 dans la carte isolée), devant le fond blanc */
+.spot-ready .spot::after {
+  z-index: -1;
+  background: radial-gradient(260px circle at var(--mx, -999px) var(--my, -999px), rgba(34, 211, 238, 0.1), transparent 70%);
+}
+/* Bord : anneau de 1px éclairé près du curseur */
+.spot-ready .spot::before {
+  z-index: 2;
+  padding: 1px;
+  background: radial-gradient(220px circle at var(--mx, -999px) var(--my, -999px), rgba(34, 211, 238, 0.55), transparent 70%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+.spot-ready .spot-group:hover .spot::after,
+.spot-ready .spot-group:hover .spot::before,
+.spot-ready .spot:hover::after,
+.spot-ready .spot:hover::before {
+  opacity: 1;
+}

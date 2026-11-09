@@ -36,12 +36,12 @@ export default function PourquoiMoi() {
           <h2>Pourquoi <span className="grad-text">moi</span></h2>
         </motion.div>
 
-        <ul className="grid gap-4 md:grid-cols-3 md:gap-5">
+        <ul className="spot-group grid gap-4 md:grid-cols-3 md:gap-5">
           {REASONS.map((r, i) => (
             <motion.li
               key={r.title}
               {...revealItem(i)}
-              className="rounded-2xl border border-line bg-surface p-6 shadow-soft"
+              className="spot rounded-2xl border border-line bg-surface p-6 shadow-soft"
             >
               <span className="mb-4 flex items-center justify-center w-10 h-10 rounded-full border border-accent/30 bg-accent/5 text-accent">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5" aria-hidden="true">

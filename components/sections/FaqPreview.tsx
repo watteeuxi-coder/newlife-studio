@@ -24,7 +24,7 @@ export default function FaqPreview() {
         </motion.div>
 
         <div>
-          <div className="space-y-3">
+          <div className="spot-group space-y-3">
             {HOME_FAQ.map((item, i) => (
               <FaqItem key={item.q} item={item} index={i} />
             ))}

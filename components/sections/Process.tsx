@@ -33,12 +33,12 @@ export default function Process() {
           <h2>De ton premier message <span className="grad-text">à ton site en ligne</span></h2>
         </motion.div>
 
-        <ol className="grid gap-4 md:grid-cols-3 md:gap-5">
+        <ol className="spot-group grid gap-4 md:grid-cols-3 md:gap-5">
           {STEPS.map((s, i) => (
             <motion.li
               key={s.n}
               {...revealItem(i)}
-              className="rounded-2xl border border-line bg-surface p-6 shadow-soft"
+              className="spot rounded-2xl border border-line bg-surface p-6 shadow-soft"
             >
               <span
                 aria-hidden="true"

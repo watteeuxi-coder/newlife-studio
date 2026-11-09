@@ -56,12 +56,12 @@ export default function Forfaits() {
         </motion.div>
 
         {/* Formules empilées : chacune reprend la précédente */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+        <div className="spot-group grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
           {PLANS.map((plan, i) => (
             <motion.article
               key={plan.name}
               {...revealItem(i)}
-              className={`relative flex flex-col rounded-2xl p-8 bg-surface shadow-soft transition-colors duration-300 ${
+              className={`spot flex flex-col rounded-2xl p-8 bg-surface shadow-soft transition-colors duration-300 ${
                 plan.featured ? 'border-2 border-accent' : 'border border-line hover:border-accent/40'
               }`}
             >
@@ -89,10 +89,10 @@ export default function Forfaits() {
         </div>
 
         {/* Après la livraison, et besoins qui dépassent les formules */}
-        <div className="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-6 mt-6">
+        <div className="spot-group grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-6 mt-6">
           <motion.article
             {...revealItem(0)}
-            className="flex flex-col rounded-2xl border border-line bg-surface p-8 shadow-soft"
+            className="spot flex flex-col rounded-2xl border border-line bg-surface p-8 shadow-soft"
           >
             <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
               <div>
@@ -112,7 +112,7 @@ export default function Forfaits() {
 
           <motion.article
             {...revealItem(1)}
-            className="flex flex-col rounded-2xl border border-pill-cyan-line bg-pill-cyan-bg p-8 shadow-soft"
+            className="spot flex flex-col rounded-2xl border border-pill-cyan-line bg-pill-cyan-bg p-8 shadow-soft"
           >
             <div className="mb-6">
               <div className="text-text-dim text-sm font-medium mb-2">Sur-mesure</div>
