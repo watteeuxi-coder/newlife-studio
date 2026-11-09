@@ -17,9 +17,10 @@ const TONES = [
 export default function Zones() {
   return (
     <section id="zones" className="tone-white">
-      <div className="wrap">
+      {/* Desktop : titre à gauche, villes à droite (sinon la moitié droite reste vide) */}
+      <div className="wrap lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center">
         <motion.div
-          className="section-head"
+          className="section-head !mb-8 lg:!mb-0"
           {...revealHead}
         >
           <span className="kicker">Zone d&rsquo;intervention</span>

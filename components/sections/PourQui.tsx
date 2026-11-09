@@ -31,7 +31,7 @@ export default function PourQui() {
     <section id="pour-qui" className="tone-tint">
       <div className="wrap">
         <motion.div
-          className="section-head"
+          className="section-head section-head--split"
           {...revealHead}
         >
           <span className="kicker">Pour qui</span>

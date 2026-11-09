@@ -245,3 +245,34 @@ main > section:first-child:not(#top) {
   color: rgb(var(--c-ink-2));
   line-height: 1.7;
 }
+
+/* Tête de section en 2 colonnes (desktop) : titre à gauche, intro à droite, pour ne pas laisser
+   la moitié droite vide. Mobile : inchangé. */
+@media (min-width: 1024px) {
+  .section-head--split {
+    max-width: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    column-gap: 64px;
+    align-items: end;
+  }
+  .section-head--split > .kicker {
+    grid-column: 1;
+    justify-self: start;
+  }
+  .section-head--split > h2 {
+    grid-column: 1;
+    margin-bottom: 0;
+  }
+  .section-head--split > p {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+}
+
+/* Hero : moins d'espace sous les pastilles en mobile */
+@media (max-width: 640px) {
+  #top {
+    padding-bottom: 48px;
+  }
+}

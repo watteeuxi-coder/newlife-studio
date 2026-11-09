@@ -12,7 +12,7 @@ export default function ConceptsPreview() {
     <section id="apercu-concepts" className="tone-white">
       <div className="wrap">
         <motion.div
-          className="section-head"
+          className="section-head section-head--split"
           {...revealHead}
         >
           <span className="kicker">Mes concepts</span>

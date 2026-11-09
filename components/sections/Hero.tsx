@@ -63,7 +63,6 @@ const ICONS = {
 const FEATURES = [
   { label: 'Code sur mesure', icon: ICONS.code, tone: 'bg-pill-cyan-bg border-pill-cyan-line text-pill-cyan-text' },
   { label: 'Pensé pour mobile', icon: ICONS.phone, tone: 'bg-pill-green-bg border-pill-green-line text-pill-green-text' },
-  { label: 'Local, à Rouen', icon: ICONS.pin, tone: 'bg-pill-amber-bg border-pill-amber-line text-pill-amber-text' },
 ]
 
 export default function Hero() {
@@ -165,11 +164,12 @@ export default function Hero() {
         </div>
 
         {/* Pastilles colorées sous le hero */}
-        <ul className="flex flex-wrap justify-center gap-3 mt-10 lg:mt-4">
+        {/* « Local, à Rouen » retiré : doublon de la carte « Rouen et alentours » */}
+        <ul className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-6 sm:mt-10 lg:mt-4">
           {FEATURES.map((f) => (
             <li
               key={f.label}
-              className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium ${f.tone}`}
+              className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs sm:px-4 sm:py-2 sm:text-sm font-medium ${f.tone}`}
             >
               <Icon d={f.icon} />
               {f.label}
