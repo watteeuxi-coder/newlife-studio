@@ -30,7 +30,7 @@ export default function PourQui() {
   const [headRef, headVisible] = useScrollReveal()
 
   return (
-    <section id="pour-qui">
+    <section id="pour-qui" className="tone-tint">
       <div className="wrap">
         <motion.div
           ref={headRef as any}
@@ -40,15 +40,14 @@ export default function PourQui() {
           transition={{ duration: 0.6 }}
         >
           <span className="kicker">Pour qui</span>
-          <h2>Tu fais tourner ton activité. <span className="grad-text">On s&rsquo;occupe du site.</span></h2>
+          <h2>Tu fais tourner ton activité. <span className="grad-text">Je m&rsquo;occupe du site.</span></h2>
           <p>
-            On travaille avec des indépendants et des petites équipes qui veulent un site clair, rapide sur
+            Je travaille avec des indépendants et des petites équipes qui veulent un site clair, rapide sur
             téléphone, et pensé pour que les clients les contactent.
           </p>
         </motion.div>
 
-        {/* Liste éditoriale plutôt que des cartes à icônes */}
-        <ul className="border-t border-white/[0.08]">
+        <ul className="grid gap-4 sm:grid-cols-2">
           {PROFILES.map((p, i) => (
             <motion.li
               key={p.who}
@@ -56,13 +55,13 @@ export default function PourQui() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10% 0px' }}
               transition={{ duration: 0.5, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-              className="grid gap-2 md:grid-cols-[240px_1fr] md:gap-10 py-6 border-b border-white/[0.08]"
+              className="rounded-2xl border border-line bg-surface p-6 shadow-soft"
             >
               <div>
                 <h3 className="text-text-base text-lg font-semibold">{p.who}</h3>
                 {p.examples && <p className="text-text-muted text-xs mt-1">{p.examples}</p>}
               </div>
-              <p className="text-text-dim leading-relaxed max-w-2xl">{p.text}</p>
+              <p className="text-text-dim leading-relaxed mt-3">{p.text}</p>
             </motion.li>
           ))}
         </ul>

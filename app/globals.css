@@ -8,6 +8,46 @@
   --accent-rgb: 34, 211, 238;
   --glow-soft: 0 0 0 1px rgba(var(--accent-rgb), 0.18),
                0 24px 70px -28px rgba(var(--accent-rgb), 0.45);
+
+  /* Tokens de couleur (canaux RGB, utilisés via tailwind.config.ts). Thème sombre par défaut. */
+  --c-void: 5 7 13;
+  --c-night: 11 17 32;
+  --c-ink: 233 238 247;
+  --c-ink-2: 170 182 204;
+  --c-ink-3: 111 126 152;
+  --c-accent: 34 211 238;
+  --c-accent-bright: 125 240 255;
+  --c-line: 255 255 255;
+  --c-line-a: 0.08;
+  --c-line-strong: 255 255 255;
+  --c-line-strong-a: 0.2;
+  --c-surface: 255 255 255;
+  --c-surface-a: 0.03;
+  --grid: rgba(120, 160, 210, 0.04);
+  --focus: rgba(var(--accent-rgb), 0.7);
+  --grad: linear-gradient(135deg, #22d3ee 0%, #7df0ff 50%, #22d3ee 100%);
+}
+
+/* Thème clair (accueil, en validation) — palette validée, contrastes AA calculés.
+   :root:has() pour que le fond du body suive aussi ; le sélecteur seul couvre les navigateurs sans :has(). */
+[data-theme='light'],
+:root:has([data-theme='light']) {
+  --c-void: 250 250 247;        /* bg #FAFAF7 */
+  --c-night: 255 255 255;       /* surface #FFFFFF */
+  --c-ink: 11 18 32;            /* #0B1220 — 17,9:1 */
+  --c-ink-2: 61 74 92;          /* #3D4A5C — 8,6:1 */
+  --c-ink-3: 91 103 121;        /* #5B6779 — 5,5:1 */
+  --c-accent: 14 116 144;       /* cyan-strong #0E7490 — 5,1:1 (texte, boutons) */
+  --c-accent-bright: 21 94 117; /* cyan-deep #155E75 — survol */
+  --c-line: 227 231 235;        /* #E3E7EB */
+  --c-line-a: 1;
+  --c-line-strong: 138 148 163; /* #8A94A3 — bordure des champs, 3,1:1 (palette validée) */
+  --c-line-strong-a: 1;
+  --c-surface: 255 255 255;
+  --c-surface-a: 1;
+  --grid: rgba(11, 18, 32, 0.045);
+  --focus: #0e7490;
+  --grad: linear-gradient(135deg, #0e7490 0%, #155e75 100%);
 }
 
 * {
@@ -27,8 +67,8 @@ html {
 }
 
 body {
-  background-color: #05070d;
-  color: #e9eef7;
+  background-color: rgb(var(--c-void));
+  color: rgb(var(--c-ink));
   font-family: var(--font-display), -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
@@ -36,34 +76,58 @@ body {
 
 ::selection {
   background: rgba(var(--accent-rgb), 0.3);
-  color: #e9eef7;
+  color: rgb(var(--c-ink));
 }
 
 :focus-visible {
-  outline: 2px solid rgba(var(--accent-rgb), 0.7);
+  outline: 2px solid var(--focus);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
 /* Gradient text utility */
 .grad-text {
-  background: linear-gradient(135deg, #22d3ee 0%, #7df0ff 50%, #22d3ee 100%);
+  background: var(--grad);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Background grid */
-.bg-grid::before {
-  content: '';
-  position: fixed;
+/* La grille ne vit que dans le hero, estompée vers le bas */
+.hero-grid {
+  position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(120, 160, 210, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(120, 160, 210, 0.04) 1px, transparent 1px);
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
   background-size: 50px 50px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 35%, transparent 95%);
+  mask-image: linear-gradient(to bottom, #000 35%, transparent 95%);
   pointer-events: none;
-  z-index: 0;
+}
+
+/* Fonds alternés des sections + ligne de séparation.
+   Contrastes vérifiés sur le fond teinté, halo compris (pire cas : accent 4,8:1). */
+[data-theme='light'] .tone-base,
+[data-theme='light'] .tone-white,
+[data-theme='light'] .tone-tint {
+  border-top: 1px solid rgb(var(--c-line));
+}
+/* 1re section d'une page : pas de ligne sous le header flottant */
+[data-theme='light'] main > section:first-child {
+  border-top: 0;
+}
+[data-theme='light'] .tone-base {
+  background: rgb(var(--c-void));
+}
+[data-theme='light'] .tone-white {
+  background: #ffffff;
+}
+[data-theme='light'] .tone-tint {
+  background:
+    radial-gradient(ellipse 55% 70% at 100% 0%, rgba(34, 211, 238, 0.1), transparent 70%),
+    radial-gradient(rgba(14, 116, 144, 0.1) 1px, transparent 1.2px) 0 0 / 18px 18px,
+    #f3fbfc;
 }
 
 /* Noise overlay */
@@ -117,7 +181,7 @@ main > section:first-child:not(#top) {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #22d3ee;
+  color: rgb(var(--c-accent));
   margin-bottom: 16px;
 }
 
@@ -133,10 +197,10 @@ main > section:first-child:not(#top) {
   font-weight: 700;
   line-height: 1.15;
   margin-bottom: 16px;
-  color: #e9eef7;
+  color: rgb(var(--c-ink));
 }
 
 .section-head p {
-  color: #aab6cc;
+  color: rgb(var(--c-ink-2));
   line-height: 1.7;
 }

@@ -32,7 +32,7 @@ const SERVICES = [
   {
     id: '03',
     title: 'Refonte',
-    desc: "On modernise ton site existant pour le rendre rapide, beau et réellement efficace.",
+    desc: "Je modernise ton site existant pour le rendre rapide, beau et réellement efficace.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
         <path d="M21 12a9 9 0 1 1-3-6.7L21 8" />
@@ -43,7 +43,7 @@ const SERVICES = [
   {
     id: '04',
     title: 'SEO',
-    desc: "On te rend visible sur Google pour attirer des clients qualifiés, sans dépendre de la pub.",
+    desc: "Je te rends visible sur Google pour attirer des clients qualifiés, sans dépendre de la pub.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
         <circle cx={11} cy={11} r={7} />
@@ -54,7 +54,7 @@ const SERVICES = [
   {
     id: '05',
     title: 'Maintenance',
-    desc: "On garde ton site à jour, sécurisé et performant — tu n'as plus à t'en occuper.",
+    desc: "Je garde ton site à jour, sécurisé et performant — tu n'as plus à t'en occuper.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
         <path d="M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5l-8-3Z" />
@@ -64,7 +64,10 @@ const SERVICES = [
   },
 ]
 
-function ServiceCard({ service, index }: { service: typeof SERVICES[number]; index: number }) {
+// Niveau des titres de cartes : un cran sous le titre de section (h1 sur /offre → cartes en h2)
+type CardHeading = 'h2' | 'h3'
+
+function ServiceCard({ service, index, Heading }: { service: typeof SERVICES[number]; index: number; Heading: CardHeading }) {
   const cardRef = useRef<HTMLElement>(null)
 
   function onPointerMove(e: React.PointerEvent<HTMLElement>) {
@@ -82,20 +85,21 @@ function ServiceCard({ service, index }: { service: typeof SERVICES[number]; ind
       viewport={{ once: true, margin: '-10% 0px' }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: (index % 3) * 0.1 }}
       whileHover={{ scale: 1.02 }}
-      className="relative group rounded-2xl border border-white/[0.08] bg-white/[0.03] p-7 overflow-hidden cursor-default transition-colors hover:border-accent/30"
+      className="relative group rounded-2xl border border-line bg-surface p-7 overflow-hidden cursor-default shadow-soft transition-colors hover:border-accent/40"
+      // backgroundImage (pas background) : garde le fond blanc de la carte sous le halo
       style={{
-        background: 'radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(34,211,238,0.07) 0%, transparent 60%)',
+        backgroundImage: 'radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(34,211,238,0.08) 0%, transparent 60%)',
       }}
     >
       <span className="absolute top-5 right-5 text-xs font-mono text-text-muted">{service.id}</span>
       <div className="w-11 h-11 text-accent mb-5">{service.icon}</div>
-      <h3 className="text-text-base font-semibold text-lg mb-2">{service.title}</h3>
+      <Heading className="text-text-base font-semibold text-lg mb-2">{service.title}</Heading>
       <p className="text-text-dim text-sm leading-relaxed">{service.desc}</p>
     </motion.article>
   )
 }
 
-function CtaCard() {
+function CtaCard({ Heading }: { Heading: CardHeading }) {
   const [ref, isInView] = useScrollReveal()
   const wa = waLink()
   return (
@@ -104,10 +108,9 @@ function CtaCard() {
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: 0.2 }}
-      className="rounded-2xl border border-accent/30 p-7 flex flex-col justify-center"
-      style={{ background: 'linear-gradient(160deg, rgba(34,211,238,0.08), rgba(255,255,255,0.01))' }}
+      className="rounded-2xl border border-pill-cyan-line bg-pill-cyan-bg p-7 flex flex-col justify-center shadow-soft"
     >
-      <h3 className="text-text-base font-semibold text-lg mb-3">Un besoin sur mesure ?</h3>
+      <Heading className="text-text-base font-semibold text-lg mb-3">Un besoin sur mesure ?</Heading>
       <p className="text-text-dim text-sm leading-relaxed mb-5">
         Tu as un projet spécifique ? On en parle directement sur WhatsApp.
       </p>
@@ -130,7 +133,7 @@ export default function Services({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | '
   const [headRef, headVisible] = useScrollReveal()
 
   return (
-    <section id="services">
+    <section id="services" className="tone-base">
       <div className="wrap">
         <motion.div
           ref={headRef as any}
@@ -139,16 +142,16 @@ export default function Services({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | '
           animate={headVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <span className="kicker">Nos services</span>
+          <span className="kicker">Mes services</span>
           <Title>Tout ce qu&rsquo;il faut pour <span className="grad-text">exister en ligne</span></Title>
-          <p>Du premier site à la boutique qui tourne 24h/24 — on construit, on modernise et on fait grandir ta présence web.</p>
+          <p>Du premier site à la boutique qui tourne 24h/24 — je construis, je modernise et je fais grandir ta présence web.</p>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {SERVICES.map((s, i) => (
-            <ServiceCard key={s.id} service={s} index={i} />
+            <ServiceCard key={s.id} service={s} index={i} Heading={Title === 'h1' ? 'h2' : 'h3'} />
           ))}
-          <CtaCard />
+          <CtaCard Heading={Title === 'h1' ? 'h2' : 'h3'} />
         </div>
       </div>
     </section>

@@ -3,7 +3,7 @@ import { pageMetadata } from '@/lib/seo'
 
 export const metadata = pageMetadata({
   title: 'Contact',
-  description: 'Parle-nous de ton projet sur WhatsApp ou par message. Réponse sous 24h.',
+  description: 'Parle-moi de ton projet sur WhatsApp ou par message. Réponse sous 24h.',
   path: '/contact',
 })
 

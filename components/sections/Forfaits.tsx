@@ -2,13 +2,12 @@
 
 import { motion } from 'framer-motion'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
-import { useState } from 'react'
-import ForfaitModal, { type ModalPlan } from '@/components/ui/ForfaitModal'
+import Link from 'next/link'
+import { formuleSlug, type Formule } from '@/lib/formules'
 
 const PLANS = [
   {
-    name: 'Starter',
-    days: 5,
+    name: 'Starter' as Formule,
     price: '299€',
     tag: "Idéal pour lancer ton activité avec une présence pro.",
     features: [
@@ -21,12 +20,10 @@ const PLANS = [
     ],
     featured: false,
     badge: null as string | null,
-    cta: 'Choisir Starter',
     ctaStyle: 'ghost',
   },
   {
-    name: 'Pro',
-    days: 7,
+    name: 'Pro' as Formule,
     price: '499€',
     tag: "Pour une présence complète qui convertit vraiment.",
     features: [
@@ -39,12 +36,10 @@ const PLANS = [
     ],
     featured: true,
     badge: 'Recommandé' as string | null,
-    cta: 'Choisir Pro',
     ctaStyle: 'primary',
   },
   {
-    name: 'Premium',
-    days: 10,
+    name: 'Premium' as Formule,
     price: '799€',
     tag: "L'expérience complète, taillée pour vendre et durer.",
     features: [
@@ -57,7 +52,6 @@ const PLANS = [
     ],
     featured: false,
     badge: null as string | null,
-    cta: 'Choisir Premium',
     ctaStyle: 'ghost',
   },
 ]
@@ -72,10 +66,9 @@ function CheckIcon() {
 
 export default function Forfaits() {
   const [headRef, headVisible] = useScrollReveal()
-  const [openPlan, setOpenPlan] = useState<ModalPlan | null>(null)
 
   return (
-    <section id="forfaits">
+    <section id="forfaits" className="tone-tint">
       <div className="wrap">
         <motion.div
           ref={headRef as any}
@@ -87,7 +80,8 @@ export default function Forfaits() {
           <span className="kicker justify-center">Forfaits</span>
           <h2>Des prix clairs, <span className="grad-text">sans surprise</span></h2>
           <p className="mx-auto">
-            Paiement en deux fois possible. Acompte au démarrage, solde à la livraison.
+            Des prix accessibles, sans abonnement caché. Paiement en deux fois possible : acompte au démarrage, solde à la livraison.
+            Délais comptés à partir de la réception de tes contenus.
           </p>
         </motion.div>
 
@@ -100,14 +94,12 @@ export default function Forfaits() {
               viewport={{ once: true, margin: '-10% 0px' }}
               transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ y: -4 }}
-              className={`relative flex flex-col rounded-2xl p-8 backdrop-blur-xl transition-shadow duration-300 ${
-                plan.featured
-                  ? 'border border-accent/40 bg-white/[0.06] shadow-[0_0_50px_rgba(34,211,238,0.12)]'
-                  : 'border border-white/[0.08] bg-white/[0.03] hover:border-accent/20 hover:shadow-[0_0_30px_rgba(34,211,238,0.06)]'
+              className={`relative flex flex-col rounded-2xl p-8 bg-surface shadow-soft transition-colors duration-300 ${
+                plan.featured ? 'border-2 border-accent' : 'border border-line hover:border-accent/40'
               }`}
             >
               {plan.badge && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-accent text-void text-xs font-bold whitespace-nowrap">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-accent text-white text-xs font-bold whitespace-nowrap">
                   {plan.badge}
                 </span>
               )}
@@ -127,20 +119,21 @@ export default function Forfaits() {
                 ))}
               </ul>
 
-              <button
-                onClick={() => setOpenPlan({ name: plan.name, price: plan.price, features: plan.features, days: plan.days })}
+              <Link
+                href={`/contact?formule=${formuleSlug(plan.name)}`}
                 className={`flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold transition-colors ${
                   plan.ctaStyle === 'primary'
-                    ? 'bg-accent text-void hover:bg-accent-bright'
-                    : 'border border-white/20 text-text-dim hover:border-accent/50 hover:text-text-base'
+                    ? 'bg-accent text-white hover:bg-accent-bright'
+                    : 'border border-line-strong text-text-base hover:border-accent'
                 }`}
               >
-                {plan.cta}
-              </button>
+                Discuter de ton projet
+                {/* 3 liens au même texte : on précise la formule pour les lecteurs d'écran */}
+                <span className="sr-only"> (formule {plan.name})</span>
+              </Link>
             </motion.article>
           ))}
         </div>
-        <ForfaitModal plan={openPlan} onClose={() => setOpenPlan(null)} />
       </div>
     </section>
   )

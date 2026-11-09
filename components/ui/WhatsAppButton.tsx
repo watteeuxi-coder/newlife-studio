@@ -9,7 +9,7 @@ export default function WhatsAppButton() {
       href={waLink()}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 md:hidden flex items-center justify-center w-14 h-14 rounded-full bg-accent text-void shadow-lg"
+      className="fixed bottom-6 right-6 z-50 md:hidden flex items-center justify-center w-14 h-14 rounded-full bg-accent text-white shadow-lg"
       animate={{
         boxShadow: [
           '0 0 0 0 rgba(34, 211, 238, 0.5)',

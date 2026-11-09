@@ -15,7 +15,7 @@ export default function ConfidentialitePage() {
 
   const { editeur } = LEGAL
   return (
-    <TextPage title="Confidentialité" intro="Ce qu’on fait des informations que tu nous envoies.">
+    <TextPage title="Confidentialité" intro="Ce que je fais des informations que tu m’envoies.">
       <TextBlock title="Responsable du traitement">
         <p>
           {editeur.nom} ({editeur.statut}), {editeur.adresse}. Contact :{' '}
@@ -33,8 +33,8 @@ export default function ConfidentialitePage() {
       </TextBlock>
       <TextBlock title="Qui y a accès">
         <p>
-          NEWLIFE STUDIO uniquement. Les messages du formulaire nous sont transmis par email via le service
-          d’envoi Resend. Si tu nous écris sur WhatsApp, l’échange passe par WhatsApp et suit ses propres règles.
+          Moi uniquement. Les messages du formulaire me sont transmis par email via le service d’envoi
+          Resend. Si tu m’écris sur WhatsApp, l’échange passe par WhatsApp et suit ses propres règles.
         </p>
       </TextBlock>
       <TextBlock title="Combien de temps">

@@ -1,16 +1,23 @@
 'use client'
 
-import { useState, type FormEvent } from 'react'
-import { FORMULES } from '@/lib/formules'
+import { useState, useEffect, type FormEvent } from 'react'
+import { FORMULES, formuleFromSlug, type Formule } from '@/lib/formules'
 
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
 const inputClass =
-  'w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-text-base placeholder:text-text-muted outline-none transition-colors focus:border-accent/50 focus:bg-white/[0.06]'
+  // Bordure line-strong (#8A94A3, 3,1:1) ; pas d'outline-none : le contour de focus global reste visible
+  'w-full rounded-xl border border-line-strong bg-surface px-4 py-3 text-sm text-text-base placeholder:text-text-muted transition-colors focus:border-accent'
 
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>('idle')
   const [error, setError] = useState('')
+  const [formule, setFormule] = useState<Formule>(FORMULES[0])
+
+  // ?formule=pro (boutons des forfaits) → présélection. Lu côté navigateur pour garder /contact statique.
+  useEffect(() => {
+    setFormule(formuleFromSlug(new URLSearchParams(window.location.search).get('formule')))
+  }, [])
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -33,7 +40,7 @@ export default function ContactForm() {
       })
       const json = await res.json().catch(() => ({}))
       if (!res.ok) {
-        throw new Error(json.error || "L'envoi a échoué — réessaie ou écris-nous sur WhatsApp.")
+        throw new Error(json.error || "L'envoi a échoué — réessaie ou écris-moi sur WhatsApp.")
       }
       setStatus('sent')
       form.reset()
@@ -49,9 +56,13 @@ export default function ContactForm() {
         role="status"
         className="rounded-xl border border-accent/30 bg-accent/[0.06] px-6 py-8 text-center"
       >
-        <div className="text-2xl mb-2">✅</div>
+        <span className="mx-auto mb-3 flex items-center justify-center w-10 h-10 rounded-full bg-accent text-white" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} className="w-5 h-5">
+            <path d="m5 13 4 4L19 7" />
+          </svg>
+        </span>
         <p className="text-text-base font-semibold mb-1">Message envoyé !</p>
-        <p className="text-text-dim text-sm">On te répond sous 24h, promis.</p>
+        <p className="text-text-dim text-sm">Je te réponds sous 24h, promis.</p>
       </div>
     )
   }
@@ -101,7 +112,8 @@ export default function ContactForm() {
         <span className="relative block">
           <select
             name="formule"
-            defaultValue={FORMULES[0]}
+            value={formule}
+            onChange={(e) => setFormule(e.target.value as Formule)}
             className={`${inputClass} appearance-none pr-10 [&>option]:bg-night`}
           >
             {FORMULES.map((f) => (
@@ -128,13 +140,13 @@ export default function ContactForm() {
           required
           maxLength={5000}
           rows={4}
-          placeholder="Parle-nous de ton projet (activité, objectifs, délais…)"
+          placeholder="Parle-moi de ton projet (activité, objectifs, délais…)"
           className={`${inputClass} resize-none`}
         />
       </label>
 
       {status === 'error' && (
-        <p role="alert" className="text-sm text-red-400 mb-4">
+        <p role="alert" className="text-sm text-red-700 mb-4">
           {error}
         </p>
       )}
@@ -142,7 +154,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={status === 'sending'}
-        className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-accent text-void font-semibold hover:bg-accent-bright active:scale-[0.98] transition-all disabled:opacity-60 disabled:pointer-events-none"
+        className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-accent text-white font-semibold hover:bg-accent-bright active:scale-[0.98] transition-all disabled:opacity-60 disabled:pointer-events-none"
       >
         {status === 'sending' ? 'Envoi en cours…' : 'Envoyer mon message'}
       </button>

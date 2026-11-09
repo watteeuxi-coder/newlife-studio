@@ -11,21 +11,21 @@ export default function ProjectCta() {
   const onContactPage = pathname === '/contact'
 
   return (
-    <section aria-labelledby="project-cta-title">
+    <section aria-labelledby="project-cta-title" className="tone-tint">
       <div className="wrap">
-        <div className="max-w-3xl mx-auto rounded-3xl border border-white/[0.08] bg-white/[0.03] p-8 sm:p-12 text-center">
+        <div className="max-w-3xl mx-auto rounded-3xl border border-line bg-surface p-8 sm:p-12 text-center shadow-soft">
           <h2 id="project-cta-title" className="text-2xl sm:text-3xl font-bold text-text-base mb-3">
             Discuter de ton projet
           </h2>
           <p className="text-text-dim leading-relaxed max-w-md mx-auto mb-8">
-            Dis-nous ce que tu fais et ce dont tu as besoin. On te répond sous 24h.
+            Dis-moi ce que tu fais et ce dont tu as besoin. Je te réponds sous 24h.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
               href={waLink()}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-accent text-void font-semibold hover:bg-accent-bright active:scale-[0.98] transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-accent text-white font-semibold hover:bg-accent-bright active:scale-[0.98] transition-all"
             >
               <WaIcon className="w-5 h-5" />
               Discuter sur WhatsApp
@@ -33,7 +33,7 @@ export default function ProjectCta() {
             {!onContactPage && (
               <Link
                 href="/contact"
-                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-full border border-white/20 text-text-dim hover:border-accent/50 hover:text-text-base active:scale-[0.98] transition-all"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-full border border-line-strong text-text-dim hover:border-accent/50 hover:text-text-base active:scale-[0.98] transition-all"
               >
                 Écrire un message
               </Link>

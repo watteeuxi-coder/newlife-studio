@@ -11,7 +11,7 @@ export default function ConceptsPreview() {
   const [headRef, headVisible] = useScrollReveal()
 
   return (
-    <section id="apercu-concepts">
+    <section id="apercu-concepts" className="tone-white">
       <div className="wrap">
         <motion.div
           ref={headRef as any}
@@ -20,9 +20,9 @@ export default function ConceptsPreview() {
           animate={headVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <span className="kicker">Nos concepts</span>
-          <h2>Ce qu&rsquo;on <span className="grad-text">sait construire</span></h2>
-          <p>Trois sites de démo, un par métier, pour te montrer ce qu&rsquo;on peut construire pour toi.</p>
+          <span className="kicker">Mes concepts</span>
+          <h2>Ce que je <span className="grad-text">sais construire</span></h2>
+          <p>Trois sites de démo, un par métier, pour te montrer ce que je peux construire pour toi.</p>
         </motion.div>
 
         {/* scroll-px-6 = px-6 : sinon le snap colle la 1re carte au bord de l'écran */}
@@ -33,10 +33,9 @@ export default function ConceptsPreview() {
                 href={p.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Tester la démo ${p.title}`}
-                className="group block rounded-2xl border border-white/[0.08] overflow-hidden hover:border-accent/25 transition-colors"
+                className="group relative block rounded-2xl border border-line overflow-hidden hover:border-accent/25 transition-colors"
               >
-                <div className="h-44 p-4" style={{ background: p.bg }}>
+                <div className="h-44 p-4 bg-void">
                   <ProjectShot title={p.title} image={p.image} bg={p.bg} sizes="(min-width: 768px) 33vw, 80vw" />
                 </div>
                 <div className="p-4">
@@ -47,6 +46,8 @@ export default function ConceptsPreview() {
                     </span>
                   </div>
                   <p className="text-text-muted text-xs mt-1">{p.cat}</p>
+                  {/* Nom accessible = texte visible + précision (pas d'aria-label qui le remplacerait) */}
+                  <span className="sr-only">, tester la démo (nouvel onglet)</span>
                 </div>
               </a>
             </li>

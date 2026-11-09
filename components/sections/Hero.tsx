@@ -1,150 +1,181 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { waLink } from '@/lib/config'
+import { Caveat } from 'next/font/google'
+import { motion, useReducedMotion } from 'framer-motion'
+import { waLink, PERF_SCORE } from '@/lib/config'
+import WaIcon from '@/components/ui/WaIcon'
 
-const COMMITMENTS = ['Livré en 5 à 10 jours', 'Réponse sous 24h', 'Paiement en 2 fois']
+// Police manuscrite réservée aux mots en accent du titre (chargée seulement là où le hero est utilisé)
+const caveat = Caveat({ subsets: ['latin'], weight: ['700'], display: 'swap' })
 
-const CONSOLE_LINES = [
-  { prefix: '$', text: 'newlife init --client', ok: false },
-  { prefix: '›', text: 'Analyse de ton business...', ok: false },
-  { prefix: '›', text: 'Design sur mesure', ok: true },
-  { prefix: '›', text: 'Optimisation mobile', ok: true },
-  { prefix: '›', text: 'SEO & vitesse', ok: true },
+// Cartes d'infos : une seule liste. Mobile = pastilles sous les boutons ; lg = cartes flottantes autour du titre.
+// La rotation est sur l'élément interne : framer-motion pilote le transform de l'élément externe (fondu).
+const FACT_POSITIONS = [
+  'lg:left-0 lg:top-6',
+  'lg:right-0 lg:top-12',
+  'lg:left-6 lg:bottom-4',
+  'lg:right-8 lg:bottom-8',
 ]
+const FACT_TILTS = ['lg:-rotate-[4deg]', 'lg:rotate-[3deg]', 'lg:rotate-[2deg]', 'lg:-rotate-[3deg]']
 
-const CONSOLE_BARS = [40, 62, 48, 80, 70, 95, 88]
+const factCard =
+  'inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1.5 text-sm text-text-dim ' +
+  'lg:rounded-2xl lg:px-4 lg:py-3 lg:gap-3 lg:shadow-[0_16px_40px_-16px_rgba(11,18,32,0.22)]'
 
-function fadeUp(delay = 0) {
-  return {
-    initial: { opacity: 0, y: 28 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1], delay },
-  }
+function ScoreRing({ score }: { score: number }) {
+  return (
+    <span className="relative flex items-center justify-center w-4 h-4 lg:w-11 lg:h-11 shrink-0">
+      <svg viewBox="0 0 40 40" className="absolute inset-0 -rotate-90" aria-hidden="true">
+        <circle cx={20} cy={20} r={16} fill="none" strokeWidth={4} className="stroke-ok/20" />
+        <circle
+          cx={20}
+          cy={20}
+          r={16}
+          fill="none"
+          strokeWidth={4}
+          strokeLinecap="round"
+          pathLength={100}
+          strokeDasharray={`${score} 100`}
+          className="stroke-ok"
+        />
+      </svg>
+      <span className="hidden lg:block relative font-mono text-xs font-bold text-ok-text">{score}</span>
+    </span>
+  )
 }
 
+function Icon({ d }: { d: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 shrink-0" aria-hidden="true">
+      <path d={d} />
+    </svg>
+  )
+}
+
+const ICONS = {
+  clock: 'M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z',
+  pin: 'M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Zm0-9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z',
+  code: 'm8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14',
+  phone: 'M8 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm3 15h2',
+}
+
+const FEATURES = [
+  { label: 'Code sur mesure', icon: ICONS.code, tone: 'bg-pill-cyan-bg border-pill-cyan-line text-pill-cyan-text' },
+  { label: 'Pensé pour mobile', icon: ICONS.phone, tone: 'bg-pill-green-bg border-pill-green-line text-pill-green-text' },
+  { label: 'Local, à Rouen', icon: ICONS.pin, tone: 'bg-pill-amber-bg border-pill-amber-line text-pill-amber-text' },
+]
+
 export default function Hero() {
-  const wa = waLink()
+  const reduceMotion = useReducedMotion()
+
+  // Fondu léger (opacité + 8px). Le h1 n'est jamais animé : c'est l'élément LCP.
+  const fade = (delay: number) =>
+    reduceMotion
+      ? {}
+      : {
+          initial: { opacity: 0, y: 8 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1], delay },
+        }
+
+  const facts = [
+    <>
+      <ScoreRing score={PERF_SCORE} />
+      <span className="flex flex-wrap items-baseline gap-x-1 lg:flex-col lg:gap-0">
+        <span className="font-semibold text-text-base">{PERF_SCORE}/100</span>
+        <span className="lg:hidden" aria-hidden="true">·</span>
+        <span className="lg:text-xs lg:text-text-muted">Performance mobile de ce site</span>
+      </span>
+    </>,
+    <>
+      <span className="text-accent"><Icon d={ICONS.clock} /></span>
+      <span className="font-medium text-text-base">Livré en 5 à 10 jours</span>
+    </>,
+    <>
+      <span className="flex flex-wrap items-center gap-x-2 lg:flex-col lg:items-start lg:gap-0.5">
+        <span className="font-medium text-text-base">Réponse sous 24h</span>
+        <span className="inline-flex items-center gap-1.5 text-xs text-ok-text">
+          <span className="w-2 h-2 rounded-full bg-ok" aria-hidden="true" />
+          Dispo pour échanger
+        </span>
+      </span>
+    </>,
+    <>
+      <span className="text-accent"><Icon d={ICONS.pin} /></span>
+      <span className="font-medium text-text-base">Rouen et alentours</span>
+    </>,
+  ]
 
   return (
-    <section
-      id="top"
-      className="relative min-h-screen flex items-center pt-16 overflow-hidden"
-    >
-      {/* Aurora background blobs */}
-      <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 1 }}>
-        {/* Un seul blob animé sur mobile — les blurs géants coûtent cher en GPU */}
-        <div className="absolute top-[-20%] left-[-10%] w-[400px] h-[400px] md:w-[600px] md:h-[600px] rounded-full bg-accent/10 blur-[80px] md:blur-[120px] animate-aurora-1" />
-        <div className="hidden md:block absolute bottom-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-accent/[0.08] blur-[100px] animate-aurora-2" />
-        <div className="hidden md:block absolute top-[40%] left-[40%] w-[400px] h-[400px] rounded-full bg-accent/[0.06] blur-[80px] animate-aurora-3" />
-      </div>
-
-      <div className="wrap relative w-full" style={{ zIndex: 2 }}>
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 py-16">
-
-          {/* Left col */}
-          <div className="flex-1 max-w-2xl">
-            <motion.span
-              className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-accent mb-6"
-              {...fadeUp(0)}
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-              Studio web freelance · Propulsé par l&rsquo;IA
-            </motion.span>
-
-            <motion.h1
-              className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] tracking-tight text-text-base mb-6"
-              {...fadeUp(0.1)}
-            >
-              On donne une{' '}
-              <span className="grad-text">nouvelle vie</span>
-              {' '}à ton business en ligne
-            </motion.h1>
-
+    // pt-20 : place pour le header flottant. Le bas suit l'espacement commun des sections (globals.css).
+    <section id="top" className="relative pt-20 overflow-hidden">
+      <div className="hero-grid" aria-hidden="true" />
+      <div className="wrap relative">
+        <div className="relative">
+          <div className="relative z-[1] max-w-2xl mx-auto text-center pt-10 sm:pt-14 lg:pt-28 lg:pb-28">
             <motion.p
-              className="text-lg text-text-dim leading-relaxed max-w-xl mb-8"
-              {...fadeUp(0.2)}
+              className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-accent mb-6"
+              {...fade(0)}
             >
+              <span className="w-1.5 h-1.5 rounded-full bg-accent-brand" aria-hidden="true" />
+              Studio web · Rouen et alentours
+            </motion.p>
+
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-balance text-text-base mb-6">
+              Une{' '}
+              <span
+                className={`${caveat.className} text-accent text-[1.2em] font-bold leading-none whitespace-nowrap bg-[linear-gradient(transparent_62%,rgba(34,211,238,0.35)_62%)] px-1`}
+              >
+                nouvelle vie
+              </span>{' '}
+              pour ton business en ligne
+            </h1>
+
+            <motion.p className="text-lg text-text-dim leading-relaxed max-w-xl mx-auto mb-8" {...fade(0.1)}>
               Des sites web pour commerçants et indépendants, faits pour que tes clients te trouvent et te contactent.
             </motion.p>
 
-            <motion.div
-              className="flex flex-wrap gap-4 mb-10"
-              {...fadeUp(0.3)}
-            >
+            <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-3" {...fade(0.2)}>
+              <Link
+                href="/contact"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-full bg-accent text-white font-semibold hover:bg-accent-bright active:scale-[0.98] transition-all"
+              >
+                Discuter de ton projet
+              </Link>
               <a
-                href={wa}
+                href={waLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-void font-semibold hover:bg-accent-bright hover:shadow-[0_8px_30px_-8px_rgba(34,211,238,0.5)] active:scale-[0.98] transition-all"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-line-strong bg-surface text-text-base font-semibold hover:border-accent active:scale-[0.98] transition-all"
               >
-                <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-                  <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24z" />
-                </svg>
-                Discuter sur WhatsApp
+                <WaIcon className="w-5 h-5 text-ok" />
+                WhatsApp
               </a>
-              <Link
-                href="/offre#forfaits"
-                className="flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 text-text-dim hover:border-accent/50 hover:text-text-base hover:bg-white/[0.04] active:scale-[0.98] transition-all"
-              >
-                Voir les forfaits →
-              </Link>
             </motion.div>
-
-            <motion.ul
-              className="flex flex-wrap gap-x-6 gap-y-2"
-              {...fadeUp(0.4)}
-            >
-              {COMMITMENTS.map((c) => (
-                <li key={c} className="flex items-center gap-2 text-sm text-text-dim">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} className="w-4 h-4 text-accent flex-shrink-0" aria-hidden="true">
-                    <path d="m5 13 4 4L19 7" />
-                  </svg>
-                  {c}
-                </li>
-              ))}
-            </motion.ul>
           </div>
 
-          {/* Right col — glass console (hidden on mobile) */}
-          <motion.div
-            className="hidden lg:block flex-shrink-0 w-[340px]"
-            {...fadeUp(0.2)}
-          >
-            <div className="rounded-xl border border-white/10 bg-white/[0.04] backdrop-blur-sm overflow-hidden shadow-[0_0_60px_rgba(34,211,238,0.08)]">
-              {/* Title bar */}
-              <div className="flex items-center gap-2 px-4 py-3 border-b border-white/10">
-                <span className="w-3 h-3 rounded-full bg-red-500/70" />
-                <span className="w-3 h-3 rounded-full bg-yellow-500/70" />
-                <span className="w-3 h-3 rounded-full bg-green-500/70" />
-              </div>
-              {/* Console body */}
-              <div className="p-5 font-mono text-sm space-y-2">
-                {CONSOLE_LINES.map((l, i) => (
-                  <div key={i} className="flex items-center gap-2 text-text-dim">
-                    <span className="text-accent w-3">{l.prefix}</span>
-                    <span>{l.text}</span>
-                    {l.ok && (
-                      <span className="ml-auto text-green-400">✓</span>
-                    )}
-                  </div>
-                ))}
-                {/* Bar chart */}
-                <div className="flex items-end gap-1.5 pt-3 h-16">
-                  {CONSOLE_BARS.map((h, i) => (
-                    <div
-                      key={i}
-                      className="flex-1 rounded-t bg-accent/60"
-                      style={{ height: `${h}%` }}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
+          <ul className="relative mt-8 flex flex-wrap justify-center gap-2 lg:static lg:mt-0" aria-label="En bref">
+            {facts.map((content, i) => (
+              <motion.li key={i} className={`lg:absolute ${FACT_POSITIONS[i]}`} {...fade(0.35 + i * 0.12)}>
+                <div className={`${factCard} ${FACT_TILTS[i]}`}>{content}</div>
+              </motion.li>
+            ))}
+          </ul>
         </div>
+
+        {/* Pastilles colorées sous le hero */}
+        <ul className="flex flex-wrap justify-center gap-3 mt-10 lg:mt-4">
+          {FEATURES.map((f) => (
+            <li
+              key={f.label}
+              className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium ${f.tone}`}
+            >
+              <Icon d={f.icon} />
+              {f.label}
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   )

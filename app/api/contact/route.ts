@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { SITE_CONFIG } from '@/lib/config'
 import { isFormule } from '@/lib/formules'
+import { EMAIL_RE, escapeHtml, contactHtml } from '@/lib/contact-email'
 
 /**
  * Envoi d'email via l'API REST de Resend (https://resend.com) — aucune dépendance.
@@ -9,16 +10,6 @@ import { isFormule } from '@/lib/formules'
  *   CONTACT_TO_EMAIL  — destinataire (optionnel, défaut : SITE_CONFIG.email)
  *   CONTACT_FROM      — expéditeur vérifié chez Resend (optionnel, défaut : onboarding@resend.dev)
  */
-
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
-function escapeHtml(s: string): string {
-  return s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-}
 
 export async function POST(req: Request) {
   let body: { name?: string; contact?: string; formule?: unknown; message?: string; company?: string }
@@ -52,7 +43,7 @@ export async function POST(req: Request) {
   const apiKey = process.env.RESEND_API_KEY
   if (!apiKey) {
     return NextResponse.json(
-      { error: "L'envoi d'email n'est pas encore configuré — écris-nous sur WhatsApp !" },
+      { error: "L'envoi d'email n'est pas encore configuré — écris-moi sur WhatsApp !" },
       { status: 503 }
     )
   }
@@ -63,7 +54,7 @@ export async function POST(req: Request) {
   const html = `
     <h2>Nouveau message depuis le site NEWLIFE STUDIO</h2>
     <p><strong>Nom :</strong> ${escapeHtml(name)}</p>
-    <p><strong>Contact :</strong> ${escapeHtml(contact)}</p>
+    <p><strong>Contact :</strong> ${contactHtml(contact)}</p>
     <p><strong>Formule :</strong> ${escapeHtml(formule)}</p>
     <p><strong>Message :</strong></p>
     <p>${escapeHtml(message).replace(/\n/g, '<br/>')}</p>
@@ -80,6 +71,7 @@ export async function POST(req: Request) {
       to: [to],
       subject: `Nouveau prospect : ${name} (${formule})`,
       html,
+      // « Répondre » dans Gmail écrit directement au prospect quand il a laissé un email
       ...(EMAIL_RE.test(contact) ? { reply_to: contact } : {}),
     }),
   })
@@ -87,7 +79,7 @@ export async function POST(req: Request) {
   if (!res.ok) {
     console.error('Resend error:', res.status, await res.text())
     return NextResponse.json(
-      { error: "L'envoi a échoué — réessaie ou écris-nous sur WhatsApp." },
+      { error: "L'envoi a échoué — réessaie ou écris-moi sur WhatsApp." },
       { status: 502 }
     )
   }

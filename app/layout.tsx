@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Space_Grotesk, JetBrains_Mono } from 'next/font/google'
 import { SITE_CONFIG } from '@/lib/config'
-import ParticleCanvas from '@/components/ui/ParticleCanvas'
 import WhatsAppButton from '@/components/ui/WhatsAppButton'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
@@ -20,14 +19,16 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 })
 
+const HOME_DESCRIPTION =
+  'Création de sites web à Rouen et ses alentours pour commerçants, artisans et indépendants. Sites vitrine, e-commerce, refonte.'
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_CONFIG.siteUrl),
   title: {
-    default: 'NEWLIFE STUDIO — On donne une nouvelle vie à ton business en ligne',
+    default: 'NEWLIFE STUDIO — Une nouvelle vie pour ton business en ligne',
     template: '%s — NEWLIFE STUDIO',
   },
-  description:
-    "Studio web freelance propulsé par l'IA. Sites vitrine, e-commerce, refonte. Livraison express 5–10 jours. Dès 299€.",
+  description: HOME_DESCRIPTION,
   keywords: [
     'création site web',
     'site vitrine',
@@ -38,8 +39,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
   openGraph: {
     title: 'NEWLIFE STUDIO — Nouvelle vie pour ton business en ligne',
-    description:
-      "Studio web freelance propulsé par l'IA. Dès 299€, livraison 5–10 jours.",
+    description: HOME_DESCRIPTION,
     url: '/',
     siteName: 'NEWLIFE STUDIO',
     locale: 'fr_FR',
@@ -48,32 +48,31 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'NEWLIFE STUDIO — Nouvelle vie pour ton business en ligne',
-    description:
-      "Studio web freelance propulsé par l'IA. Dès 299€, livraison 5–10 jours.",
+    description: HOME_DESCRIPTION,
   },
   robots: { index: true, follow: true },
 }
 
 export const viewport = {
-  themeColor: '#05070d',
+  themeColor: '#FAFAF7',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
       <body>
-        {/* Fonds fixes (z=0), partagés par toutes les pages */}
-        <div className="bg-grid" aria-hidden="true" />
-        <div className="noise" aria-hidden="true" />
-        <ParticleCanvas />
+        {/* Thème clair sur tout le site (tokens dans globals.css) */}
+        <div data-theme="light">
+          <div className="noise" aria-hidden="true" />
 
-        <Header />
-        <main>{children}</main>
-        <ProjectCta />
-        <Footer />
+          <Header />
+          <main>{children}</main>
+          <ProjectCta />
+          <Footer />
 
-        {/* Bouton WhatsApp flottant (mobile) */}
-        <WhatsAppButton />
+          {/* Bouton WhatsApp flottant (mobile) */}
+          <WhatsAppButton />
+        </div>
       </body>
     </html>
   )
