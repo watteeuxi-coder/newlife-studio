@@ -1,6 +1,16 @@
 import Hero from '@/components/sections/Hero'
+import PourQui from '@/components/sections/PourQui'
+import ConceptsPreview from '@/components/sections/ConceptsPreview'
+import Process from '@/components/sections/Process'
 
-// Accueil allégé : l'étape 2 ajoute « Pour qui », « Comment ça se passe » et l'aperçu des concepts
+// Le bloc final « Discuter de ton projet » vient du layout (commun à toutes les pages)
 export default function HomePage() {
-  return <Hero />
+  return (
+    <>
+      <Hero />
+      <PourQui />
+      <ConceptsPreview />
+      <Process />
+    </>
+  )
 }
