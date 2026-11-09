@@ -23,7 +23,7 @@ const FAQ = [
   },
   {
     q: 'Comment se passe le paiement ?',
-    a: "Un acompte au démarrage du projet, puis le solde à la livraison une fois que tu es 100% satisfait. Paiement en deux fois possible, sans frais.",
+    a: "Un acompte au démarrage du projet, puis le solde à la livraison, après les 2 séries de retouches incluses. Paiement en deux fois, sans frais.",
   },
 ]
 
