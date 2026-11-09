@@ -1,27 +1,15 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { waLink } from '@/lib/config'
+import { PAGES, isActivePage } from '@/lib/nav'
+import WaIcon from '@/components/ui/WaIcon'
 
-const NAV_LINKS = [
-  { href: '#services', label: 'Services' },
-  { href: '#forfaits', label: 'Forfaits' },
-  { href: '#concepts', label: 'Concepts' },
-  { href: '#pourquoi', label: 'Pourquoi nous' },
-  { href: '#faq', label: 'FAQ' },
-]
-
-// Sur mobile, pas de bouton WhatsApp dans le header → le contact passe par le menu
-const MOBILE_LINKS = [...NAV_LINKS, { href: '#contact', label: 'Contact' }]
-
-function WaIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24z" />
-    </svg>
-  )
-}
+// Desktop : le logo fait office de lien Accueil
+const DESKTOP_LINKS = PAGES.filter((p) => p.href !== '/')
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
@@ -31,6 +19,7 @@ export default function Header() {
   // Position de scroll mémorisée pendant que le menu bloque la page (null = pas bloquée)
   const lockedY = useRef<number | null>(null)
   const reduceMotion = useReducedMotion()
+  const pathname = usePathname()
   const wa = waLink()
 
   useEffect(() => {
@@ -42,6 +31,11 @@ export default function Header() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  // Changement de page (liens, retour arrière…) → menu fermé
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [pathname])
 
   // Scroll lock compatible iOS Safari : overflow:hidden ne suffit pas, il faut figer le body
   function lockScroll() {
@@ -65,13 +59,10 @@ export default function Header() {
     window.scrollTo({ top: y, behavior: 'instant' })
   }
 
-  function onMenuLink(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
-    // Débloquer avant de suivre l'ancre, sinon la restauration du scroll annule le saut
-    e.preventDefault()
+  function onMenuLink() {
+    // Débloquer avant la navigation : Next remonte ensuite la nouvelle page en haut
     unlockScroll()
     setMenuOpen(false)
-    document.querySelector(href)?.scrollIntoView()
-    history.pushState(null, '', href)
   }
 
   // Menu ouvert : scroll bloqué, focus sur le 1er lien, Échap ferme et rend le focus
@@ -116,9 +107,9 @@ export default function Header() {
     >
       <div className="wrap flex items-center justify-between h-16">
         {/* Brand */}
-        <a href="#top" className="flex items-center gap-2" aria-label="NEWLIFE STUDIO">
+        <Link href="/" onClick={onMenuLink} className="flex items-center gap-2" aria-label="NEWLIFE STUDIO — Accueil">
           <span className="w-7 h-7 text-accent flex-shrink-0">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M12 2L12 22M5 9L12 2L19 9" />
               <path d="M5 15L12 22L19 15" opacity={0.5} />
             </svg>
@@ -127,19 +118,25 @@ export default function Header() {
             <strong>NEWLIFE</strong>{' '}
             <span className="font-normal text-text-dim">STUDIO</span>
           </span>
-        </a>
+        </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-7">
-          {NAV_LINKS.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="text-text-dim hover:text-text-base text-sm transition-colors duration-200"
-            >
-              {l.label}
-            </a>
-          ))}
+        <nav aria-label="Navigation principale" className="hidden md:flex items-center gap-7">
+          {DESKTOP_LINKS.map((l) => {
+            const active = isActivePage(pathname, l.href)
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                aria-current={active ? 'page' : undefined}
+                className={`text-sm transition-colors duration-200 ${
+                  active ? 'text-text-base' : 'text-text-dim hover:text-text-base'
+                }`}
+              >
+                {l.label}
+              </Link>
+            )
+          })}
         </nav>
 
         {/* Desktop CTA */}
@@ -184,17 +181,23 @@ export default function Header() {
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
             <ul className="wrap py-3">
-              {MOBILE_LINKS.map((l) => (
-                <li key={l.href}>
-                  <a
-                    href={l.href}
-                    onClick={(e) => onMenuLink(e, l.href)}
-                    className="flex items-center min-h-[48px] text-lg text-text-dim hover:text-text-base transition-colors"
-                  >
-                    {l.label}
-                  </a>
-                </li>
-              ))}
+              {PAGES.map((l) => {
+                const active = isActivePage(pathname, l.href)
+                return (
+                  <li key={l.href}>
+                    <Link
+                      href={l.href}
+                      onClick={onMenuLink}
+                      aria-current={active ? 'page' : undefined}
+                      className={`flex items-center min-h-[48px] text-lg transition-colors ${
+                        active ? 'text-accent' : 'text-text-dim hover:text-text-base'
+                      }`}
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                )
+              })}
             </ul>
           </motion.nav>
         )}
