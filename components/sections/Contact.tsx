@@ -5,7 +5,7 @@ import { useScrollReveal } from '@/hooks/useScrollReveal'
 import { waLink, SITE_CONFIG } from '@/lib/config'
 import ContactForm from '@/components/ui/ContactForm'
 
-export default function Contact() {
+export default function Contact({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 'h2' }) {
   const [ref, isInView] = useScrollReveal()
   const wa = waLink()
 
@@ -20,9 +20,9 @@ export default function Contact() {
           className="rounded-3xl border border-accent/20 bg-white/[0.03] backdrop-blur-xl p-8 sm:p-12 text-center shadow-[0_0_80px_rgba(34,211,238,0.07)] max-w-3xl mx-auto"
         >
           <span className="kicker justify-center">Contact</span>
-          <h2 className="text-3xl sm:text-4xl font-bold text-text-base mb-4 leading-tight">
+          <Title className="text-3xl sm:text-4xl font-bold text-text-base mb-4 leading-tight">
             Prêt à donner une nouvelle vie<br className="hidden sm:block" /> à ton business ?
-          </h2>
+          </Title>
           <p className="text-text-dim mb-8 max-w-lg mx-auto leading-relaxed">
             Le plus rapide : WhatsApp. Sinon, laisse-nous un message ici et on te répond sous 24h.
           </p>

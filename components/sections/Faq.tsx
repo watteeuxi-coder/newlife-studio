@@ -7,7 +7,7 @@ import { useScrollReveal } from '@/hooks/useScrollReveal'
 const FAQ = [
   {
     q: 'Combien de temps pour livrer mon site ?',
-    a: 'Entre 5 et 10 jours selon le forfait choisi. Le Starter est livré en 5 jours, le Premium en 10 jours. On te tient informé à chaque étape.',
+    a: 'Entre 5 et 10 jours après réception de tes contenus, selon le forfait. Le Starter est livré en 5 jours, le Premium en 10 jours. On te tient informé à chaque étape.',
   },
   {
     q: "Je n'ai ni logo ni contenu, c'est un problème ?",
@@ -23,7 +23,7 @@ const FAQ = [
   },
   {
     q: 'Comment se passe le paiement ?',
-    a: "Un acompte au démarrage du projet, puis le solde à la livraison une fois que tu es 100% satisfait. Paiement en deux fois possible, sans frais.",
+    a: "Un acompte au démarrage du projet, puis le solde à la livraison, après les 2 séries de retouches incluses. Paiement en deux fois, sans frais.",
   },
 ]
 

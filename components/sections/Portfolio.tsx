@@ -1,37 +1,9 @@
 'use client'
 
-import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
-
-/**
- * Pour ajouter un projet : dépose une capture d'écran (1280×832 conseillé)
- * dans public/images/portfolio/ puis ajoute une entrée ici avec `image`.
- * Sans `image`, la carte affiche un placeholder dégradé avec l'initiale.
- */
-const PROJECTS = [
-  {
-    title: 'Fade & Co. Barbershop',
-    cat: 'Barbershop · Réservation en ligne',
-    url: 'https://barbershopv2.vercel.app',
-    image: '/images/portfolio/barbershop.png',
-    bg: 'radial-gradient(circle at 30% 20%, rgba(34,211,238,0.22), transparent 60%), linear-gradient(160deg,#0c1424,#0a0f1c)',
-  },
-  {
-    title: 'Alex Fit',
-    cat: 'Salle de sport · Programmes & coaching',
-    url: 'https://alex-fit.vercel.app',
-    image: '/images/portfolio/alex-fit.png',
-    bg: 'radial-gradient(circle at 30% 80%, rgba(94,230,168,0.22), transparent 60%), linear-gradient(160deg,#0a1612,#0a0f1c)',
-  },
-  {
-    title: 'Elite Immo',
-    cat: 'Immobilier · Chatbot & génération de leads',
-    url: 'https://elite-immo-five.vercel.app',
-    image: '/images/portfolio/elite-immo.png',
-    bg: 'radial-gradient(circle at 70% 80%, rgba(124,108,255,0.22), transparent 60%), linear-gradient(160deg,#100f1c,#0a0f1c)',
-  },
-]
+import { PROJECTS } from '@/lib/projects'
+import ProjectShot from '@/components/ui/ProjectShot'
 
 function ArrowIcon() {
   return (
@@ -41,43 +13,11 @@ function ArrowIcon() {
   )
 }
 
-function ProjectShot({ title, image, bg }: { title: string; image?: string; bg: string }) {
-  return (
-    <div className="rounded-lg overflow-hidden border border-white/10 h-full flex flex-col">
-      {/* Browser chrome */}
-      <div className="flex items-center gap-1.5 px-3 py-2 bg-white/5 shrink-0">
-        <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
-        <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
-        <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
-      </div>
-      <div className="relative flex-1 overflow-hidden bg-night">
-        {image ? (
-          <Image
-            src={image}
-            alt={`Capture d'écran du site ${title}`}
-            fill
-            loading="lazy"
-            sizes="(min-width: 768px) 33vw, 100vw"
-            className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-          />
-        ) : (
-          <div
-            className="absolute inset-0 flex items-center justify-center"
-            style={{ background: bg }}
-          >
-            <span className="text-4xl font-bold text-white/15">{title.charAt(0)}</span>
-          </div>
-        )}
-      </div>
-    </div>
-  )
-}
-
-export default function Portfolio() {
+export default function Portfolio({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 'h2' }) {
   const [headRef, headVisible] = useScrollReveal()
 
   return (
-    <section id="portfolio">
+    <section id="concepts">
       <div className="wrap">
         <motion.div
           ref={headRef as any}
@@ -86,9 +26,12 @@ export default function Portfolio() {
           animate={headVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <span className="kicker">Réalisations</span>
-          <h2>Des projets qui <span className="grad-text">donnent envie</span></h2>
-          <p>Un aperçu du style NEWLIFE — chaque site est pensé pour l&rsquo;image de marque et la conversion.</p>
+          <span className="kicker">Nos concepts</span>
+          <Title>Trois métiers, <span className="grad-text">trois sites de démo</span></Title>
+          <p>
+            Les premiers avis clients arrivent bientôt. En attendant, voilà ce qu&rsquo;on sait faire.
+            Clique sur un site pour le tester.
+          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
@@ -106,7 +49,7 @@ export default function Portfolio() {
                 href={p.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Visiter ${p.title}`}
+                aria-label={`Tester la démo ${p.title}`}
                 className="relative block h-52 p-5"
                 style={{ background: p.bg }}
               >
@@ -115,14 +58,19 @@ export default function Portfolio() {
               {/* Meta */}
               <div className="flex items-center justify-between p-5 mt-auto">
                 <div>
-                  <h3 className="text-text-base font-semibold">{p.title}</h3>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-text-base font-semibold">{p.title}</h3>
+                    <span className="px-2 py-0.5 rounded-full border border-accent/30 text-accent text-[10px] font-semibold uppercase tracking-wider">
+                      Démo
+                    </span>
+                  </div>
                   <div className="text-text-muted text-xs mt-1">{p.cat}</div>
                 </div>
                 <a
                   href={p.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`Voir ${p.title}`}
+                  aria-label={`Tester la démo ${p.title}`}
                   className="text-text-muted group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200"
                 >
                   <ArrowIcon />

@@ -1,6 +1,11 @@
 import type { Metadata } from 'next'
 import { Space_Grotesk, JetBrains_Mono } from 'next/font/google'
 import { SITE_CONFIG } from '@/lib/config'
+import ParticleCanvas from '@/components/ui/ParticleCanvas'
+import WhatsAppButton from '@/components/ui/WhatsAppButton'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
+import ProjectCta from '@/components/layout/ProjectCta'
 import './globals.css'
 
 const spaceGrotesk = Space_Grotesk({
@@ -17,7 +22,10 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_CONFIG.siteUrl),
-  title: 'NEWLIFE STUDIO — On donne une nouvelle vie à ton business en ligne',
+  title: {
+    default: 'NEWLIFE STUDIO — On donne une nouvelle vie à ton business en ligne',
+    template: '%s — NEWLIFE STUDIO',
+  },
   description:
     "Studio web freelance propulsé par l'IA. Sites vitrine, e-commerce, refonte. Livraison express 5–10 jours. Dès 299€.",
   keywords: [
@@ -53,7 +61,20 @@ export const viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
-      <body>{children}</body>
+      <body>
+        {/* Fonds fixes (z=0), partagés par toutes les pages */}
+        <div className="bg-grid" aria-hidden="true" />
+        <div className="noise" aria-hidden="true" />
+        <ParticleCanvas />
+
+        <Header />
+        <main>{children}</main>
+        <ProjectCta />
+        <Footer />
+
+        {/* Bouton WhatsApp flottant (mobile) */}
+        <WhatsAppButton />
+      </body>
     </html>
   )
 }
