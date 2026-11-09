@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { SITE_CONFIG } from '@/lib/config'
+import { isFormule } from '@/lib/formules'
 
 /**
  * Envoi d'email via l'API REST de Resend (https://resend.com) — aucune dépendance.
@@ -20,7 +21,7 @@ function escapeHtml(s: string): string {
 }
 
 export async function POST(req: Request) {
-  let body: { name?: string; contact?: string; message?: string; company?: string }
+  let body: { name?: string; contact?: string; formule?: unknown; message?: string; company?: string }
   try {
     body = await req.json()
   } catch {
@@ -42,6 +43,11 @@ export async function POST(req: Request) {
   if (name.length > 100 || contact.length > 200 || message.length > 5000) {
     return NextResponse.json({ error: 'Message trop long.' }, { status: 400 })
   }
+  // Absent (ancien formulaire en cache) → « Je ne sais pas encore » ; valeur inconnue → refus
+  const formule = body.formule ?? 'Je ne sais pas encore'
+  if (!isFormule(formule)) {
+    return NextResponse.json({ error: 'Formule invalide.' }, { status: 400 })
+  }
 
   const apiKey = process.env.RESEND_API_KEY
   if (!apiKey) {
@@ -58,6 +64,7 @@ export async function POST(req: Request) {
     <h2>Nouveau message depuis le site NEWLIFE STUDIO</h2>
     <p><strong>Nom :</strong> ${escapeHtml(name)}</p>
     <p><strong>Contact :</strong> ${escapeHtml(contact)}</p>
+    <p><strong>Formule :</strong> ${escapeHtml(formule)}</p>
     <p><strong>Message :</strong></p>
     <p>${escapeHtml(message).replace(/\n/g, '<br/>')}</p>
   `
@@ -71,7 +78,7 @@ export async function POST(req: Request) {
     body: JSON.stringify({
       from,
       to: [to],
-      subject: `Nouveau prospect : ${name}`,
+      subject: `Nouveau prospect : ${name} (${formule})`,
       html,
       ...(EMAIL_RE.test(contact) ? { reply_to: contact } : {}),
     }),

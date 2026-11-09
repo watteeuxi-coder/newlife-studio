@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, type FormEvent } from 'react'
+import { FORMULES } from '@/lib/formules'
 
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
@@ -25,6 +26,7 @@ export default function ContactForm() {
         body: JSON.stringify({
           name: data.get('name'),
           contact: data.get('contact'),
+          formule: data.get('formule'),
           message: data.get('message'),
           company: data.get('company'),
         }),
@@ -92,6 +94,32 @@ export default function ContactForm() {
           />
         </label>
       </div>
+
+      {/* Label visible : un select n'a pas de placeholder pour poser la question */}
+      <label className="block mb-4">
+        <span className="block text-sm text-text-dim mb-2">Quelle formule t&rsquo;intéresse ?</span>
+        <span className="relative block">
+          <select
+            name="formule"
+            defaultValue={FORMULES[0]}
+            className={`${inputClass} appearance-none pr-10 [&>option]:bg-night`}
+          >
+            {FORMULES.map((f) => (
+              <option key={f} value={f}>{f}</option>
+            ))}
+          </select>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            aria-hidden="true"
+            className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted"
+          >
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </span>
+      </label>
 
       <label className="block mb-4">
         <span className="sr-only">Ton projet</span>
