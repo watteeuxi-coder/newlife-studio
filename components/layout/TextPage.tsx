@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 /** Gabarit des pages de texte (à propos, légal) : titre, chapô optionnel, sections h2. */
 export function TextPage({ title, intro, children }: { title: string; intro?: string | string[]; children: ReactNode }) {
   return (
-    <section>
+    <section className="tone-base">
       <div className="wrap">
         <div className="section-head">
           <h1>{title}</h1>

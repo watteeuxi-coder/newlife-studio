@@ -6,14 +6,12 @@ import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { waLink } from '@/lib/config'
 import { PAGES, isActivePage } from '@/lib/nav'
-import { isLightPath } from '@/lib/theme'
 import WaIcon from '@/components/ui/WaIcon'
 
 // Desktop : le logo fait office de lien Accueil
 const DESKTOP_LINKS = PAGES.filter((p) => p.href !== '/')
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const toggleRef = useRef<HTMLButtonElement>(null)
   const menuRef = useRef<HTMLElement>(null)
@@ -21,19 +19,7 @@ export default function Header() {
   const lockedY = useRef<number | null>(null)
   const reduceMotion = useReducedMotion()
   const pathname = usePathname()
-  // Thème clair : header en carte flottante (arrondie, centrée, flou + ombre douce), toujours visible
-  const floating = isLightPath(pathname)
   const wa = waLink()
-
-  useEffect(() => {
-    const onScroll = () => {
-      // Body en position fixed → scrollY vaut 0 : on ne touche pas au fond du header
-      if (lockedY.current !== null) return
-      setScrolled(window.scrollY > 24)
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
 
   // Changement de page (liens, retour arrière…) → menu fermé
   useEffect(() => {
@@ -99,27 +85,10 @@ export default function Header() {
   }, [menuOpen])
 
   return (
-    <header
-      className={
-        floating
-          ? 'fixed top-3 inset-x-0 z-40 px-3'
-          : `fixed top-0 left-0 right-0 z-40 transition-colors duration-300 ${
-              menuOpen
-                ? 'bg-void border-b border-line'
-                : scrolled
-                  ? 'bg-void/90 backdrop-blur-md border-b border-line'
-                  : ''
-            }`
-      }
-    >
+    // Carte flottante arrondie, centrée (flou + ombre douce), toujours visible au scroll
+    <header className="fixed top-3 inset-x-0 z-40 px-3">
       {/* z-10 : la carte reste au-dessus du menu mobile plein écran */}
-      <div
-        className={
-          floating
-            ? 'relative z-10 mx-auto max-w-5xl flex items-center justify-between h-14 pl-4 pr-3 rounded-2xl border border-line bg-night/80 backdrop-blur-md shadow-soft'
-            : 'wrap flex items-center justify-between h-16'
-        }
-      >
+      <div className="relative z-10 mx-auto max-w-5xl flex items-center justify-between h-14 pl-4 pr-3 rounded-2xl border border-line bg-night/80 backdrop-blur-md shadow-soft">
         {/* Brand */}
         <Link href="/" onClick={onMenuLink} className="flex items-center gap-2" aria-label="NEWLIFE STUDIO — Accueil">
           <span className="w-7 h-7 text-accent flex-shrink-0">
@@ -158,7 +127,7 @@ export default function Header() {
           href={wa}
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden md:flex items-center gap-2 px-4 py-2 rounded-full bg-accent text-void text-sm font-semibold hover:bg-accent-bright active:scale-[0.98] transition-all"
+          className="hidden md:flex items-center gap-2 px-4 py-2 rounded-full bg-accent text-white text-sm font-semibold hover:bg-accent-bright active:scale-[0.98] transition-all"
         >
           <WaIcon className="w-4 h-4" />
           WhatsApp
@@ -180,17 +149,15 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile menu — plein écran ; sous le header (4rem) ou sous la carte flottante. Repli vh si dvh non supporté */}
+      {/* Mobile menu — plein écran sous la carte flottante. Repli 100vh si dvh non supporté */}
       <AnimatePresence>
         {menuOpen && (
           <motion.nav
             ref={menuRef}
             id="mobile-menu"
             aria-label="Menu principal"
-            className={`md:hidden fixed inset-x-0 bg-void overflow-y-auto overscroll-contain ${
-              floating ? 'top-0 pt-[5.25rem] h-screen' : 'top-16 h-[calc(100vh_-_4rem)]'
-            }`}
-            style={{ height: floating ? '100dvh' : 'calc(100dvh - 4rem)' }}
+            className="md:hidden fixed inset-x-0 top-0 pt-[5.25rem] h-screen bg-void overflow-y-auto overscroll-contain"
+            style={{ height: '100dvh' }}
             initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}

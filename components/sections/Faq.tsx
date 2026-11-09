@@ -37,11 +37,12 @@ function FaqItem({ item, index }: { item: typeof FAQ[number]; index: number }) {
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.07 }}
-      className="border border-white/[0.08] rounded-xl overflow-hidden"
+      className="rounded-xl border border-line bg-surface overflow-hidden shadow-soft"
     >
       <button
         onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left hover:bg-white/[0.02] transition-colors"
+        aria-expanded={open}
+        className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left hover:bg-void transition-colors"
       >
         <span className="text-text-base font-medium text-sm sm:text-base">{item.q}</span>
         <motion.span
@@ -64,7 +65,7 @@ function FaqItem({ item, index }: { item: typeof FAQ[number]; index: number }) {
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden"
           >
-            <div className="px-6 pb-5 text-text-dim text-sm leading-relaxed border-t border-white/[0.06] pt-4">
+            <div className="px-6 pb-5 text-text-dim text-sm leading-relaxed border-t border-line pt-4">
               {item.a}
             </div>
           </motion.div>
@@ -78,7 +79,7 @@ export default function Faq() {
   const [headRef, headVisible] = useScrollReveal()
 
   return (
-    <section id="faq">
+    <section id="faq" className="tone-base">
       <div className="wrap">
         <motion.div
           ref={headRef as any}

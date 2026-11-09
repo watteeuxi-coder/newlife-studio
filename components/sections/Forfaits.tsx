@@ -68,7 +68,7 @@ export default function Forfaits() {
   const [headRef, headVisible] = useScrollReveal()
 
   return (
-    <section id="forfaits">
+    <section id="forfaits" className="tone-tint">
       <div className="wrap">
         <motion.div
           ref={headRef as any}
@@ -94,14 +94,12 @@ export default function Forfaits() {
               viewport={{ once: true, margin: '-10% 0px' }}
               transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ y: -4 }}
-              className={`relative flex flex-col rounded-2xl p-8 backdrop-blur-xl transition-shadow duration-300 ${
-                plan.featured
-                  ? 'border border-accent/40 bg-white/[0.06] shadow-[0_0_50px_rgba(34,211,238,0.12)]'
-                  : 'border border-white/[0.08] bg-white/[0.03] hover:border-accent/20 hover:shadow-[0_0_30px_rgba(34,211,238,0.06)]'
+              className={`relative flex flex-col rounded-2xl p-8 bg-surface shadow-soft transition-colors duration-300 ${
+                plan.featured ? 'border-2 border-accent' : 'border border-line hover:border-accent/40'
               }`}
             >
               {plan.badge && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-accent text-void text-xs font-bold whitespace-nowrap">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-accent text-white text-xs font-bold whitespace-nowrap">
                   {plan.badge}
                 </span>
               )}
@@ -125,8 +123,8 @@ export default function Forfaits() {
                 href={`/contact?formule=${formuleSlug(plan.name)}`}
                 className={`flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold transition-colors ${
                   plan.ctaStyle === 'primary'
-                    ? 'bg-accent text-void hover:bg-accent-bright'
-                    : 'border border-white/20 text-text-dim hover:border-accent/50 hover:text-text-base'
+                    ? 'bg-accent text-white hover:bg-accent-bright'
+                    : 'border border-line-strong text-text-base hover:border-accent'
                 }`}
               >
                 Discuter de ton projet

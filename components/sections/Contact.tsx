@@ -10,14 +10,14 @@ export default function Contact({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 'h
   const wa = waLink()
 
   return (
-    <section id="contact">
+    <section id="contact" className="tone-base">
       <div className="wrap">
         <motion.div
           ref={ref as any}
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="rounded-3xl border border-accent/20 bg-white/[0.03] backdrop-blur-xl p-8 sm:p-12 text-center shadow-[0_0_80px_rgba(34,211,238,0.07)] max-w-3xl mx-auto"
+          className="rounded-3xl border border-line bg-surface p-8 sm:p-12 text-center shadow-soft max-w-3xl mx-auto"
         >
           <span className="kicker justify-center">Contact</span>
           <Title className="text-3xl sm:text-4xl font-bold text-text-base mb-4 leading-tight">
@@ -31,7 +31,7 @@ export default function Contact({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 'h
             href={wa}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-accent text-void font-semibold text-lg hover:bg-accent-bright active:scale-[0.98] transition-all"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-accent text-white font-semibold text-lg hover:bg-accent-bright active:scale-[0.98] transition-all"
           >
             <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
               <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24z" />
@@ -41,9 +41,9 @@ export default function Contact({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 'h
 
           {/* Divider */}
           <div className="flex items-center gap-4 my-8" aria-hidden="true">
-            <span className="flex-1 h-px bg-white/10" />
+            <span className="flex-1 h-px bg-line" />
             <span className="text-text-muted text-xs uppercase tracking-widest">ou par message</span>
-            <span className="flex-1 h-px bg-white/10" />
+            <span className="flex-1 h-px bg-line" />
           </div>
 
           <ContactForm />

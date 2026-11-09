@@ -25,7 +25,7 @@ export default function ProjectCta() {
               href={waLink()}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-accent text-void font-semibold hover:bg-accent-bright active:scale-[0.98] transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-accent text-white font-semibold hover:bg-accent-bright active:scale-[0.98] transition-all"
             >
               <WaIcon className="w-5 h-5" />
               Discuter sur WhatsApp

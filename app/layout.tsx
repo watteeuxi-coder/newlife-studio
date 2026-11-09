@@ -1,12 +1,10 @@
 import type { Metadata } from 'next'
 import { Space_Grotesk, JetBrains_Mono } from 'next/font/google'
 import { SITE_CONFIG } from '@/lib/config'
-import ParticleCanvas from '@/components/ui/ParticleCanvas'
 import WhatsAppButton from '@/components/ui/WhatsAppButton'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import ProjectCta from '@/components/layout/ProjectCta'
-import ThemeRoot from '@/components/layout/ThemeRoot'
 import './globals.css'
 
 const spaceGrotesk = Space_Grotesk({
@@ -56,18 +54,16 @@ export const metadata: Metadata = {
 }
 
 export const viewport = {
-  themeColor: '#05070d',
+  themeColor: '#FAFAF7',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
       <body>
-        <ThemeRoot>
-          {/* Fonds fixes (z=0), partagés par toutes les pages */}
-          <div className="bg-grid" aria-hidden="true" />
+        {/* Thème clair sur tout le site (tokens dans globals.css) */}
+        <div data-theme="light">
           <div className="noise" aria-hidden="true" />
-          <ParticleCanvas />
 
           <Header />
           <main>{children}</main>
@@ -76,7 +72,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
           {/* Bouton WhatsApp flottant (mobile) */}
           <WhatsAppButton />
-        </ThemeRoot>
+        </div>
       </body>
     </html>
   )

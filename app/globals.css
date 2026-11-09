@@ -41,7 +41,7 @@
   --c-accent-bright: 21 94 117; /* cyan-deep #155E75 — survol */
   --c-line: 227 231 235;        /* #E3E7EB */
   --c-line-a: 1;
-  --c-line-strong: 184 192 202;
+  --c-line-strong: 138 148 163; /* #8A94A3 — bordure des champs, 3,1:1 (palette validée) */
   --c-line-strong-a: 1;
   --c-surface: 255 255 255;
   --c-surface-a: 1;
@@ -93,24 +93,7 @@ body {
   background-clip: text;
 }
 
-/* Background grid */
-.bg-grid::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 50px 50px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* Thème clair : la grille ne vit que dans le hero (.hero-grid), estompée vers le bas */
-[data-theme='light'] .bg-grid {
-  display: none;
-}
-
+/* La grille ne vit que dans le hero, estompée vers le bas */
 .hero-grid {
   position: absolute;
   inset: 0;
@@ -123,12 +106,16 @@ body {
   pointer-events: none;
 }
 
-/* Fonds alternés des sections + ligne de séparation (thème clair uniquement ; sans effet sur les pages sombres).
+/* Fonds alternés des sections + ligne de séparation.
    Contrastes vérifiés sur le fond teinté, halo compris (pire cas : accent 4,8:1). */
 [data-theme='light'] .tone-base,
 [data-theme='light'] .tone-white,
 [data-theme='light'] .tone-tint {
   border-top: 1px solid rgb(var(--c-line));
+}
+/* 1re section d'une page : pas de ligne sous le header flottant */
+[data-theme='light'] main > section:first-child {
+  border-top: 0;
 }
 [data-theme='light'] .tone-base {
   background: rgb(var(--c-void));

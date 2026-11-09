@@ -15,9 +15,10 @@ function ArrowIcon() {
 
 export default function Portfolio({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 'h2' }) {
   const [headRef, headVisible] = useScrollReveal()
+  const CardHeading = Title === 'h1' ? 'h2' : 'h3'
 
   return (
-    <section id="concepts">
+    <section id="concepts" className="tone-base">
       <div className="wrap">
         <motion.div
           ref={headRef as any}
@@ -42,7 +43,7 @@ export default function Portfolio({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10% 0px' }}
               transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="group flex flex-col rounded-2xl border border-white/[0.08] overflow-hidden hover:border-accent/25 hover:shadow-[0_12px_40px_-16px_rgba(34,211,238,0.25)] hover:-translate-y-1 transition-all duration-300"
+              className="group flex flex-col rounded-2xl border border-line bg-surface overflow-hidden shadow-soft hover:border-accent/40 hover:-translate-y-1 transition-all duration-300"
             >
               {/* Screenshot */}
               <a
@@ -50,8 +51,7 @@ export default function Portfolio({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Tester la démo ${p.title}`}
-                className="relative block h-52 p-5"
-                style={{ background: p.bg }}
+                className="relative block h-52 p-5 bg-void"
               >
                 <ProjectShot title={p.title} image={p.image} bg={p.bg} />
               </a>
@@ -59,7 +59,8 @@ export default function Portfolio({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 
               <div className="flex items-center justify-between p-5 mt-auto">
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="text-text-base font-semibold">{p.title}</h3>
+                    {/* Un cran sous le titre de section (h1 sur /concepts → h2) */}
+                    <CardHeading className="text-text-base font-semibold">{p.title}</CardHeading>
                     <span className="px-2 py-0.5 rounded-full border border-accent/30 text-accent text-[10px] font-semibold uppercase tracking-wider">
                       Démo
                     </span>
