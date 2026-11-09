@@ -1,5 +1,6 @@
 import Hero from '@/components/sections/Hero'
 import PourQui from '@/components/sections/PourQui'
+import PourquoiMoi from '@/components/sections/PourquoiMoi'
 import ConceptsPreview from '@/components/sections/ConceptsPreview'
 import Process from '@/components/sections/Process'
 import Zones from '@/components/sections/Zones'
@@ -10,6 +11,7 @@ export default function HomePage() {
     <>
       <Hero />
       <PourQui />
+      <PourquoiMoi />
       <ConceptsPreview />
       <Process />
       <Zones />
