@@ -5,7 +5,8 @@ import { pageMetadata } from '@/lib/seo'
 
 export const metadata = pageMetadata({
   title: 'À propos',
-  description: 'Qui est derrière NEWLIFE STUDIO.',
+  description:
+    'Ilan, créateur de sites web pour les commerçants, artisans et indépendants de Rouen et ses alentours.',
   path: '/a-propos',
   noindex: !aboutReady(),
 })
@@ -24,9 +25,11 @@ export default function AProposPage() {
 
   return (
     <TextPage title="À propos" intro={ABOUT.intro ?? undefined}>
-      <TextBlock title="Qui est derrière NEWLIFE STUDIO">
-        {ABOUT.story?.map((p) => <p key={p}>{p}</p>)}
-      </TextBlock>
+      {ABOUT.sections?.map((s) => (
+        <TextBlock key={s.title} title={s.title}>
+          {s.paragraphs.map((p) => <p key={p}>{p}</p>)}
+        </TextBlock>
+      ))}
       <TextBlock title="Nos engagements">
         <ul className="space-y-2">
           {COMMITMENTS.map((c) => (
