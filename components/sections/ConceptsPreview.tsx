@@ -11,7 +11,7 @@ export default function ConceptsPreview() {
   const [headRef, headVisible] = useScrollReveal()
 
   return (
-    <section id="apercu-concepts">
+    <section id="apercu-concepts" className="tone-white">
       <div className="wrap">
         <motion.div
           ref={headRef as any}
@@ -33,7 +33,7 @@ export default function ConceptsPreview() {
                 href={p.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block rounded-2xl border border-line overflow-hidden hover:border-accent/25 transition-colors"
+                className="group relative block rounded-2xl border border-line overflow-hidden hover:border-accent/25 transition-colors"
               >
                 <div className="h-44 p-4 bg-void">
                   <ProjectShot title={p.title} image={p.image} bg={p.bg} sizes="(min-width: 768px) 33vw, 80vw" />
