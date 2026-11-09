@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import { waLink } from '@/lib/config'
 
 const COMMITMENTS = ['Livré en 5 à 10 jours', 'Réponse sous 24h', 'Paiement en 2 fois']
@@ -83,12 +84,12 @@ export default function Hero() {
                 </svg>
                 Discuter sur WhatsApp
               </a>
-              <a
-                href="#forfaits"
+              <Link
+                href="/offre#forfaits"
                 className="flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 text-text-dim hover:border-accent/50 hover:text-text-base hover:bg-white/[0.04] active:scale-[0.98] transition-all"
               >
                 Voir les forfaits →
-              </a>
+              </Link>
             </motion.div>
 
             <motion.ul
