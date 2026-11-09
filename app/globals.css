@@ -90,6 +90,17 @@ section {
   }
 }
 
+/* 1re section d'une page : compense le header fixe (h-16 = 64px). Le hero (#top) gère son propre pt-16. */
+main > section:first-child:not(#top) {
+  padding-top: calc(64px + 64px);
+}
+
+@media (max-width: 640px) {
+  main > section:first-child:not(#top) {
+    padding-top: calc(64px + 40px);
+  }
+}
+
 /* Wrap (max-width container) */
 .wrap {
   max-width: 1200px;
