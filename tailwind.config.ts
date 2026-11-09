@@ -81,6 +81,10 @@ const config: Config = {
         },
       },
       maxWidth: { site: '1200px' },
+      boxShadow: {
+        // Cartes du thème clair
+        soft: '0 1px 2px rgba(11, 18, 32, 0.04), 0 10px 28px -14px rgba(11, 18, 32, 0.14)',
+      },
     },
   },
   plugins: [],

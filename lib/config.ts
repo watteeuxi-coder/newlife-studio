@@ -11,8 +11,8 @@ export const SITE_CONFIG = {
  * Valeur MESURÉE uniquement (règle : aucun chiffre inventé) — à remesurer après chaque refonte visuelle.
  * Mesure : Lighthouse 12.6.1, mobile, build de prod local, médiane de 3 passages.
  */
-// Mesuré le 2026-11-09 sur le build final de la refonte claire de l'accueil : 95 / 95 / 94 → médiane 95
-export const PERF_SCORE = 95
+// Mesuré le 2026-11-09 après séparation des sections + header flottant : 94 / 96 / 96 → médiane 96
+export const PERF_SCORE = 96
 
 export function waLink(): string {
   return `https://wa.me/${SITE_CONFIG.waNumber}?text=${encodeURIComponent(

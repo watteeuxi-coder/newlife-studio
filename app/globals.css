@@ -106,6 +106,43 @@ body {
   z-index: 0;
 }
 
+/* Thème clair : la grille ne vit que dans le hero (.hero-grid), estompée vers le bas */
+[data-theme='light'] .bg-grid {
+  display: none;
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 50px 50px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 35%, transparent 95%);
+  mask-image: linear-gradient(to bottom, #000 35%, transparent 95%);
+  pointer-events: none;
+}
+
+/* Fonds alternés des sections + ligne de séparation (thème clair uniquement ; sans effet sur les pages sombres).
+   Contrastes vérifiés sur le fond teinté, halo compris (pire cas : accent 4,8:1). */
+[data-theme='light'] .tone-base,
+[data-theme='light'] .tone-white,
+[data-theme='light'] .tone-tint {
+  border-top: 1px solid rgb(var(--c-line));
+}
+[data-theme='light'] .tone-base {
+  background: rgb(var(--c-void));
+}
+[data-theme='light'] .tone-white {
+  background: #ffffff;
+}
+[data-theme='light'] .tone-tint {
+  background:
+    radial-gradient(ellipse 55% 70% at 100% 0%, rgba(34, 211, 238, 0.1), transparent 70%),
+    radial-gradient(rgba(14, 116, 144, 0.1) 1px, transparent 1.2px) 0 0 / 18px 18px,
+    #f3fbfc;
+}
+
 /* Noise overlay */
 .noise::after {
   content: '';

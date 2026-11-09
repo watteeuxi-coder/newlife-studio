@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
+import { isLightPath } from '@/lib/theme'
 
 interface Particle {
   x: number
@@ -19,8 +20,8 @@ export default function ParticleCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [enabled, setEnabled] = useState(false)
   const pathname = usePathname()
-  // Pas de particules sur l'accueil en thème clair (lignes cyan sur blanc + coût CPU)
-  const active = enabled && pathname !== '/'
+  // Pas de particules en thème clair (lignes cyan sur blanc + coût CPU)
+  const active = enabled && !isLightPath(pathname)
 
   // Désactivé sur petits écrans et si l'utilisateur préfère réduire les animations
   useEffect(() => {

@@ -18,7 +18,7 @@ export default function Zones() {
   const [headRef, headVisible] = useScrollReveal()
 
   return (
-    <section id="zones">
+    <section id="zones" className="tone-white">
       <div className="wrap">
         <motion.div
           ref={headRef as any}

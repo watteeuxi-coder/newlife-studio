@@ -11,9 +11,9 @@ export default function ProjectCta() {
   const onContactPage = pathname === '/contact'
 
   return (
-    <section aria-labelledby="project-cta-title">
+    <section aria-labelledby="project-cta-title" className="tone-tint">
       <div className="wrap">
-        <div className="max-w-3xl mx-auto rounded-3xl border border-line bg-surface p-8 sm:p-12 text-center">
+        <div className="max-w-3xl mx-auto rounded-3xl border border-line bg-surface p-8 sm:p-12 text-center shadow-soft">
           <h2 id="project-cta-title" className="text-2xl sm:text-3xl font-bold text-text-base mb-3">
             Discuter de ton projet
           </h2>

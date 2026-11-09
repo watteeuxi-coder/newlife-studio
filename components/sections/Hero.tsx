@@ -12,10 +12,10 @@ const caveat = Caveat({ subsets: ['latin'], weight: ['700'], display: 'swap' })
 // Cartes d'infos : une seule liste. Mobile = pastilles sous les boutons ; lg = cartes flottantes autour du titre.
 // La rotation est sur l'élément interne : framer-motion pilote le transform de l'élément externe (fondu).
 const FACT_POSITIONS = [
-  'lg:left-0 lg:top-10',
-  'lg:right-0 lg:top-16',
-  'lg:left-6 lg:bottom-28',
-  'lg:right-8 lg:bottom-24',
+  'lg:left-0 lg:top-6',
+  'lg:right-0 lg:top-12',
+  'lg:left-6 lg:bottom-4',
+  'lg:right-8 lg:bottom-8',
 ]
 const FACT_TILTS = ['lg:-rotate-[4deg]', 'lg:rotate-[3deg]', 'lg:rotate-[2deg]', 'lg:-rotate-[3deg]']
 
@@ -108,10 +108,12 @@ export default function Hero() {
   ]
 
   return (
-    <section id="top" className="relative pt-16 overflow-hidden">
+    // pt-20 : place pour le header flottant. Le bas suit l'espacement commun des sections (globals.css).
+    <section id="top" className="relative pt-20 overflow-hidden">
+      <div className="hero-grid" aria-hidden="true" />
       <div className="wrap relative">
-        <div className="relative lg:min-h-[640px] lg:flex lg:items-center lg:justify-center">
-          <div className="relative z-[1] max-w-2xl mx-auto text-center pt-12 sm:pt-16 lg:py-36">
+        <div className="relative">
+          <div className="relative z-[1] max-w-2xl mx-auto text-center pt-10 sm:pt-14 lg:pt-28 lg:pb-28">
             <motion.p
               className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-accent mb-6"
               {...fade(0)}
@@ -163,7 +165,7 @@ export default function Hero() {
         </div>
 
         {/* Pastilles colorées sous le hero */}
-        <ul className="flex flex-wrap justify-center gap-3 mt-10 lg:mt-0">
+        <ul className="flex flex-wrap justify-center gap-3 mt-10 lg:mt-4">
           {FEATURES.map((f) => (
             <li
               key={f.label}
