@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, type FormEvent } from 'react'
-import { FORMULES } from '@/lib/formules'
+import { useState, useEffect, type FormEvent } from 'react'
+import { FORMULES, formuleFromSlug, type Formule } from '@/lib/formules'
 
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
@@ -11,6 +11,12 @@ const inputClass =
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>('idle')
   const [error, setError] = useState('')
+  const [formule, setFormule] = useState<Formule>(FORMULES[0])
+
+  // ?formule=pro (boutons des forfaits) → présélection. Lu côté navigateur pour garder /contact statique.
+  useEffect(() => {
+    setFormule(formuleFromSlug(new URLSearchParams(window.location.search).get('formule')))
+  }, [])
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -101,7 +107,8 @@ export default function ContactForm() {
         <span className="relative block">
           <select
             name="formule"
-            defaultValue={FORMULES[0]}
+            value={formule}
+            onChange={(e) => setFormule(e.target.value as Formule)}
             className={`${inputClass} appearance-none pr-10 [&>option]:bg-night`}
           >
             {FORMULES.map((f) => (

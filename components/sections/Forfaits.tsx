@@ -2,13 +2,12 @@
 
 import { motion } from 'framer-motion'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
-import { useState } from 'react'
-import ForfaitModal, { type ModalPlan } from '@/components/ui/ForfaitModal'
+import Link from 'next/link'
+import { formuleSlug, type Formule } from '@/lib/formules'
 
 const PLANS = [
   {
-    name: 'Starter',
-    days: 5,
+    name: 'Starter' as Formule,
     price: '299€',
     tag: "Idéal pour lancer ton activité avec une présence pro.",
     features: [
@@ -21,12 +20,10 @@ const PLANS = [
     ],
     featured: false,
     badge: null as string | null,
-    cta: 'Choisir Starter',
     ctaStyle: 'ghost',
   },
   {
-    name: 'Pro',
-    days: 7,
+    name: 'Pro' as Formule,
     price: '499€',
     tag: "Pour une présence complète qui convertit vraiment.",
     features: [
@@ -39,12 +36,10 @@ const PLANS = [
     ],
     featured: true,
     badge: 'Recommandé' as string | null,
-    cta: 'Choisir Pro',
     ctaStyle: 'primary',
   },
   {
-    name: 'Premium',
-    days: 10,
+    name: 'Premium' as Formule,
     price: '799€',
     tag: "L'expérience complète, taillée pour vendre et durer.",
     features: [
@@ -57,7 +52,6 @@ const PLANS = [
     ],
     featured: false,
     badge: null as string | null,
-    cta: 'Choisir Premium',
     ctaStyle: 'ghost',
   },
 ]
@@ -72,7 +66,6 @@ function CheckIcon() {
 
 export default function Forfaits() {
   const [headRef, headVisible] = useScrollReveal()
-  const [openPlan, setOpenPlan] = useState<ModalPlan | null>(null)
 
   return (
     <section id="forfaits">
@@ -88,6 +81,7 @@ export default function Forfaits() {
           <h2>Des prix clairs, <span className="grad-text">sans surprise</span></h2>
           <p className="mx-auto">
             Paiement en deux fois possible. Acompte au démarrage, solde à la livraison.
+            Délais comptés à partir de la réception de tes contenus.
           </p>
         </motion.div>
 
@@ -127,20 +121,21 @@ export default function Forfaits() {
                 ))}
               </ul>
 
-              <button
-                onClick={() => setOpenPlan({ name: plan.name, price: plan.price, features: plan.features, days: plan.days })}
+              <Link
+                href={`/contact?formule=${formuleSlug(plan.name)}`}
                 className={`flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold transition-colors ${
                   plan.ctaStyle === 'primary'
                     ? 'bg-accent text-void hover:bg-accent-bright'
                     : 'border border-white/20 text-text-dim hover:border-accent/50 hover:text-text-base'
                 }`}
               >
-                {plan.cta}
-              </button>
+                Discuter de ton projet
+                {/* 3 liens au même texte : on précise la formule pour les lecteurs d'écran */}
+                <span className="sr-only"> (formule {plan.name})</span>
+              </Link>
             </motion.article>
           ))}
         </div>
-        <ForfaitModal plan={openPlan} onClose={() => setOpenPlan(null)} />
       </div>
     </section>
   )
