@@ -28,20 +28,58 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const toggleRef = useRef<HTMLButtonElement>(null)
   const menuRef = useRef<HTMLElement>(null)
+  // Position de scroll mémorisée pendant que le menu bloque la page (null = pas bloquée)
+  const lockedY = useRef<number | null>(null)
   const reduceMotion = useReducedMotion()
   const wa = waLink()
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
+    const onScroll = () => {
+      // Body en position fixed → scrollY vaut 0 : on ne touche pas au fond du header
+      if (lockedY.current !== null) return
+      setScrolled(window.scrollY > 24)
+    }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Menu ouvert : focus sur le 1er lien, Échap ferme et rend le focus au bouton,
-  // clic ou focus hors du header ferme, passage en desktop ferme
+  // Scroll lock compatible iOS Safari : overflow:hidden ne suffit pas, il faut figer le body
+  function lockScroll() {
+    if (lockedY.current !== null) return
+    lockedY.current = window.scrollY
+    Object.assign(document.body.style, {
+      position: 'fixed',
+      top: `-${lockedY.current}px`,
+      left: '0',
+      right: '0',
+      overflow: 'hidden',
+    })
+  }
+
+  function unlockScroll() {
+    if (lockedY.current === null) return
+    const y = lockedY.current
+    lockedY.current = null
+    Object.assign(document.body.style, { position: '', top: '', left: '', right: '', overflow: '' })
+    // 'instant' sinon le scroll-behavior: smooth du html anime le retour
+    window.scrollTo({ top: y, behavior: 'instant' })
+  }
+
+  function onMenuLink(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
+    // Débloquer avant de suivre l'ancre, sinon la restauration du scroll annule le saut
+    e.preventDefault()
+    unlockScroll()
+    setMenuOpen(false)
+    document.querySelector(href)?.scrollIntoView()
+    history.pushState(null, '', href)
+  }
+
+  // Menu ouvert : scroll bloqué, focus sur le 1er lien, Échap ferme et rend le focus
+  // au bouton, focus hors du header ferme, passage en desktop ferme
   useEffect(() => {
     if (!menuOpen) return
-    menuRef.current?.querySelector('a')?.focus()
+    lockScroll()
+    menuRef.current?.querySelector('a')?.focus({ preventScroll: true })
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -49,27 +87,26 @@ export default function Header() {
         toggleRef.current?.focus()
       }
     }
-    const onOutside = (e: Event) => {
+    const onFocusOut = (e: FocusEvent) => {
       if (!(e.target as Element).closest?.('header')) setMenuOpen(false)
     }
     const desktop = window.matchMedia('(min-width: 768px)')
     const onResize = () => desktop.matches && setMenuOpen(false)
 
     document.addEventListener('keydown', onKey)
-    document.addEventListener('pointerdown', onOutside)
-    document.addEventListener('focusin', onOutside)
+    document.addEventListener('focusin', onFocusOut)
     desktop.addEventListener('change', onResize)
     return () => {
       document.removeEventListener('keydown', onKey)
-      document.removeEventListener('pointerdown', onOutside)
-      document.removeEventListener('focusin', onOutside)
+      document.removeEventListener('focusin', onFocusOut)
       desktop.removeEventListener('change', onResize)
+      unlockScroll()
     }
   }, [menuOpen])
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-300 ${
         menuOpen
           ? 'bg-void border-b border-white/10'
           : scrolled
@@ -132,14 +169,15 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu — plein écran sous le header (4rem) ; repli 100vh si dvh non supporté */}
       <AnimatePresence>
         {menuOpen && (
           <motion.nav
             ref={menuRef}
             id="mobile-menu"
             aria-label="Menu principal"
-            className="md:hidden border-t border-white/10"
+            className="md:hidden fixed inset-x-0 top-16 h-[calc(100vh_-_4rem)] bg-void overflow-y-auto overscroll-contain"
+            style={{ height: 'calc(100dvh - 4rem)' }}
             initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
@@ -150,7 +188,7 @@ export default function Header() {
                 <li key={l.href}>
                   <a
                     href={l.href}
-                    onClick={() => setMenuOpen(false)}
+                    onClick={(e) => onMenuLink(e, l.href)}
                     className="flex items-center min-h-[48px] text-lg text-text-dim hover:text-text-base transition-colors"
                   >
                     {l.label}
