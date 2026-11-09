@@ -48,16 +48,25 @@ export default function Contact({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 'h
 
           <ContactForm />
 
-          <a
-            href={`mailto:${SITE_CONFIG.email}`}
-            className="inline-flex items-center gap-2 text-text-dim hover:text-text-base transition-colors text-sm mt-8"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-4 h-4">
-              <rect x={3} y={5} width={18} height={14} rx={2} />
-              <path d="m3 7 9 6 9-6" />
-            </svg>
-            {SITE_CONFIG.email}
-          </a>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-x-8 gap-y-1 mt-8 text-sm text-text-dim">
+            <a
+              href={`mailto:${SITE_CONFIG.email}`}
+              className="inline-flex items-center gap-2 min-h-[44px] hover:text-text-base transition-colors break-all"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-4 h-4 shrink-0" aria-hidden="true">
+                <rect x={3} y={5} width={18} height={14} rx={2} />
+                <path d="m3 7 9 6 9-6" />
+              </svg>
+              {SITE_CONFIG.email}
+            </a>
+            <p className="inline-flex items-center gap-2 min-h-[44px]">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-4 h-4 shrink-0" aria-hidden="true">
+                <path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z" />
+                <circle cx={12} cy={9.5} r={2.5} />
+              </svg>
+              Rouen et alentours
+            </p>
+          </div>
         </motion.div>
       </div>
     </section>
