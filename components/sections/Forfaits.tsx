@@ -8,6 +8,7 @@ import ForfaitModal, { type ModalPlan } from '@/components/ui/ForfaitModal'
 const PLANS = [
   {
     name: 'Starter',
+    days: 5,
     price: '299€',
     tag: "Idéal pour lancer ton activité avec une présence pro.",
     features: [
@@ -25,6 +26,7 @@ const PLANS = [
   },
   {
     name: 'Pro',
+    days: 7,
     price: '499€',
     tag: "Pour une présence complète qui convertit vraiment.",
     features: [
@@ -42,6 +44,7 @@ const PLANS = [
   },
   {
     name: 'Premium',
+    days: 10,
     price: '799€',
     tag: "L'expérience complète, taillée pour vendre et durer.",
     features: [
@@ -125,7 +128,7 @@ export default function Forfaits() {
               </ul>
 
               <button
-                onClick={() => setOpenPlan({ name: plan.name, price: plan.price, features: plan.features })}
+                onClick={() => setOpenPlan({ name: plan.name, price: plan.price, features: plan.features, days: plan.days })}
                 className={`flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold transition-colors ${
                   plan.ctaStyle === 'primary'
                     ? 'bg-accent text-void hover:bg-accent-bright'
