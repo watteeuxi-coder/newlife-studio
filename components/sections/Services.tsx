@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { motion } from 'framer-motion'
-import { useScrollReveal } from '@/hooks/useScrollReveal'
+import { revealHead, revealItem } from '@/lib/motion'
 import { waLink } from '@/lib/config'
 
 const SERVICES = [
@@ -80,10 +80,7 @@ function ServiceCard({ service, index, Heading }: { service: typeof SERVICES[num
     <motion.article
       ref={cardRef}
       onPointerMove={onPointerMove}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-10% 0px' }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: (index % 3) * 0.1 }}
+      {...revealItem(index % 3)}
       whileHover={{ scale: 1.02 }}
       className="relative group rounded-2xl border border-line bg-surface p-7 overflow-hidden cursor-default shadow-soft transition-colors hover:border-accent/40"
       // backgroundImage (pas background) : garde le fond blanc de la carte sous le halo
@@ -100,14 +97,10 @@ function ServiceCard({ service, index, Heading }: { service: typeof SERVICES[num
 }
 
 function CtaCard({ Heading }: { Heading: CardHeading }) {
-  const [ref, isInView] = useScrollReveal()
   const wa = waLink()
   return (
     <motion.article
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: 0.2 }}
+      {...revealItem(2)}
       className="rounded-2xl border border-pill-cyan-line bg-pill-cyan-bg p-7 flex flex-col justify-center shadow-soft"
     >
       <Heading className="text-text-base font-semibold text-lg mb-3">Un besoin sur mesure ?</Heading>
@@ -130,17 +123,12 @@ function CtaCard({ Heading }: { Heading: CardHeading }) {
 }
 
 export default function Services({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 'h2' }) {
-  const [headRef, headVisible] = useScrollReveal()
-
   return (
     <section id="services" className="tone-base">
       <div className="wrap">
         <motion.div
-          ref={headRef as any}
           className="section-head"
-          initial={{ opacity: 0, y: 30 }}
-          animate={headVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          {...revealHead}
         >
           <span className="kicker">Mes services</span>
           <Title>Tout ce qu&rsquo;il faut pour <span className="grad-text">exister en ligne</span></Title>

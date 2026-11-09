@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useScrollReveal } from '@/hooks/useScrollReveal'
+import { revealHead, revealItem } from '@/lib/motion'
 
 const FAQ = [
   {
@@ -29,14 +29,10 @@ const FAQ = [
 
 function FaqItem({ item, index }: { item: typeof FAQ[number]; index: number }) {
   const [open, setOpen] = useState(false)
-  const [ref, isInView] = useScrollReveal()
 
   return (
     <motion.div
-      ref={ref as any}
-      initial={{ opacity: 0, y: 20 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.07 }}
+      {...revealItem(index)}
       className="rounded-xl border border-line bg-surface overflow-hidden shadow-soft"
     >
       <button
@@ -76,17 +72,12 @@ function FaqItem({ item, index }: { item: typeof FAQ[number]; index: number }) {
 }
 
 export default function Faq() {
-  const [headRef, headVisible] = useScrollReveal()
-
   return (
     <section id="faq" className="tone-base">
       <div className="wrap">
         <motion.div
-          ref={headRef as any}
           className="section-head mx-auto text-center"
-          initial={{ opacity: 0, y: 30 }}
-          animate={headVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          {...revealHead}
         >
           <span className="kicker justify-center">Questions fréquentes</span>
           <h2>Je réponds à <span className="grad-text">tes doutes</span></h2>

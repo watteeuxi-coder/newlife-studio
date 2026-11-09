@@ -1,22 +1,18 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useScrollReveal } from '@/hooks/useScrollReveal'
+import { revealHead } from '@/lib/motion'
 import { waLink, SITE_CONFIG } from '@/lib/config'
 import ContactForm from '@/components/ui/ContactForm'
 
 export default function Contact({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 'h2' }) {
-  const [ref, isInView] = useScrollReveal()
   const wa = waLink()
 
   return (
     <section id="contact" className="tone-base">
       <div className="wrap">
         <motion.div
-          ref={ref as any}
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          {...revealHead}
           className="rounded-3xl border border-line bg-surface p-8 sm:p-12 text-center shadow-soft max-w-3xl mx-auto"
         >
           <span className="kicker justify-center">Contact</span>

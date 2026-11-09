@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useScrollReveal } from '@/hooks/useScrollReveal'
+import { revealHead, revealItem } from '@/lib/motion'
 import Link from 'next/link'
 import { formuleSlug, type Formule } from '@/lib/formules'
 
@@ -65,17 +65,12 @@ function CheckIcon() {
 }
 
 export default function Forfaits() {
-  const [headRef, headVisible] = useScrollReveal()
-
   return (
     <section id="forfaits" className="tone-tint">
       <div className="wrap">
         <motion.div
-          ref={headRef as any}
           className="section-head mx-auto text-center"
-          initial={{ opacity: 0, y: 30 }}
-          animate={headVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          {...revealHead}
         >
           <span className="kicker justify-center">Forfaits</span>
           <h2>Des prix clairs, <span className="grad-text">sans surprise</span></h2>
@@ -89,10 +84,7 @@ export default function Forfaits() {
           {PLANS.map((plan, i) => (
             <motion.article
               key={plan.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-10% 0px' }}
-              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              {...revealItem(i)}
               whileHover={{ y: -4 }}
               className={`relative flex flex-col rounded-2xl p-8 bg-surface shadow-soft transition-colors duration-300 ${
                 plan.featured ? 'border-2 border-accent' : 'border border-line hover:border-accent/40'

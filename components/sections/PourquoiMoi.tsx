@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useScrollReveal } from '@/hooks/useScrollReveal'
+import { revealHead, revealItem } from '@/lib/motion'
 
 // Textes fournis par l'utilisateur le 2026-11-09
 const REASONS = [
@@ -26,17 +26,12 @@ const REASONS = [
 ]
 
 export default function PourquoiMoi() {
-  const [headRef, headVisible] = useScrollReveal()
-
   return (
     <section id="pourquoi-moi" className="tone-base">
       <div className="wrap">
         <motion.div
-          ref={headRef as any}
           className="section-head"
-          initial={{ opacity: 0, y: 30 }}
-          animate={headVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          {...revealHead}
         >
           <h2>Pourquoi <span className="grad-text">moi</span></h2>
         </motion.div>
@@ -45,10 +40,7 @@ export default function PourquoiMoi() {
           {REASONS.map((r, i) => (
             <motion.li
               key={r.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-10% 0px' }}
-              transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              {...revealItem(i)}
               className="rounded-2xl border border-line bg-surface p-6 shadow-soft"
             >
               <span className="mb-4 flex items-center justify-center w-10 h-10 rounded-full border border-accent/30 bg-accent/5 text-accent">

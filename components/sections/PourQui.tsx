@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useScrollReveal } from '@/hooks/useScrollReveal'
+import { revealHead, revealItem } from '@/lib/motion'
 
 const PROFILES = [
   {
@@ -27,17 +27,12 @@ const PROFILES = [
 ]
 
 export default function PourQui() {
-  const [headRef, headVisible] = useScrollReveal()
-
   return (
     <section id="pour-qui" className="tone-tint">
       <div className="wrap">
         <motion.div
-          ref={headRef as any}
           className="section-head"
-          initial={{ opacity: 0, y: 30 }}
-          animate={headVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          {...revealHead}
         >
           <span className="kicker">Pour qui</span>
           <h2>Tu fais tourner ton activité. <span className="grad-text">Je m&rsquo;occupe du site.</span></h2>
@@ -51,10 +46,7 @@ export default function PourQui() {
           {PROFILES.map((p, i) => (
             <motion.li
               key={p.who}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-10% 0px' }}
-              transition={{ duration: 0.5, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+              {...revealItem(i)}
               className="rounded-2xl border border-line bg-surface p-6 shadow-soft"
             >
               <div>

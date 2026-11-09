@@ -2,23 +2,18 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { useScrollReveal } from '@/hooks/useScrollReveal'
+import { revealHead, revealItem } from '@/lib/motion'
 import { PROJECTS } from '@/lib/projects'
 import ProjectShot from '@/components/ui/ProjectShot'
 
 /** Aperçu des démos sur l'accueil. Mobile : défilement horizontal pour ne pas empiler 3 grandes cartes. */
 export default function ConceptsPreview() {
-  const [headRef, headVisible] = useScrollReveal()
-
   return (
     <section id="apercu-concepts" className="tone-white">
       <div className="wrap">
         <motion.div
-          ref={headRef as any}
           className="section-head"
-          initial={{ opacity: 0, y: 30 }}
-          animate={headVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          {...revealHead}
         >
           <span className="kicker">Mes concepts</span>
           <h2>Ce que je <span className="grad-text">sais construire</span></h2>
@@ -27,8 +22,8 @@ export default function ConceptsPreview() {
 
         {/* scroll-px-6 = px-6 : sinon le snap colle la 1re carte au bord de l'écran */}
         <ul className="flex gap-4 overflow-x-auto snap-x snap-mandatory -mx-6 px-6 scroll-px-6 pb-2 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:mx-0 md:px-0 md:pb-0">
-          {PROJECTS.map((p) => (
-            <li key={p.title} className="snap-start shrink-0 w-[80%] sm:w-[55%] md:w-auto">
+          {PROJECTS.map((p, i) => (
+            <motion.li key={p.title} {...revealItem(i)} className="snap-start shrink-0 w-[80%] sm:w-[55%] md:w-auto">
               <a
                 href={p.url}
                 target="_blank"
@@ -50,7 +45,7 @@ export default function ConceptsPreview() {
                   <span className="sr-only">, tester la démo (nouvel onglet)</span>
                 </div>
               </a>
-            </li>
+            </motion.li>
           ))}
         </ul>
 
