@@ -16,15 +16,16 @@ Site vitrine one-page du studio web freelance NEWLIFE STUDIO. Objectif du site :
 - Déploiement **Vercel** (`vercel.json` → `framework: nextjs`, pas d'export statique)
 - API : `app/api/contact/route.ts` (formulaire email). SEO : `app/sitemap.ts`, `app/robots.ts`, `app/opengraph-image.tsx`, metadata dans `app/layout.tsx`
 - Config centrale (WhatsApp, email, URL) : `lib/config.ts` → utiliser `waLink()` et `SITE_CONFIG`, jamais de numéro en dur
-- Hook : `useScrollReveal` (`hooks/`)
+- Animations d'apparition : `revealHead` / `revealItem(i)` de `lib/motion.ts` (pas de valeurs en dur dans les sections)
 
 Structure du site (multi-pages, spec `docs/superpowers/specs/2026-11-09-multi-pages-design.md`) :
 - `app/layout.tsx` porte le commun : thème clair (`data-theme="light"`), bruit léger, `Header` (carte flottante), `<main>`, `ProjectCta` (bloc « Discuter de ton projet », WhatsApp seul sur `/contact`), `Footer`, bouton WhatsApp flottant. Page 404 : `app/not-found.tsx` (noindex).
-- Pages : `/` (Hero → Pour qui → Pourquoi moi → aperçu des concepts → Comment ça se passe → Zones), `/offre` (Services → Forfaits → FAQ), `/concepts` (3 démos, `Portfolio.tsx` : pas des clients), `/contact` (formulaire), `/a-propos` (texte d'Ilan, indexée), `/mentions-legales`, `/confidentialite` (en préparation, noindex, hors sitemap).
+- Pages : `/` (Hero → Pour qui → Pourquoi moi → aperçu des concepts → Comment ça se passe → Inclus → 3 questions → Zones), `/offre` (Services → Forfaits (+ Maintenance, Sur-mesure) → FAQ), `/concepts` (3 démos, `Portfolio.tsx` : pas des clients), `/contact` (formulaire), `/a-propos` (texte d'Ilan, indexée), `/mentions-legales`, `/confidentialite` (en préparation, noindex, hors sitemap).
 - Données des démos : `lib/projects.ts` (partagées entre `/concepts` et l'accueil).
-- Infos réelles validées par l'utilisateur : livré en 5 à 10 jours **après réception des contenus**, selon la formule ; réponse sous 24h ; acompte au démarrage, solde à la livraison ; **2 séries de retouches incluses** ; zone Rouen et alentours.
+- Infos réelles validées par l'utilisateur : livré en 5 à 10 jours **après réception des contenus**, selon la formule ; réponse sous 24h ; acompte au démarrage, solde à la livraison ; **2 séries de retouches incluses** ; zone Rouen et alentours. Prix « à partir de » : Starter 299 €, Pro 499 €, Premium 799 € ; formules empilées (Pro et Premium incluent tout le Starter). **Maintenance 30 €/mois sans engagement** (hébergement et suivi, sauvegardes et mises à jour, petites modifications jusqu'à 30 min/mois, support prioritaire WhatsApp). **Sur-mesure sur devis** (prise de rendez-vous, espace client, automatisations, emails automatiques).
+- Données des forfaits et liste « Inclus » : `lib/forfaits.ts`. Questions fréquentes : `lib/faq.ts` (toutes sur /offre, `HOME_FAQ` sur l'accueil).
 - Textes de `/a-propos`, `/mentions-legales`, `/confidentialite` : `lib/content.ts`. Un champ à `null` = info pas encore fournie → la page reste « en préparation » (noindex, hors sitemap) ; dès que tout est rempli, elle s'affiche et devient indexable automatiquement.
-- Formules du formulaire de contact : `lib/formules.ts` (validées aussi côté API, transmises dans l'email). Les boutons des forfaits mènent à `/contact?formule=starter|pro|premium`, qui présélectionne la formule (absent ou inconnu → « Je ne sais pas encore »).
+- Formules du formulaire de contact : `lib/formules.ts` (validées aussi côté API, transmises dans l'email). Les boutons des forfaits mènent à `/contact?formule=starter|pro|premium|maintenance|sur-mesure`, qui présélectionne la formule (absent ou inconnu → « Je ne sais pas encore »).
 - Email reçu : `lib/contact-email.ts` — email du prospect en `reply_to` + lien mailto, téléphone en lien `tel:`.
 - Liste des pages : `lib/nav.ts`. Metadata d'une page : `pageMetadata()` de `lib/seo.ts`. Un seul h1 par page (prop `titleAs="h1"` sur la première section). La 1re section d'une page (hors hero) reçoit une marge haute qui compense le header fixe (`globals.css`).
 
@@ -48,8 +49,9 @@ Couleurs en variables CSS (`app/globals.css`, bloc `[data-theme='light']`) expos
 | `pill-{cyan,green,amber,rose,blue,lime}-{bg,line,text}` | — | Pastilles douces (texte ≥ 5,2:1, pas d'opacité réduite) | ✅ |
 | erreurs | `text-red-700` | Messages d'erreur du formulaire | ✅ |
 
-**Fonds de section** (classes `tone-*`, alterner sans jamais deux identiques à la suite, ligne `line` entre chaque, pas de ligne sur la 1re section) :
-- `tone-base` (#FAFAF7), `tone-white` (#FFFFFF), `tone-tint` (cyan très léger + petits points + halo doux ; contraste vérifié, pire cas 4,8:1).
+**Fonds de section** (classes `tone-*`, alterner sans jamais deux identiques à la suite) : **pas de ligne de séparation**, chaque section commence par un fondu (96 px, 72 px en mobile) depuis la couleur de la précédente (`--prev`, `globals.css`). Le footer est en `tone-base`.
+- `tone-base` (#FAFAF7), `tone-white` (#FFFFFF), `tone-tint` (#F6FCFD + points et halo à 6 % ; contraste vérifié, pire cas 4,6:1).
+- Tête de section en 2 colonnes en desktop (titre / intro) : `section-head section-head--split`.
 - Cartes : `rounded-2xl border border-line bg-surface shadow-soft`, posées sur `tone-base` ou `tone-tint` de préférence.
 - Grille uniquement dans le hero de l'accueil (`.hero-grid`, estompée vers le bas). `.grad-text` = dégradé cyan-strong → cyan-deep sur 1–2 mots clés.
 
@@ -66,10 +68,12 @@ Couleurs en variables CSS (`app/globals.css`, bloc `[data-theme='light']`) expos
 
 ## Animations existantes
 
-- Entrée : fade + `y: 28–30 → 0`, durée 0.6–0.65 s, ease `[0.22, 1, 0.36, 1]`, stagger 0.07–0.12 s, `whileInView` avec `once: true, margin: '-10% 0px'`
+- Entrée : `lib/motion.ts` — fondu + `y: 24 → 0`, 0,6 s, ease `[0.22, 1, 0.36, 1]`, cascade 0,08 s entre cartes, `whileInView` `once: true, margin: '-10% 0px'`. Opacity et transform uniquement.
+- Changement de page : fondu 0,25 s (`app/template.tsx`, qui porte `<main>`), **jamais au premier chargement** (LCP).
+- `<MotionConfig reducedMotion="user">` dans le layout (`MotionProvider`)
 - Hero (clair) : slogan « Une *nouvelle vie* pour ton business en ligne » (« nouvelle vie » en Caveat), 4 cartes d'infos en fondu (flottantes en desktop, pastilles en mobile), h1 jamais animé (LCP)
 - Services : halo radial qui suit le pointeur, `whileHover scale 1.02`
-- `prefers-reduced-motion` respecté (scroll, fondus du hero, menu) → à respecter sur toute nouvelle animation
+- `prefers-reduced-motion` respecté (global via MotionConfig, scroll, hero, menu) → à respecter sur toute nouvelle animation
 - Spec motion design validée mais **pas encore implémentée** : `docs/superpowers/specs/2026-10-07-motion-design-design.md` (Lenis, KineticHeading, Marquee, TiltReveal, hero 3D)
 
 ## Ton des textes
