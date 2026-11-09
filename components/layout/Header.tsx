@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { waLink } from '@/lib/config'
 import { PAGES, isActivePage } from '@/lib/nav'
+import { isLightPath } from '@/lib/theme'
 import WaIcon from '@/components/ui/WaIcon'
 
 // Desktop : le logo fait office de lien Accueil
@@ -20,6 +21,8 @@ export default function Header() {
   const lockedY = useRef<number | null>(null)
   const reduceMotion = useReducedMotion()
   const pathname = usePathname()
+  // Thème clair : header en carte flottante (arrondie, centrée, flou + ombre douce), toujours visible
+  const floating = isLightPath(pathname)
   const wa = waLink()
 
   useEffect(() => {
@@ -97,15 +100,26 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-300 ${
-        menuOpen
-          ? 'bg-void border-b border-line'
-          : scrolled
-            ? 'bg-void/90 backdrop-blur-md border-b border-line'
-            : ''
-      }`}
+      className={
+        floating
+          ? 'fixed top-3 inset-x-0 z-40 px-3'
+          : `fixed top-0 left-0 right-0 z-40 transition-colors duration-300 ${
+              menuOpen
+                ? 'bg-void border-b border-line'
+                : scrolled
+                  ? 'bg-void/90 backdrop-blur-md border-b border-line'
+                  : ''
+            }`
+      }
     >
-      <div className="wrap flex items-center justify-between h-16">
+      {/* z-10 : la carte reste au-dessus du menu mobile plein écran */}
+      <div
+        className={
+          floating
+            ? 'relative z-10 mx-auto max-w-5xl flex items-center justify-between h-14 pl-4 pr-3 rounded-2xl border border-line bg-night/80 backdrop-blur-md shadow-soft'
+            : 'wrap flex items-center justify-between h-16'
+        }
+      >
         {/* Brand */}
         <Link href="/" onClick={onMenuLink} className="flex items-center gap-2" aria-label="NEWLIFE STUDIO — Accueil">
           <span className="w-7 h-7 text-accent flex-shrink-0">
@@ -166,15 +180,17 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile menu — plein écran sous le header (4rem) ; repli 100vh si dvh non supporté */}
+      {/* Mobile menu — plein écran ; sous le header (4rem) ou sous la carte flottante. Repli vh si dvh non supporté */}
       <AnimatePresence>
         {menuOpen && (
           <motion.nav
             ref={menuRef}
             id="mobile-menu"
             aria-label="Menu principal"
-            className="md:hidden fixed inset-x-0 top-16 h-[calc(100vh_-_4rem)] bg-void overflow-y-auto overscroll-contain"
-            style={{ height: 'calc(100dvh - 4rem)' }}
+            className={`md:hidden fixed inset-x-0 bg-void overflow-y-auto overscroll-contain ${
+              floating ? 'top-0 pt-[5.25rem] h-screen' : 'top-16 h-[calc(100vh_-_4rem)]'
+            }`}
+            style={{ height: floating ? '100dvh' : 'calc(100dvh - 4rem)' }}
             initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
