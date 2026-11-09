@@ -6,7 +6,7 @@ import { waLink } from '@/lib/config'
 const NAV_LINKS = [
   { href: '#services', label: 'Services' },
   { href: '#forfaits', label: 'Forfaits' },
-  { href: '#portfolio', label: 'Réalisations' },
+  { href: '#concepts', label: 'Concepts' },
   { href: '#pourquoi', label: 'Pourquoi nous' },
   { href: '#faq', label: 'FAQ' },
 ]

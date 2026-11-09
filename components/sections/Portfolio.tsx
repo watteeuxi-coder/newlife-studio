@@ -77,7 +77,7 @@ export default function Portfolio() {
   const [headRef, headVisible] = useScrollReveal()
 
   return (
-    <section id="portfolio">
+    <section id="concepts">
       <div className="wrap">
         <motion.div
           ref={headRef as any}
@@ -86,9 +86,12 @@ export default function Portfolio() {
           animate={headVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <span className="kicker">Réalisations</span>
-          <h2>Des projets qui <span className="grad-text">donnent envie</span></h2>
-          <p>Un aperçu du style NEWLIFE — chaque site est pensé pour l&rsquo;image de marque et la conversion.</p>
+          <span className="kicker">Nos concepts</span>
+          <h2>Trois métiers, <span className="grad-text">trois sites de démo</span></h2>
+          <p>
+            Les premiers avis clients arrivent bientôt. En attendant, voilà ce qu&rsquo;on sait faire.
+            Clique sur un site pour le tester.
+          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
@@ -106,7 +109,7 @@ export default function Portfolio() {
                 href={p.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Visiter ${p.title}`}
+                aria-label={`Tester la démo ${p.title}`}
                 className="relative block h-52 p-5"
                 style={{ background: p.bg }}
               >
@@ -115,14 +118,19 @@ export default function Portfolio() {
               {/* Meta */}
               <div className="flex items-center justify-between p-5 mt-auto">
                 <div>
-                  <h3 className="text-text-base font-semibold">{p.title}</h3>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-text-base font-semibold">{p.title}</h3>
+                    <span className="px-2 py-0.5 rounded-full border border-accent/30 text-accent text-[10px] font-semibold uppercase tracking-wider">
+                      Démo
+                    </span>
+                  </div>
                   <div className="text-text-muted text-xs mt-1">{p.cat}</div>
                 </div>
                 <a
                   href={p.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`Voir ${p.title}`}
+                  aria-label={`Tester la démo ${p.title}`}
                   className="text-text-muted group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200"
                 >
                   <ArrowIcon />
