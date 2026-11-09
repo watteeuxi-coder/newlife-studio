@@ -36,7 +36,7 @@ const PLANS = [
       'Livraison en 7 jours',
     ],
     featured: true,
-    badge: 'Le plus choisi' as string | null,
+    badge: 'Recommandé' as string | null,
     cta: 'Choisir Pro',
     ctaStyle: 'primary',
   },
