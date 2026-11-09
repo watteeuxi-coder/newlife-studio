@@ -25,7 +25,8 @@ export default function ConceptsPreview() {
           <p>Trois sites de démo, un par métier, pour te montrer ce qu&rsquo;on peut construire pour toi.</p>
         </motion.div>
 
-        <ul className="flex gap-4 overflow-x-auto snap-x snap-mandatory -mx-6 px-6 pb-2 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:mx-0 md:px-0 md:pb-0">
+        {/* scroll-px-6 = px-6 : sinon le snap colle la 1re carte au bord de l'écran */}
+        <ul className="flex gap-4 overflow-x-auto snap-x snap-mandatory -mx-6 px-6 scroll-px-6 pb-2 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:mx-0 md:px-0 md:pb-0">
           {PROJECTS.map((p) => (
             <li key={p.title} className="snap-start shrink-0 w-[80%] sm:w-[55%] md:w-auto">
               <a
