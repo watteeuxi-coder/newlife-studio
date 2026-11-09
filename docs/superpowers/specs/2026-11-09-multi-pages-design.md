@@ -91,3 +91,7 @@ Titles et descriptions (étape 1) :
 
 - Pages individuelles par démo (`/concepts/[slug]`) — plus tard.
 - Spec motion design du 2026-10-07 — inchangée, non implémentée ici.
+
+## Points notés (à traiter plus tard, hors étapes 1–4)
+
+- **Incohérence des délais** : la fenêtre des forfaits (`components/ui/ForfaitModal.tsx`, `TIMELINE`) affiche « J7–10 Livraison » pour toutes les formules, alors que le Starter est livré en 5 jours (Pro : 7, Premium : 10). Les délais s'entendent désormais « après réception de tes contenus » (étape 2, accueil).
