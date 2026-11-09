@@ -126,7 +126,7 @@ function CtaCard() {
   )
 }
 
-export default function Services() {
+export default function Services({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 'h2' }) {
   const [headRef, headVisible] = useScrollReveal()
 
   return (
@@ -140,7 +140,7 @@ export default function Services() {
           transition={{ duration: 0.6 }}
         >
           <span className="kicker">Nos services</span>
-          <h2>Tout ce qu&rsquo;il faut pour <span className="grad-text">exister en ligne</span></h2>
+          <Title>Tout ce qu&rsquo;il faut pour <span className="grad-text">exister en ligne</span></Title>
           <p>Du premier site à la boutique qui tourne 24h/24 — on construit, on modernise et on fait grandir ta présence web.</p>
         </motion.div>
 

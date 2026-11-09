@@ -73,7 +73,7 @@ function ProjectShot({ title, image, bg }: { title: string; image?: string; bg: 
   )
 }
 
-export default function Portfolio() {
+export default function Portfolio({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 'h2' }) {
   const [headRef, headVisible] = useScrollReveal()
 
   return (
@@ -87,7 +87,7 @@ export default function Portfolio() {
           transition={{ duration: 0.6 }}
         >
           <span className="kicker">Nos concepts</span>
-          <h2>Trois métiers, <span className="grad-text">trois sites de démo</span></h2>
+          <Title>Trois métiers, <span className="grad-text">trois sites de démo</span></Title>
           <p>
             Les premiers avis clients arrivent bientôt. En attendant, voilà ce qu&rsquo;on sait faire.
             Clique sur un site pour le tester.
