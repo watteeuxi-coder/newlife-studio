@@ -19,7 +19,7 @@ Site vitrine one-page du studio web freelance NEWLIFE STUDIO. Objectif du site :
 - Hook : `useScrollReveal` (`hooks/`)
 
 Structure du site (multi-pages, spec `docs/superpowers/specs/2026-11-09-multi-pages-design.md`) :
-- `app/layout.tsx` porte le commun : fonds fixes (grille, bruit, `ParticleCanvas` désactivé sur mobile et en reduced-motion), `Header`, `<main>`, `ProjectCta` (bloc « Discuter de ton projet », WhatsApp seul sur `/contact`), `Footer`, bouton WhatsApp flottant.
+- `app/layout.tsx` porte le commun : thème clair (`data-theme="light"`), bruit léger, `Header` (carte flottante), `<main>`, `ProjectCta` (bloc « Discuter de ton projet », WhatsApp seul sur `/contact`), `Footer`, bouton WhatsApp flottant. Page 404 : `app/not-found.tsx` (noindex).
 - Pages : `/` (Hero → Pour qui → Pourquoi moi → aperçu des concepts → Comment ça se passe → Zones), `/offre` (Services → Forfaits → FAQ), `/concepts` (3 démos, `Portfolio.tsx` : pas des clients), `/contact` (formulaire), `/a-propos` (texte d'Ilan, indexée), `/mentions-legales`, `/confidentialite` (en préparation, noindex, hors sitemap).
 - Données des démos : `lib/projects.ts` (partagées entre `/concepts` et l'accueil).
 - Infos réelles validées par l'utilisateur : livré en 5 à 10 jours **après réception des contenus**, selon la formule ; réponse sous 24h ; acompte au démarrage, solde à la livraison ; **2 séries de retouches incluses** ; zone Rouen et alentours.
@@ -28,46 +28,35 @@ Structure du site (multi-pages, spec `docs/superpowers/specs/2026-11-09-multi-pa
 - Email reçu : `lib/contact-email.ts` — email du prospect en `reply_to` + lien mailto, téléphone en lien `tel:`.
 - Liste des pages : `lib/nav.ts`. Metadata d'une page : `pageMetadata()` de `lib/seo.ts`. Un seul h1 par page (prop `titleAs="h1"` sur la première section). La 1re section d'une page (hors hero) reçoit une marge haute qui compense le header fixe (`globals.css`).
 
-## Palette (exacte)
+## Palette (exacte) — thème clair, tout le site
 
-| Token Tailwind | Hex | Usage |
-|---|---|---|
-| `void` | `#05070d` | Fond principal (body, `themeColor`) |
-| `void-2` | `#070b14` | Fond secondaire |
-| `night` | `#0b1120` | Surfaces / cartes sombres |
-| `night-2` | `#0e1729` | Surfaces variante |
-| `accent` | `#22d3ee` | Couleur de marque (cyan) : CTA, kickers, icônes |
-| `accent-bright` | `#7df0ff` | Hover des CTA, milieu du dégradé `.grad-text` |
-| `accent-deep` | `#0a7d92` | Accent foncé |
-| `text-base` | `#e9eef7` | Texte principal |
-| `text-dim` | `#aab6cc` | Texte secondaire / paragraphes |
-| `text-muted` | `#6f7e98` | Légendes, labels |
+Couleurs en variables CSS (`app/globals.css`, bloc `[data-theme='light']`) exposées comme tokens Tailwind. Toujours utiliser les tokens (`text-text-*`, `bg-surface`, `border-line`, `border-line-strong`, `bg-void`, `text-accent`, `bg-accent text-white`), jamais `white/x` ni d'hex en dur. (Les valeurs de `:root` sont l'ancien thème sombre, plus utilisé.)
 
-- Variable CSS `--accent-rgb: 34, 211, 238` pour les `rgba()` (glows, sélection, focus).
-- Surfaces en verre : `bg-white/[0.03–0.06]` + `border-white/[0.08–0.10]`, hover `border-accent/30`.
-- Dégradé `.grad-text` : `linear-gradient(135deg, #22d3ee, #7df0ff, #22d3ee)` sur 1–2 mots clés par titre.
-- Couleurs hors palette tolérées seulement dans les placeholders de la section Concepts (`Portfolio.tsx`).
-
-### Thème clair (en validation sur l'accueil uniquement)
-
-Les couleurs sont des variables CSS (`app/globals.css` : `:root` = sombre ci-dessus, `[data-theme='light']` = clair). `components/layout/ThemeRoot.tsx` choisit le thème par page (clair sur `/` seulement, côté serveur, sans flash). Utiliser les tokens (`text-text-*`, `bg-surface`, `border-line`, `border-line-strong`, `bg-void`, `text-accent`), jamais `white/x` ni d'hex en dur, dans tout composant affiché sur une page claire.
-
-| Token | Clair | Usage | Contraste |
+| Token | Hex | Usage | Contraste |
 |---|---|---|---|
-| `void` | `#FAFAF7` | Fond | — |
+| `void` | `#FAFAF7` | Fond (body, `themeColor`) | — |
 | `surface` / `night` | `#FFFFFF` | Cartes, champs | — |
 | `text-base` | `#0B1220` | Texte principal | 17,9:1 |
 | `text-dim` | `#3D4A5C` | Paragraphes | 8,6:1 |
-| `text-muted` | `#5B6779` | Légendes | 5,5:1 |
-| `accent` | `#0E7490` (cyan-strong) | Liens, accents, bouton principal (texte blanc) | 5,1:1 |
+| `text-muted` | `#5B6779` | Légendes, placeholders | 5,5:1 |
+| `accent` | `#0E7490` (cyan-strong) | Liens, accents, bouton principal (texte blanc 5,4:1) | 5,1:1 |
 | `accent-bright` | `#155E75` | Survol | 7,3:1 |
-| `accent-brand` | `#22D3EE` | Cyan d'identité : **déco uniquement**, jamais du texte sur clair | 1,7:1 |
-| `line` / `line-strong` | `#E3E7EB` / `#B8C0CA` | Bordures | déco |
+| `accent-brand` | `#22D3EE` | Cyan d'identité : **déco uniquement**, jamais du texte | 1,7:1 |
+| `line` | `#E3E7EB` | Séparateurs, bordures de cartes | déco |
+| `line-strong` | `#8A94A3` | Bordures des champs et boutons secondaires | 3,1:1 |
 | `ok` / `ok-text` | `#16A34A` / `#15803D` | Disponibilité, score | 3,3 / 5,0:1 |
 | `pill-{cyan,green,amber,rose,blue,lime}-{bg,line,text}` | — | Pastilles douces (texte ≥ 5,2:1, pas d'opacité réduite) | ✅ |
+| erreurs | `text-red-700` | Messages d'erreur du formulaire | ✅ |
+
+**Fonds de section** (classes `tone-*`, alterner sans jamais deux identiques à la suite, ligne `line` entre chaque, pas de ligne sur la 1re section) :
+- `tone-base` (#FAFAF7), `tone-white` (#FFFFFF), `tone-tint` (cyan très léger + petits points + halo doux ; contraste vérifié, pire cas 4,8:1).
+- Cartes : `rounded-2xl border border-line bg-surface shadow-soft`, posées sur `tone-base` ou `tone-tint` de préférence.
+- Grille uniquement dans le hero de l'accueil (`.hero-grid`, estompée vers le bas). `.grad-text` = dégradé cyan-strong → cyan-deep sur 1–2 mots clés.
 
 - Accent manuscrit du hero : **Caveat** 700 (`next/font`, chargée dans `Hero.tsx` uniquement).
-- Score « Performance mobile de ce site » du hero : `PERF_SCORE` dans `lib/config.ts`, **valeur mesurée** (Lighthouse mobile, médiane de 3) — à remesurer après chaque changement visuel de l'accueil. Lighthouse mobile de l'accueil : rester > 90.
+- Score « Performance mobile de ce site » du hero : `PERF_SCORE` dans `lib/config.ts`, **valeur mesurée** (Lighthouse mobile, médiane de 3) — à remesurer après chaque changement visuel de l'accueil. Lighthouse mobile : rester > 90 sur chaque page, accessibilité 100.
+- Titres de cartes : un niveau sous le titre de leur section (h1 de page → cartes en h2).
+- Image de partage `app/opengraph-image.tsx` : thème clair, slogan, « Studio web · Rouen et alentours » (pas de délai ni de mention de l'IA).
 
 ## Polices (exactes)
 
@@ -80,7 +69,7 @@ Les couleurs sont des variables CSS (`app/globals.css` : `:root` = sombre ci-des
 - Entrée : fade + `y: 28–30 → 0`, durée 0.6–0.65 s, ease `[0.22, 1, 0.36, 1]`, stagger 0.07–0.12 s, `whileInView` avec `once: true, margin: '-10% 0px'`
 - Hero (clair) : slogan « Une *nouvelle vie* pour ton business en ligne » (« nouvelle vie » en Caveat), 4 cartes d'infos en fondu (flottantes en desktop, pastilles en mobile), h1 jamais animé (LCP)
 - Services : halo radial qui suit le pointeur, `whileHover scale 1.02`
-- `prefers-reduced-motion` respecté (scroll, particules) → à respecter sur toute nouvelle animation
+- `prefers-reduced-motion` respecté (scroll, fondus du hero, menu) → à respecter sur toute nouvelle animation
 - Spec motion design validée mais **pas encore implémentée** : `docs/superpowers/specs/2026-10-07-motion-design-design.md` (Lenis, KineticHeading, Marquee, TiltReveal, hero 3D)
 
 ## Ton des textes
