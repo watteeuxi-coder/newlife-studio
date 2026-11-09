@@ -43,7 +43,7 @@ export async function POST(req: Request) {
   const apiKey = process.env.RESEND_API_KEY
   if (!apiKey) {
     return NextResponse.json(
-      { error: "L'envoi d'email n'est pas encore configuré — écris-nous sur WhatsApp !" },
+      { error: "L'envoi d'email n'est pas encore configuré — écris-moi sur WhatsApp !" },
       { status: 503 }
     )
   }
@@ -79,7 +79,7 @@ export async function POST(req: Request) {
   if (!res.ok) {
     console.error('Resend error:', res.status, await res.text())
     return NextResponse.json(
-      { error: "L'envoi a échoué — réessaie ou écris-nous sur WhatsApp." },
+      { error: "L'envoi a échoué — réessaie ou écris-moi sur WhatsApp." },
       { status: 502 }
     )
   }

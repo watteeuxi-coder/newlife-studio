@@ -7,19 +7,19 @@ import { useScrollReveal } from '@/hooks/useScrollReveal'
 const FAQ = [
   {
     q: 'Combien de temps pour livrer mon site ?',
-    a: 'Entre 5 et 10 jours après réception de tes contenus, selon le forfait. Le Starter est livré en 5 jours, le Premium en 10 jours. On te tient informé à chaque étape.',
+    a: 'Entre 5 et 10 jours après réception de tes contenus, selon le forfait. Le Starter est livré en 5 jours, le Premium en 10 jours. Je te tiens informé à chaque étape.',
   },
   {
     q: "Je n'ai ni logo ni contenu, c'est un problème ?",
-    a: "Pas du tout. On t'accompagne pour les textes, on peut créer un logo simple et te guider pour les photos. Tu n'as pas besoin d'être expert — c'est notre rôle.",
+    a: "Pas du tout. Je t'accompagne pour les textes, je peux créer un logo simple et te guider pour les photos. Tu n'as pas besoin d'être expert — c'est mon rôle.",
   },
   {
     q: 'Mon site sera-t-il optimisé pour mobile ?',
-    a: "Oui, à 100%. Tous nos sites sont pensés mobile-first : la majorité de tes visiteurs viennent de TikTok et Instagram, donc l'expérience téléphone est notre priorité.",
+    a: "Oui, à 100%. Tous mes sites sont pensés mobile-first : la majorité de tes visiteurs viennent de TikTok et Instagram, donc l'expérience téléphone est ma priorité.",
   },
   {
     q: 'Pourrai-je modifier mon site moi-même ?',
-    a: "Oui. On peut te livrer une solution facile à modifier et te former, ou s'en occuper pour toi via le forfait maintenance. À toi de choisir.",
+    a: "Oui. Je peux te livrer une solution facile à modifier et te former, ou m'en occuper pour toi via le forfait maintenance. À toi de choisir.",
   },
   {
     q: 'Comment se passe le paiement ?',
@@ -88,7 +88,7 @@ export default function Faq() {
           transition={{ duration: 0.6 }}
         >
           <span className="kicker justify-center">Questions fréquentes</span>
-          <h2>On répond à <span className="grad-text">tes doutes</span></h2>
+          <h2>Je réponds à <span className="grad-text">tes doutes</span></h2>
         </motion.div>
 
         <div className="max-w-3xl mx-auto space-y-3">

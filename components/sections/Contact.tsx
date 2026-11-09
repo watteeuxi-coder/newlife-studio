@@ -24,7 +24,7 @@ export default function Contact({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 'h
             Prêt à donner une nouvelle vie<br className="hidden sm:block" /> à ton business ?
           </Title>
           <p className="text-text-dim mb-8 max-w-lg mx-auto leading-relaxed">
-            Le plus rapide : WhatsApp. Sinon, laisse-nous un message ici et on te répond sous 24h.
+            Le plus rapide : WhatsApp. Sinon, laisse-moi un message ici et je te réponds sous 24h.
           </p>
 
           <a

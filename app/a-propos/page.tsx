@@ -30,7 +30,7 @@ export default function AProposPage() {
           {s.paragraphs.map((p) => <p key={p}>{p}</p>)}
         </TextBlock>
       ))}
-      <TextBlock title="Nos engagements">
+      <TextBlock title="Mes engagements">
         <ul className="space-y-2">
           {COMMITMENTS.map((c) => (
             <li key={c} className="flex items-start gap-2">

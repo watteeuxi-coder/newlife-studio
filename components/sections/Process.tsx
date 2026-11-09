@@ -7,12 +7,12 @@ const STEPS = [
   {
     n: '01',
     title: 'On en parle',
-    text: 'Tu nous expliques ton activité sur WhatsApp ou par message. On te répond sous 24h avec la formule qui te correspond et son prix.',
+    text: 'Tu m’expliques ton activité sur WhatsApp ou par message. Je te réponds sous 24h avec la formule qui te correspond et son prix.',
   },
   {
     n: '02',
-    title: 'On construit ton site',
-    text: 'Tu verses l’acompte et on s’y met : design, textes, photos. Pas de logo ni de contenu ? On t’aide. Tu vois la maquette, et 2 séries de retouches sont incluses.',
+    title: 'Je construis ton site',
+    text: 'Tu verses l’acompte et je m’y mets : design, textes, photos. Pas de logo ni de contenu ? Je t’aide. Tu vois la maquette, et 2 séries de retouches sont incluses.',
   },
   {
     n: '03',

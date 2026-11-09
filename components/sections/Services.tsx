@@ -32,7 +32,7 @@ const SERVICES = [
   {
     id: '03',
     title: 'Refonte',
-    desc: "On modernise ton site existant pour le rendre rapide, beau et réellement efficace.",
+    desc: "Je modernise ton site existant pour le rendre rapide, beau et réellement efficace.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
         <path d="M21 12a9 9 0 1 1-3-6.7L21 8" />
@@ -43,7 +43,7 @@ const SERVICES = [
   {
     id: '04',
     title: 'SEO',
-    desc: "On te rend visible sur Google pour attirer des clients qualifiés, sans dépendre de la pub.",
+    desc: "Je te rends visible sur Google pour attirer des clients qualifiés, sans dépendre de la pub.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
         <circle cx={11} cy={11} r={7} />
@@ -54,7 +54,7 @@ const SERVICES = [
   {
     id: '05',
     title: 'Maintenance',
-    desc: "On garde ton site à jour, sécurisé et performant — tu n'as plus à t'en occuper.",
+    desc: "Je garde ton site à jour, sécurisé et performant — tu n'as plus à t'en occuper.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
         <path d="M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5l-8-3Z" />
@@ -139,9 +139,9 @@ export default function Services({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | '
           animate={headVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <span className="kicker">Nos services</span>
+          <span className="kicker">Mes services</span>
           <Title>Tout ce qu&rsquo;il faut pour <span className="grad-text">exister en ligne</span></Title>
-          <p>Du premier site à la boutique qui tourne 24h/24 — on construit, on modernise et on fait grandir ta présence web.</p>
+          <p>Du premier site à la boutique qui tourne 24h/24 — je construis, je modernise et je fais grandir ta présence web.</p>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">

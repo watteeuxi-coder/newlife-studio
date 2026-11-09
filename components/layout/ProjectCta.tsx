@@ -18,7 +18,7 @@ export default function ProjectCta() {
             Discuter de ton projet
           </h2>
           <p className="text-text-dim leading-relaxed max-w-md mx-auto mb-8">
-            Dis-nous ce que tu fais et ce dont tu as besoin. On te répond sous 24h.
+            Dis-moi ce que tu fais et ce dont tu as besoin. Je te réponds sous 24h.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <a

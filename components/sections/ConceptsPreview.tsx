@@ -20,9 +20,9 @@ export default function ConceptsPreview() {
           animate={headVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <span className="kicker">Nos concepts</span>
-          <h2>Ce qu&rsquo;on <span className="grad-text">sait construire</span></h2>
-          <p>Trois sites de démo, un par métier, pour te montrer ce qu&rsquo;on peut construire pour toi.</p>
+          <span className="kicker">Mes concepts</span>
+          <h2>Ce que je <span className="grad-text">sais construire</span></h2>
+          <p>Trois sites de démo, un par métier, pour te montrer ce que je peux construire pour toi.</p>
         </motion.div>
 
         {/* scroll-px-6 = px-6 : sinon le snap colle la 1re carte au bord de l'écran */}

@@ -39,7 +39,7 @@ export default function ContactForm() {
       })
       const json = await res.json().catch(() => ({}))
       if (!res.ok) {
-        throw new Error(json.error || "L'envoi a échoué — réessaie ou écris-nous sur WhatsApp.")
+        throw new Error(json.error || "L'envoi a échoué — réessaie ou écris-moi sur WhatsApp.")
       }
       setStatus('sent')
       form.reset()
@@ -57,7 +57,7 @@ export default function ContactForm() {
       >
         <div className="text-2xl mb-2">✅</div>
         <p className="text-text-base font-semibold mb-1">Message envoyé !</p>
-        <p className="text-text-dim text-sm">On te répond sous 24h, promis.</p>
+        <p className="text-text-dim text-sm">Je te réponds sous 24h, promis.</p>
       </div>
     )
   }
@@ -135,7 +135,7 @@ export default function ContactForm() {
           required
           maxLength={5000}
           rows={4}
-          placeholder="Parle-nous de ton projet (activité, objectifs, délais…)"
+          placeholder="Parle-moi de ton projet (activité, objectifs, délais…)"
           className={`${inputClass} resize-none`}
         />
       </label>

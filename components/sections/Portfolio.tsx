@@ -26,10 +26,10 @@ export default function Portfolio({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 
           animate={headVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <span className="kicker">Nos concepts</span>
+          <span className="kicker">Mes concepts</span>
           <Title>Trois métiers, <span className="grad-text">trois sites de démo</span></Title>
           <p>
-            Les premiers avis clients arrivent bientôt. En attendant, voilà ce qu&rsquo;on sait faire.
+            Les premiers avis clients arrivent bientôt. En attendant, voilà ce que je sais faire.
             Clique sur un site pour le tester.
           </p>
         </motion.div>

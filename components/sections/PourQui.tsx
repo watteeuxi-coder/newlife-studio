@@ -40,9 +40,9 @@ export default function PourQui() {
           transition={{ duration: 0.6 }}
         >
           <span className="kicker">Pour qui</span>
-          <h2>Tu fais tourner ton activité. <span className="grad-text">On s&rsquo;occupe du site.</span></h2>
+          <h2>Tu fais tourner ton activité. <span className="grad-text">Je m&rsquo;occupe du site.</span></h2>
           <p>
-            On travaille avec des indépendants et des petites équipes qui veulent un site clair, rapide sur
+            Je travaille avec des indépendants et des petites équipes qui veulent un site clair, rapide sur
             téléphone, et pensé pour que les clients les contactent.
           </p>
         </motion.div>
