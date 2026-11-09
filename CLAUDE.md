@@ -20,7 +20,7 @@ Site vitrine one-page du studio web freelance NEWLIFE STUDIO. Objectif du site :
 
 Structure du site (multi-pages, spec `docs/superpowers/specs/2026-11-09-multi-pages-design.md`) :
 - `app/layout.tsx` porte le commun : fonds fixes (grille, bruit, `ParticleCanvas` désactivé sur mobile et en reduced-motion), `Header`, `<main>`, `ProjectCta` (bloc « Discuter de ton projet », WhatsApp seul sur `/contact`), `Footer`, bouton WhatsApp flottant.
-- Pages : `/` (Hero → Pour qui → aperçu des concepts → Comment ça se passe), `/offre` (Services → Forfaits → Pourquoi → FAQ), `/concepts` (3 démos, `Portfolio.tsx` : pas des clients), `/contact` (formulaire), `/a-propos`, `/mentions-legales`, `/confidentialite` (en préparation, noindex, hors sitemap).
+- Pages : `/` (Hero → Pour qui → Pourquoi moi → aperçu des concepts → Comment ça se passe → Zones), `/offre` (Services → Forfaits → FAQ), `/concepts` (3 démos, `Portfolio.tsx` : pas des clients), `/contact` (formulaire), `/a-propos` (texte d'Ilan, indexée), `/mentions-legales`, `/confidentialite` (en préparation, noindex, hors sitemap).
 - Données des démos : `lib/projects.ts` (partagées entre `/concepts` et l'accueil).
 - Infos réelles validées par l'utilisateur : livré en 5 à 10 jours **après réception des contenus**, selon la formule ; réponse sous 24h ; acompte au démarrage, solde à la livraison ; **2 séries de retouches incluses** ; zone Rouen et alentours.
 - Textes de `/a-propos`, `/mentions-legales`, `/confidentialite` : `lib/content.ts`. Un champ à `null` = info pas encore fournie → la page reste « en préparation » (noindex, hors sitemap) ; dès que tout est rempli, elle s'affiche et devient indexable automatiquement.
@@ -78,15 +78,16 @@ Les couleurs sont des variables CSS (`app/globals.css` : `:root` = sombre ci-des
 ## Animations existantes
 
 - Entrée : fade + `y: 28–30 → 0`, durée 0.6–0.65 s, ease `[0.22, 1, 0.36, 1]`, stagger 0.07–0.12 s, `whileInView` avec `once: true, margin: '-10% 0px'`
-- Hero : blobs « aurora » (1 seul sur mobile), sous-titre fixe, 3 engagements (Livré en 5 à 10 jours · Réponse sous 24h · Paiement en 2 fois)
+- Hero (clair) : slogan « Une *nouvelle vie* pour ton business en ligne » (« nouvelle vie » en Caveat), 4 cartes d'infos en fondu (flottantes en desktop, pastilles en mobile), h1 jamais animé (LCP)
 - Services : halo radial qui suit le pointeur, `whileHover scale 1.02`
-- Pourquoi : orbe à anneaux qui tournent
 - `prefers-reduced-motion` respecté (scroll, particules) → à respecter sur toute nouvelle animation
 - Spec motion design validée mais **pas encore implémentée** : `docs/superpowers/specs/2026-10-07-motion-design-design.md` (Lenis, KineticHeading, Marquee, TiltReveal, hero 3D)
 
 ## Ton des textes
 
-- **Tutoiement** systématique envers le visiteur (« ton business », « tu n'as plus à t'en occuper »). Le studio parle en « on ».
+- **Tutoiement** systématique envers le visiteur (« ton business », « tu n'as plus à t'en occuper »).
+- **Ilan parle en « je »** (« je te réponds sous 24h », « mes services »). Jamais « on » / « nous » / « notre » pour désigner le studio. « On » reste seulement quand il veut dire *toi et moi* (« On en parle », « on avance ensemble »).
+- Slogan neutre : « Une nouvelle vie pour ton business en ligne ». Message WhatsApp pré-rempli : « Bonjour Ilan ! Je viens de ton site et j'aimerais te parler de mon projet. »
 - **Direct** : phrases courtes, pas de jargon technique, pas de superlatifs creux.
 - **Orienté résultats** pour petits commerçants et indépendants : plus de clients, réservations en ligne, visible sur Google, livré vite, prix clair. Parler du bénéfice avant la technique.
 - Français correct avec apostrophes typographiques (`&rsquo;` dans le JSX).
