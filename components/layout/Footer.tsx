@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { waLink, SITE_CONFIG } from '@/lib/config'
 import { PAGES, LEGAL_PAGES } from '@/lib/nav'
+import { ZONES } from '@/lib/zones'
 import WaIcon from '@/components/ui/WaIcon'
 
 const linkClass =
@@ -10,7 +11,7 @@ export default function Footer() {
   return (
     // pb-24 sur mobile : le bouton WhatsApp flottant ne recouvre pas les derniers liens
     <footer className="relative z-[1] border-t border-line pt-12 pb-24 md:pb-10">
-      <div className="wrap grid gap-10 md:grid-cols-[1.5fr_1fr_1fr]">
+      <div className="wrap grid gap-10 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.2fr_1.2fr]">
         <div>
           <Link href="/" className="inline-flex items-center gap-2" aria-label="NEWLIFE STUDIO — Accueil">
             <span className="w-6 h-6 text-accent">
@@ -54,9 +55,17 @@ export default function Footer() {
                 {SITE_CONFIG.email}
               </a>
             </li>
-            <li className="flex items-center min-h-[44px] md:min-h-0 md:py-1.5 text-sm text-text-dim">
-              Rouen et alentours
-            </li>
+          </ul>
+        </div>
+
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-widest text-text-muted mb-2">Zones desservies</p>
+          <ul className="space-y-1.5 md:space-y-0">
+            {ZONES.map((z) => (
+              <li key={z.zip} className="text-sm text-text-dim md:py-1.5">
+                {z.city} <span className="font-mono text-xs text-text-muted">{z.zip}</span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
