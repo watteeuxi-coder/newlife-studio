@@ -18,7 +18,10 @@ Site vitrine one-page du studio web freelance NEWLIFE STUDIO. Objectif du site :
 - Config centrale (WhatsApp, email, URL) : `lib/config.ts` → utiliser `waLink()` et `SITE_CONFIG`, jamais de numéro en dur
 - Hook : `useScrollReveal` (`hooks/`)
 
-Structure de la page (`app/page.tsx`) : Header → Hero → Services → Forfaits → Concepts (`Portfolio.tsx`, ancre `#concepts` : 3 sites de démo, pas des clients) → Pourquoi → FAQ → Contact → Footer + bouton WhatsApp flottant (mobile). Fonds fixes : grille, bruit, `ParticleCanvas` (désactivé sur mobile et en reduced-motion).
+Structure du site (multi-pages, spec `docs/superpowers/specs/2026-11-09-multi-pages-design.md`) :
+- `app/layout.tsx` porte le commun : fonds fixes (grille, bruit, `ParticleCanvas` désactivé sur mobile et en reduced-motion), `Header`, `<main>`, `ProjectCta` (bloc « Discuter de ton projet », WhatsApp seul sur `/contact`), `Footer`, bouton WhatsApp flottant.
+- Pages : `/` (Hero), `/offre` (Services → Forfaits → Pourquoi → FAQ), `/concepts` (3 démos, `Portfolio.tsx` : pas des clients), `/contact` (formulaire), `/a-propos`, `/mentions-legales`, `/confidentialite` (en préparation, noindex, hors sitemap).
+- Liste des pages : `lib/nav.ts`. Metadata d'une page : `pageMetadata()` de `lib/seo.ts`. Un seul h1 par page (prop `titleAs="h1"` sur la première section). La 1re section d'une page (hors hero) reçoit une marge haute qui compense le header fixe (`globals.css`).
 
 ## Palette (exacte)
 
