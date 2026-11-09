@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { waLink } from '@/lib/config'
 
 const NAV_LINKS = [
@@ -10,6 +11,9 @@ const NAV_LINKS = [
   { href: '#pourquoi', label: 'Pourquoi nous' },
   { href: '#faq', label: 'FAQ' },
 ]
+
+// Sur mobile, pas de bouton WhatsApp dans le header → le contact passe par le menu
+const MOBILE_LINKS = [...NAV_LINKS, { href: '#contact', label: 'Contact' }]
 
 function WaIcon({ className }: { className?: string }) {
   return (
@@ -21,6 +25,10 @@ function WaIcon({ className }: { className?: string }) {
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const toggleRef = useRef<HTMLButtonElement>(null)
+  const menuRef = useRef<HTMLElement>(null)
+  const reduceMotion = useReducedMotion()
   const wa = waLink()
 
   useEffect(() => {
@@ -29,12 +37,44 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Menu ouvert : focus sur le 1er lien, Échap ferme et rend le focus au bouton,
+  // clic ou focus hors du header ferme, passage en desktop ferme
+  useEffect(() => {
+    if (!menuOpen) return
+    menuRef.current?.querySelector('a')?.focus()
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMenuOpen(false)
+        toggleRef.current?.focus()
+      }
+    }
+    const onOutside = (e: Event) => {
+      if (!(e.target as Element).closest?.('header')) setMenuOpen(false)
+    }
+    const desktop = window.matchMedia('(min-width: 768px)')
+    const onResize = () => desktop.matches && setMenuOpen(false)
+
+    document.addEventListener('keydown', onKey)
+    document.addEventListener('pointerdown', onOutside)
+    document.addEventListener('focusin', onOutside)
+    desktop.addEventListener('change', onResize)
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.removeEventListener('pointerdown', onOutside)
+      document.removeEventListener('focusin', onOutside)
+      desktop.removeEventListener('change', onResize)
+    }
+  }, [menuOpen])
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        scrolled
-          ? 'bg-void/90 backdrop-blur-md border-b border-white/10'
-          : ''
+        menuOpen
+          ? 'bg-void border-b border-white/10'
+          : scrolled
+            ? 'bg-void/90 backdrop-blur-md border-b border-white/10'
+            : ''
       }`}
     >
       <div className="wrap flex items-center justify-between h-16">
@@ -76,19 +116,51 @@ export default function Header() {
           WhatsApp
         </a>
 
-        {/* Mobile burger → opens WhatsApp (conversion-first) */}
-        <a
-          href={wa}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="md:hidden flex items-center justify-center w-10 h-10 text-accent"
-          aria-label="Menu"
+        {/* Mobile burger → menu (WhatsApp reste sur le bouton flottant) */}
+        <button
+          ref={toggleRef}
+          type="button"
+          onClick={() => setMenuOpen((o) => !o)}
+          className="md:hidden flex items-center justify-center w-11 h-11 -mr-2 text-accent"
+          aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" className="w-6 h-6">
-            <path d="M4 7h16M4 12h16M4 17h16" />
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" className="w-6 h-6" aria-hidden="true">
+            {menuOpen ? <path d="M6 6l12 12M18 6 6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
           </svg>
-        </a>
+        </button>
       </div>
+
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.nav
+            ref={menuRef}
+            id="mobile-menu"
+            aria-label="Menu principal"
+            className="md:hidden border-t border-white/10"
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <ul className="wrap py-3">
+              {MOBILE_LINKS.map((l) => (
+                <li key={l.href}>
+                  <a
+                    href={l.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center min-h-[48px] text-lg text-text-dim hover:text-text-base transition-colors"
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </header>
   )
 }
