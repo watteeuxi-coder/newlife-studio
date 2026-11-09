@@ -10,15 +10,15 @@ Site vitrine one-page du studio web freelance NEWLIFE STUDIO. Objectif du site :
 ## Stack
 
 - **Next.js 14.2** (App Router) + **React 18** + **TypeScript**
-- **Tailwind CSS 3.4** (tokens dans `tailwind.config.ts`) + classes utilitaires maison dans `app/globals.css` (`.wrap`, `.kicker`, `.section-head`, `.grad-text`, `.bg-grid`, `.noise`, `.cursor`)
+- **Tailwind CSS 3.4** (tokens dans `tailwind.config.ts`) + classes utilitaires maison dans `app/globals.css` (`.wrap`, `.kicker`, `.section-head`, `.grad-text`, `.bg-grid`, `.noise`)
 - **Framer Motion 11** pour les animations (pas de GSAP)
 - Polices via `next/font/google`
 - Déploiement **Vercel** (`vercel.json` → `framework: nextjs`, pas d'export statique)
 - API : `app/api/contact/route.ts` (formulaire email). SEO : `app/sitemap.ts`, `app/robots.ts`, `app/opengraph-image.tsx`, metadata dans `app/layout.tsx`
 - Config centrale (WhatsApp, email, URL) : `lib/config.ts` → utiliser `waLink()` et `SITE_CONFIG`, jamais de numéro en dur
-- Hooks : `useScrollReveal`, `useCountUp`, `useTypewriter` (`hooks/`)
+- Hook : `useScrollReveal` (`hooks/`)
 
-Structure de la page (`app/page.tsx`) : Header → Hero → Services → Forfaits → Portfolio → Témoignages → Pourquoi → FAQ → Contact → Footer + bouton WhatsApp flottant (mobile). Fonds fixes : grille, bruit, `ParticleCanvas` (désactivé sur mobile et en reduced-motion).
+Structure de la page (`app/page.tsx`) : Header → Hero → Services → Forfaits → Concepts (`Portfolio.tsx`, ancre `#concepts` : 3 sites de démo, pas des clients) → Pourquoi → FAQ → Contact → Footer + bouton WhatsApp flottant (mobile). Fonds fixes : grille, bruit, `ParticleCanvas` (désactivé sur mobile et en reduced-motion).
 
 ## Palette (exacte)
 
@@ -38,7 +38,7 @@ Structure de la page (`app/page.tsx`) : Header → Hero → Services → Forfait
 - Variable CSS `--accent-rgb: 34, 211, 238` pour les `rgba()` (glows, sélection, focus).
 - Surfaces en verre : `bg-white/[0.03–0.06]` + `border-white/[0.08–0.10]`, hover `border-accent/30`.
 - Dégradé `.grad-text` : `linear-gradient(135deg, #22d3ee, #7df0ff, #22d3ee)` sur 1–2 mots clés par titre.
-- Couleurs hors palette tolérées seulement dans les placeholders du Portfolio.
+- Couleurs hors palette tolérées seulement dans les placeholders de la section Concepts (`Portfolio.tsx`).
 
 ## Polices (exactes)
 
@@ -49,10 +49,10 @@ Structure de la page (`app/page.tsx`) : Header → Hero → Services → Forfait
 ## Animations existantes
 
 - Entrée : fade + `y: 28–30 → 0`, durée 0.6–0.65 s, ease `[0.22, 1, 0.36, 1]`, stagger 0.07–0.12 s, `whileInView` avec `once: true, margin: '-10% 0px'`
-- Hero : blobs « aurora » (1 seul sur mobile), typewriter, compteurs animés
+- Hero : blobs « aurora » (1 seul sur mobile), sous-titre fixe, 3 engagements (Livré en 5 à 10 jours · Réponse sous 24h · Paiement en 2 fois)
 - Services : halo radial qui suit le pointeur, `whileHover scale 1.02`
 - Pourquoi : orbe à anneaux qui tournent
-- `prefers-reduced-motion` respecté (scroll, typewriter, particules) → à respecter sur toute nouvelle animation
+- `prefers-reduced-motion` respecté (scroll, particules) → à respecter sur toute nouvelle animation
 - Spec motion design validée mais **pas encore implémentée** : `docs/superpowers/specs/2026-10-07-motion-design-design.md` (Lenis, KineticHeading, Marquee, TiltReveal, hero 3D)
 
 ## Ton des textes
@@ -86,7 +86,7 @@ Pas de skill SEO dédié installé : le SEO passe par `vercel:nextjs` (metadata,
 
 1. **Mobile d'abord.** Concevoir et vérifier à 375 px avant le desktop. Pas d'effet lourd (blur géant, canvas, 3D) sur mobile.
 2. **Une modification à la fois.** Un changement ciblé, vérifié, puis on passe au suivant. Pas de refonte globale non demandée.
-3. **Interdit : inventer des clients, des avis, des chiffres ou des résultats.** Pas de témoignages, notes, statistiques, nombre de clients, résultats obtenus ou badges du type « Le plus choisi » sans info réelle fournie par l'utilisateur. **Si une info réelle manque, la demander** plutôt que mettre un placeholder crédible. À vérifier dans l'existant : `Temoignages.tsx`, `STATS` dans `Hero.tsx` (« 100% clients satisfaits »), badge « Le plus choisi » dans `Forfaits.tsx`.
+3. **Interdit : inventer des clients, des avis, des chiffres ou des résultats.** Pas de témoignages, notes, statistiques, nombre de clients, résultats obtenus ou badges du type « Le plus choisi » sans info réelle fournie par l'utilisateur. **Si une info réelle manque, la demander** plutôt que mettre un placeholder crédible. Faux témoignages, compteurs et badge « Le plus choisi » retirés le 2026-11-09 : ne pas les réintroduire.
 4. **Éviter les designs qui font « template IA ».** Pas de sections génériques à 3 cartes identiques en série, d'emojis décoratifs, de dégradés violets, de textes vagues (« solutions innovantes »), d'icônes posées partout. Préférer des choix affirmés, du contenu réel (vraies captures, vrais projets) et une hiérarchie claire.
 5. **Expliquer chaque modification en 2–3 phrases** : ce qui a changé, où, et pourquoi.
 6. Réutiliser les tokens et classes existants plutôt que d'ajouter des couleurs ou des valeurs en dur.
