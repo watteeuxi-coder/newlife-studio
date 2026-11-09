@@ -1,5 +1,5 @@
 import PagePending from '@/components/layout/PagePending'
-import { TextPage, TextBlock } from '@/components/layout/TextPage'
+import About from '@/components/sections/About'
 import { ABOUT, aboutReady } from '@/lib/content'
 import { pageMetadata } from '@/lib/seo'
 
@@ -21,27 +21,16 @@ const COMMITMENTS = [
 ]
 
 export default function AProposPage() {
-  if (!aboutReady()) return <PagePending title="À propos" />
+  if (!aboutReady() || !ABOUT.intro || !ABOUT.sections) return <PagePending title="À propos" />
+
+  // 1re ligne du chapô = grand titre (« Salut, moi c’est Ilan. »), le reste = chapô
+  const [greeting, ...intro] = ABOUT.intro
 
   return (
-    <TextPage title="À propos" intro={ABOUT.intro ?? undefined}>
-      {ABOUT.sections?.map((s) => (
-        <TextBlock key={s.title} title={s.title}>
-          {s.paragraphs.map((p) => <p key={p}>{p}</p>)}
-        </TextBlock>
-      ))}
-      <TextBlock title="Mes engagements">
-        <ul className="space-y-2">
-          {COMMITMENTS.map((c) => (
-            <li key={c} className="flex items-start gap-2">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} className="w-4 h-4 mt-1 text-accent shrink-0" aria-hidden="true">
-                <path d="m5 13 4 4L19 7" />
-              </svg>
-              {c}
-            </li>
-          ))}
-        </ul>
-      </TextBlock>
-    </TextPage>
+    <About
+      greeting={greeting}
+      intro={intro}
+      blocks={[...ABOUT.sections, { title: 'Mes engagements', list: COMMITMENTS }]}
+    />
   )
 }

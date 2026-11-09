@@ -1,13 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import { Caveat } from 'next/font/google'
 import { motion, useReducedMotion } from 'framer-motion'
 import { waLink, PERF_SCORE } from '@/lib/config'
 import WaIcon from '@/components/ui/WaIcon'
+import { handAccent } from '@/lib/fonts'
 
-// Police manuscrite réservée aux mots en accent du titre (chargée seulement là où le hero est utilisé)
-const caveat = Caveat({ subsets: ['latin'], weight: ['700'], display: 'swap' })
 
 // Cartes d'infos : une seule liste. Mobile = pastilles sous les boutons ; lg = cartes flottantes autour du titre.
 // La rotation est sur l'élément interne : framer-motion pilote le transform de l'élément externe (fondu).
@@ -63,7 +61,6 @@ const ICONS = {
 const FEATURES = [
   { label: 'Code sur mesure', icon: ICONS.code, tone: 'bg-pill-cyan-bg border-pill-cyan-line text-pill-cyan-text' },
   { label: 'Pensé pour mobile', icon: ICONS.phone, tone: 'bg-pill-green-bg border-pill-green-line text-pill-green-text' },
-  { label: 'Local, à Rouen', icon: ICONS.pin, tone: 'bg-pill-amber-bg border-pill-amber-line text-pill-amber-text' },
 ]
 
 export default function Hero() {
@@ -124,11 +121,7 @@ export default function Hero() {
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-balance text-text-base mb-6">
               Une{' '}
-              <span
-                className={`${caveat.className} text-accent text-[1.2em] font-bold leading-none whitespace-nowrap bg-[linear-gradient(transparent_62%,rgba(34,211,238,0.35)_62%)] px-1`}
-              >
-                nouvelle vie
-              </span>{' '}
+              <span className={handAccent}>nouvelle vie</span>{' '}
               pour ton business en ligne
             </h1>
 
@@ -165,11 +158,12 @@ export default function Hero() {
         </div>
 
         {/* Pastilles colorées sous le hero */}
-        <ul className="flex flex-wrap justify-center gap-3 mt-10 lg:mt-4">
+        {/* « Local, à Rouen » retiré : doublon de la carte « Rouen et alentours » */}
+        <ul className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-6 sm:mt-10 lg:mt-4">
           {FEATURES.map((f) => (
             <li
               key={f.label}
-              className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium ${f.tone}`}
+              className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs sm:px-4 sm:py-2 sm:text-sm font-medium ${f.tone}`}
             >
               <Icon d={f.icon} />
               {f.label}

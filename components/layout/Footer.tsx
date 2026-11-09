@@ -10,7 +10,7 @@ const linkClass =
 export default function Footer() {
   return (
     // pb-24 sur mobile : le bouton WhatsApp flottant ne recouvre pas les derniers liens
-    <footer className="relative z-[1] border-t border-line pt-12 pb-24 md:pb-10">
+    <footer className="tone-base relative z-[1] pt-12 pb-24 md:pb-10">
       <div className="wrap grid gap-10 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.2fr_1.2fr]">
         <div>
           <Link href="/" className="inline-flex items-center gap-2" aria-label="NEWLIFE STUDIO — Accueil">

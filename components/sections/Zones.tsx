@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useScrollReveal } from '@/hooks/useScrollReveal'
+import { revealHead } from '@/lib/motion'
 import { ZONES } from '@/lib/zones'
 
 // Une couleur douce par ville, dans l'ordre (classes complètes pour que Tailwind les génère)
@@ -15,17 +15,13 @@ const TONES = [
 ]
 
 export default function Zones() {
-  const [headRef, headVisible] = useScrollReveal()
-
   return (
     <section id="zones" className="tone-white">
-      <div className="wrap">
+      {/* Desktop : titre à gauche, villes à droite (sinon la moitié droite reste vide) */}
+      <div className="wrap lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center">
         <motion.div
-          ref={headRef as any}
-          className="section-head"
-          initial={{ opacity: 0, y: 30 }}
-          animate={headVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          className="section-head !mb-8 lg:!mb-0"
+          {...revealHead}
         >
           <span className="kicker">Zone d&rsquo;intervention</span>
           <h2>Présent à <span className="grad-text">Rouen et ses alentours</span></h2>

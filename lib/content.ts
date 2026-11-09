@@ -34,6 +34,12 @@ export const ABOUT = {
         'Je ne veux pas que tu te sentes comme un client parmi d’autres. Je veux qu’on bosse comme des potes : tu m’écris quand tu veux, je t’explique tout simplement, sans jargon, et on avance ensemble jusqu’à ce que ton site te ressemble vraiment.',
       ],
     },
+    {
+      title: 'Où je travaille',
+      paragraphs: [
+        'Je suis basé autour de Rouen et je travaille avec les pros de Rouen, Franqueville-Saint-Pierre, Bois-Guillaume, Mont-Saint-Aignan, Bihorel et Darnétal. On peut se voir en vrai pour parler de ton projet.',
+      ],
+    },
   ] as { title: string; paragraphs: string[] }[] | null,
 }
 

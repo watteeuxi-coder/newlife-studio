@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useScrollReveal } from '@/hooks/useScrollReveal'
+import { revealHead, revealItem } from '@/lib/motion'
 import { PROJECTS } from '@/lib/projects'
 import ProjectShot from '@/components/ui/ProjectShot'
 
@@ -14,18 +14,14 @@ function ArrowIcon() {
 }
 
 export default function Portfolio({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 'h2' }) {
-  const [headRef, headVisible] = useScrollReveal()
   const CardHeading = Title === 'h1' ? 'h2' : 'h3'
 
   return (
     <section id="concepts" className="tone-base">
       <div className="wrap">
         <motion.div
-          ref={headRef as any}
           className="section-head"
-          initial={{ opacity: 0, y: 30 }}
-          animate={headVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          {...revealHead}
         >
           <span className="kicker">Mes concepts</span>
           <Title>Trois métiers, <span className="grad-text">trois sites de démo</span></Title>
@@ -35,15 +31,12 @@ export default function Portfolio({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+        <div className="spot-group grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
           {PROJECTS.map((p, i) => (
             <motion.article
               key={p.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-10% 0px' }}
-              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="group flex flex-col rounded-2xl border border-line bg-surface overflow-hidden shadow-soft hover:border-accent/40 hover:-translate-y-1 transition-all duration-300"
+              {...revealItem(i)}
+              className="spot group flex flex-col rounded-2xl border border-line bg-surface overflow-hidden shadow-soft hover:border-accent/40 hover:-translate-y-1 transition-all duration-300"
             >
               {/* Screenshot */}
               <a

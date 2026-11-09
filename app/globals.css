@@ -106,28 +106,69 @@ body {
   pointer-events: none;
 }
 
-/* Fonds alternés des sections + ligne de séparation.
-   Contrastes vérifiés sur le fond teinté, halo compris (pire cas : accent 4,8:1). */
-[data-theme='light'] .tone-base,
-[data-theme='light'] .tone-white,
-[data-theme='light'] .tone-tint {
-  border-top: 1px solid rgb(var(--c-line));
-}
-/* 1re section d'une page : pas de ligne sous le header flottant */
-[data-theme='light'] main > section:first-child {
-  border-top: 0;
+/* Fonds alternés des sections, reliés par un fondu (plus de ligne de séparation).
+   Écart volontairement très léger entre les 3 fonds. Chaque section commence par un dégradé
+   depuis la couleur de la section précédente (--prev, posé par les sélecteurs de voisinage).
+   Contrastes vérifiés sur le fond teinté, halo compris. */
+[data-theme='light'] {
+  --bg-base: #fafaf7;
+  --bg-white: #ffffff;
+  --bg-tint: #f6fcfd;
 }
 [data-theme='light'] .tone-base {
-  background: rgb(var(--c-void));
+  background: var(--bg-base);
 }
 [data-theme='light'] .tone-white {
-  background: #ffffff;
+  background: var(--bg-white);
 }
 [data-theme='light'] .tone-tint {
   background:
-    radial-gradient(ellipse 55% 70% at 100% 0%, rgba(34, 211, 238, 0.1), transparent 70%),
-    radial-gradient(rgba(14, 116, 144, 0.1) 1px, transparent 1.2px) 0 0 / 18px 18px,
-    #f3fbfc;
+    radial-gradient(ellipse 55% 70% at 100% 0%, rgba(34, 211, 238, 0.06), transparent 70%),
+    radial-gradient(rgba(14, 116, 144, 0.06) 1px, transparent 1.2px) 0 0 / 18px 18px,
+    var(--bg-tint);
+}
+
+/* Couleur de la section précédente. Le hero (#top) est sur le fond de base. */
+#top + section,
+.tone-base + section,
+.tone-base + footer {
+  --prev: var(--bg-base);
+}
+.tone-white + section,
+.tone-white + footer {
+  --prev: var(--bg-white);
+}
+.tone-tint + section,
+.tone-tint + footer {
+  --prev: var(--bg-tint);
+}
+/* Bloc final (hors <main>) : il suit la dernière section de la page */
+main:has(> .tone-base:last-child) + section {
+  --prev: var(--bg-base);
+}
+main:has(> .tone-white:last-child) + section {
+  --prev: var(--bg-white);
+}
+main:has(> .tone-tint:last-child) + section {
+  --prev: var(--bg-tint);
+}
+
+[data-theme='light'] :is(.tone-base, .tone-white, .tone-tint)::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 96px;
+  background: linear-gradient(to bottom, var(--prev, transparent), transparent);
+  pointer-events: none;
+}
+[data-theme='light'] :is(.tone-base, .tone-white, .tone-tint) > .wrap {
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 640px) {
+  [data-theme='light'] :is(.tone-base, .tone-white, .tone-tint)::before {
+    height: 72px;
+  }
 }
 
 /* Noise overlay */
@@ -203,4 +244,72 @@ main > section:first-child:not(#top) {
 .section-head p {
   color: rgb(var(--c-ink-2));
   line-height: 1.7;
+}
+
+/* Tête de section en 2 colonnes (desktop) : titre à gauche, intro à droite, pour ne pas laisser
+   la moitié droite vide. Mobile : inchangé. */
+@media (min-width: 1024px) {
+  .section-head--split {
+    max-width: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    column-gap: 64px;
+    align-items: end;
+  }
+  .section-head--split > .kicker {
+    grid-column: 1;
+    justify-self: start;
+  }
+  .section-head--split > h2 {
+    grid-column: 1;
+    margin-bottom: 0;
+  }
+  .section-head--split > p {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+}
+
+/* Hero : moins d'espace sous les pastilles en mobile */
+@media (max-width: 640px) {
+  #top {
+    padding-bottom: 48px;
+  }
+}
+
+/* Spotlight des cartes (components/layout/Spotlight.tsx) : halo #22D3EE très transparent sous le contenu
+   + bord éclairé près du curseur. Actif seulement si .spot-ready (vraie souris, pas de reduced-motion). */
+.spot {
+  position: relative;
+  isolation: isolate;
+}
+.spot-ready .spot::after,
+.spot-ready .spot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+/* Halo : derrière le texte (z-index -1 dans la carte isolée), devant le fond blanc */
+.spot-ready .spot::after {
+  z-index: -1;
+  background: radial-gradient(260px circle at var(--mx, -999px) var(--my, -999px), rgba(34, 211, 238, 0.1), transparent 70%);
+}
+/* Bord : anneau de 1px éclairé près du curseur */
+.spot-ready .spot::before {
+  z-index: 2;
+  padding: 1px;
+  background: radial-gradient(220px circle at var(--mx, -999px) var(--my, -999px), rgba(34, 211, 238, 0.55), transparent 70%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+.spot-ready .spot-group:hover .spot::after,
+.spot-ready .spot-group:hover .spot::before,
+.spot-ready .spot:hover::after,
+.spot-ready .spot:hover::before {
+  opacity: 1;
 }

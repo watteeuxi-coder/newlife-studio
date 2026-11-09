@@ -2,42 +2,16 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useScrollReveal } from '@/hooks/useScrollReveal'
+import { revealHead, revealItem } from '@/lib/motion'
+import { FAQ, type FaqEntry } from '@/lib/faq'
 
-const FAQ = [
-  {
-    q: 'Combien de temps pour livrer mon site ?',
-    a: 'Entre 5 et 10 jours après réception de tes contenus, selon le forfait. Le Starter est livré en 5 jours, le Premium en 10 jours. Je te tiens informé à chaque étape.',
-  },
-  {
-    q: "Je n'ai ni logo ni contenu, c'est un problème ?",
-    a: "Pas du tout. Je t'accompagne pour les textes, je peux créer un logo simple et te guider pour les photos. Tu n'as pas besoin d'être expert — c'est mon rôle.",
-  },
-  {
-    q: 'Mon site sera-t-il optimisé pour mobile ?',
-    a: "Oui, à 100%. Tous mes sites sont pensés mobile-first : la majorité de tes visiteurs viennent de TikTok et Instagram, donc l'expérience téléphone est ma priorité.",
-  },
-  {
-    q: 'Pourrai-je modifier mon site moi-même ?',
-    a: "Oui. Je peux te livrer une solution facile à modifier et te former, ou m'en occuper pour toi via le forfait maintenance. À toi de choisir.",
-  },
-  {
-    q: 'Comment se passe le paiement ?',
-    a: "Un acompte au démarrage du projet, puis le solde à la livraison, après les 2 séries de retouches incluses. Paiement en deux fois, sans frais.",
-  },
-]
-
-function FaqItem({ item, index }: { item: typeof FAQ[number]; index: number }) {
+export function FaqItem({ item, index }: { item: FaqEntry; index: number }) {
   const [open, setOpen] = useState(false)
-  const [ref, isInView] = useScrollReveal()
 
   return (
     <motion.div
-      ref={ref as any}
-      initial={{ opacity: 0, y: 20 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.07 }}
-      className="rounded-xl border border-line bg-surface overflow-hidden shadow-soft"
+      {...revealItem(index)}
+      className="spot rounded-xl border border-line bg-surface overflow-hidden shadow-soft"
     >
       <button
         onClick={() => setOpen((o) => !o)}
@@ -76,23 +50,18 @@ function FaqItem({ item, index }: { item: typeof FAQ[number]; index: number }) {
 }
 
 export default function Faq() {
-  const [headRef, headVisible] = useScrollReveal()
-
   return (
     <section id="faq" className="tone-base">
       <div className="wrap">
         <motion.div
-          ref={headRef as any}
           className="section-head mx-auto text-center"
-          initial={{ opacity: 0, y: 30 }}
-          animate={headVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          {...revealHead}
         >
           <span className="kicker justify-center">Questions fréquentes</span>
           <h2>Je réponds à <span className="grad-text">tes doutes</span></h2>
         </motion.div>
 
-        <div className="max-w-3xl mx-auto space-y-3">
+        <div className="spot-group max-w-3xl mx-auto space-y-3">
           {FAQ.map((item, i) => (
             <FaqItem key={item.q} item={item} index={i} />
           ))}

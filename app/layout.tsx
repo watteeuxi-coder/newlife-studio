@@ -5,6 +5,8 @@ import WhatsAppButton from '@/components/ui/WhatsAppButton'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import ProjectCta from '@/components/layout/ProjectCta'
+import MotionProvider from '@/components/layout/MotionProvider'
+import Spotlight from '@/components/layout/Spotlight'
 import './globals.css'
 
 const spaceGrotesk = Space_Grotesk({
@@ -63,15 +65,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {/* Thème clair sur tout le site (tokens dans globals.css) */}
         <div data-theme="light">
-          <div className="noise" aria-hidden="true" />
+          <MotionProvider>
+            <div className="noise" aria-hidden="true" />
 
-          <Header />
-          <main>{children}</main>
-          <ProjectCta />
-          <Footer />
+            <Header />
+            {/* <main> est dans app/template.tsx (fondu au changement de page) */}
+            {children}
+            <ProjectCta />
+            <Footer />
 
-          {/* Bouton WhatsApp flottant (mobile) */}
-          <WhatsAppButton />
+            {/* Bouton WhatsApp flottant (mobile) */}
+            <WhatsAppButton />
+            <Spotlight />
+          </MotionProvider>
         </div>
       </body>
     </html>
