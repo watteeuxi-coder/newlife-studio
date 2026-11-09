@@ -7,7 +7,7 @@ import { useScrollReveal } from '@/hooks/useScrollReveal'
 const FAQ = [
   {
     q: 'Combien de temps pour livrer mon site ?',
-    a: 'Entre 5 et 10 jours selon le forfait choisi. Le Starter est livré en 5 jours, le Premium en 10 jours. On te tient informé à chaque étape.',
+    a: 'Entre 5 et 10 jours après réception de tes contenus, selon le forfait. Le Starter est livré en 5 jours, le Premium en 10 jours. On te tient informé à chaque étape.',
   },
   {
     q: "Je n'ai ni logo ni contenu, c'est un problème ?",
