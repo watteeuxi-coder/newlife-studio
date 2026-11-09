@@ -122,14 +122,14 @@ export default function Hero() {
               Studio web · Rouen et alentours
             </motion.p>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-text-base mb-6">
-              On donne une{' '}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-balance text-text-base mb-6">
+              Une{' '}
               <span
                 className={`${caveat.className} text-accent text-[1.2em] font-bold leading-none whitespace-nowrap bg-[linear-gradient(transparent_62%,rgba(34,211,238,0.35)_62%)] px-1`}
               >
                 nouvelle vie
               </span>{' '}
-              à ton business en ligne
+              pour ton business en ligne
             </h1>
 
             <motion.p className="text-lg text-text-dim leading-relaxed max-w-xl mx-auto mb-8" {...fade(0.1)}>

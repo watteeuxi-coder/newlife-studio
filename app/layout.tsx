@@ -27,7 +27,7 @@ const HOME_DESCRIPTION =
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_CONFIG.siteUrl),
   title: {
-    default: 'NEWLIFE STUDIO — On donne une nouvelle vie à ton business en ligne',
+    default: 'NEWLIFE STUDIO — Une nouvelle vie pour ton business en ligne',
     template: '%s — NEWLIFE STUDIO',
   },
   description: HOME_DESCRIPTION,

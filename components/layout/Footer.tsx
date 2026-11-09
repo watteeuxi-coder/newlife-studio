@@ -26,7 +26,7 @@ export default function Footer() {
             </span>
           </Link>
           <p className="text-text-muted text-sm mt-3 max-w-xs leading-relaxed">
-            On donne une nouvelle vie à ton business en ligne.
+            Une nouvelle vie pour ton business en ligne.
           </p>
         </div>
 

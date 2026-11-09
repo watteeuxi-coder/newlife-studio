@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og'
 
-export const alt = 'NEWLIFE STUDIO — On donne une nouvelle vie à ton business en ligne'
+export const alt = 'NEWLIFE STUDIO — Une nouvelle vie pour ton business en ligne'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -53,11 +53,11 @@ export default function OgImage() {
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'center', gap: 16, fontSize: 64, fontWeight: 700, lineHeight: 1.15, color: '#e9eef7' }}>
-            <span>On donne une</span>
+            <span>Une</span>
             <span style={{ color: '#22d3ee' }}>nouvelle vie</span>
           </div>
           <div style={{ display: 'flex', fontSize: 64, fontWeight: 700, lineHeight: 1.15, color: '#e9eef7' }}>
-            à ton business en ligne
+            pour ton business en ligne
           </div>
         </div>
 
