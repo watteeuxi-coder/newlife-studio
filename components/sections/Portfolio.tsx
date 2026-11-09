@@ -11,7 +11,7 @@ import { useScrollReveal } from '@/hooks/useScrollReveal'
  */
 const PROJECTS = [
   {
-    title: 'Fade & Co. Barbershop',
+    title: 'The Fade Room',
     cat: 'Barbershop · Réservation en ligne',
     url: 'https://barbershopv2.vercel.app',
     image: '/images/portfolio/barbershop.png',
