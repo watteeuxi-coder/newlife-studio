@@ -8,8 +8,8 @@ import WaIcon from '@/components/ui/WaIcon'
 import { handAccent } from '@/lib/fonts'
 
 
-// Cartes d'infos : une seule liste. Mobile = petites cartes inclinées en grille 2 × 2 sous les boutons ;
-// lg = cartes flottantes autour du titre (desktop inchangé).
+// Cartes d'infos. Mobile : elles encadrent le titre (2 au-dessus du petit texte, 2 sous le lien WhatsApp),
+// inclinées en sens opposés et débordant un peu vers les bords. lg : cartes flottantes autour du titre (inchangé).
 // La rotation est sur l'élément interne : framer-motion pilote le transform de l'élément externe (fondu).
 const FACT_POSITIONS = [
   'lg:left-0 lg:top-6',
@@ -18,9 +18,9 @@ const FACT_POSITIONS = [
   'lg:right-8 lg:bottom-8',
 ]
 const FACT_TILTS = [
-  '-rotate-2 lg:-rotate-[4deg]',
+  '-rotate-[3deg] lg:-rotate-[4deg]',
   'rotate-[3deg] lg:rotate-[3deg]',
-  'rotate-1 lg:rotate-[2deg]',
+  'rotate-[3deg] lg:rotate-[2deg]',
   '-rotate-[3deg] lg:-rotate-[3deg]',
 ]
 
@@ -126,13 +126,27 @@ export default function Hero() {
     </>,
   ]
 
+  // -mx-4 : les cartes débordent un peu vers les bords (la section est en overflow-hidden → pas de défilement horizontal)
+  const mobilePair = (idx: [number, number], delay: number, spacing: string) => (
+    <ul className={`lg:hidden flex justify-between gap-3 -mx-4 text-left ${spacing}`} aria-label="En bref">
+      {idx.map((i, k) => (
+        <motion.li key={i} className="flex-1 max-w-[11.5rem]" {...fade(delay + k * 0.12)}>
+          <div className={`${factCard} ${FACT_TILTS[i]}`}>{facts[i]}</div>
+        </motion.li>
+      ))}
+    </ul>
+  )
+
   return (
     // pt-20 : place pour le header flottant. Le bas suit l'espacement commun des sections (globals.css).
     <section id="top" className="relative pt-20 overflow-hidden">
       <div className="hero-grid" aria-hidden="true" />
       <div className="wrap relative">
         <div className="relative">
-          <div className="relative z-[1] max-w-2xl mx-auto text-center pt-10 sm:pt-14 lg:pt-28 lg:pb-28">
+          <div className="relative z-[1] max-w-2xl mx-auto text-center pt-4 sm:pt-14 lg:pt-28 lg:pb-28">
+            {/* Mobile : 2 cartes au-dessus du petit texte */}
+            {mobilePair([0, 1], 0.3, 'mb-7')}
+
             <motion.p
               className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-accent mb-6"
               {...fade(0)}
@@ -170,9 +184,13 @@ export default function Hero() {
                 <span className="hidden lg:inline">WhatsApp</span>
               </a>
             </motion.div>
+
+            {/* Mobile : 2 cartes sous le lien WhatsApp */}
+            {mobilePair([2, 3], 0.45, 'mt-5')}
           </div>
 
-          <ul className="relative mt-6 grid grid-cols-2 gap-3 max-w-sm mx-auto lg:block lg:max-w-none lg:mx-0 lg:static lg:mt-0" aria-label="En bref">
+          {/* Desktop : cartes flottantes autour du titre (inchangé) */}
+          <ul className="hidden lg:block" aria-label="En bref">
             {facts.map((content, i) => (
               <motion.li key={i} className={`lg:absolute ${FACT_POSITIONS[i]}`} {...fade(0.35 + i * 0.12)}>
                 <div className={`${factCard} ${FACT_TILTS[i]}`}>{content}</div>
@@ -192,7 +210,7 @@ export default function Hero() {
         </ul>
 
         {/* Mobile : bandeau qui défile en boucle (CSS, globals.css), 2e copie masquée aux lecteurs d'écran */}
-        <div className="marquee lg:hidden mt-8 -mx-6">
+        <div className="marquee lg:hidden mt-6 -mx-6">
           <div className="marquee-track">
             {[0, 1].map((copy) => (
               <ul key={copy} className="flex gap-2 pr-2" aria-hidden={copy === 1 ? true : undefined}>

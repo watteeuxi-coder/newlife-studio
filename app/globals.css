@@ -273,7 +273,7 @@ main > section:first-child:not(#top) {
 /* Hero : moins d'espace sous les pastilles en mobile */
 @media (max-width: 640px) {
   #top {
-    padding-bottom: 48px;
+    padding-bottom: 24px;
   }
 }
 
