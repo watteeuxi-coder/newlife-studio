@@ -1,15 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useTypewriter } from '@/hooks/useTypewriter'
-import { useCountUp } from '@/hooks/useCountUp'
 import { waLink } from '@/lib/config'
 
-const STATS = [
-  { target: 3, suffix: '+', label: 'Projets livrés' },
-  { target: 100, suffix: '%', label: 'Clients satisfaits' },
-  { target: 5, suffix: 'j', label: 'Délai moyen' },
-]
+const COMMITMENTS = ['Livré en 5 à 10 jours', 'Réponse sous 24h', 'Paiement en 2 fois']
 
 const CONSOLE_LINES = [
   { prefix: '$', text: 'newlife init --client', ok: false },
@@ -29,18 +23,7 @@ function fadeUp(delay = 0) {
   }
 }
 
-function StatCounter({ target, suffix, label }: { target: number; suffix: string; label: string }) {
-  const [count, ref] = useCountUp(target)
-  return (
-    <div ref={ref as any}>
-      <div className="text-xl font-bold text-accent">{count}{suffix}</div>
-      <div className="text-xs text-text-muted mt-0.5">{label}</div>
-    </div>
-  )
-}
-
 export default function Hero() {
-  const text = useTypewriter()
   const wa = waLink()
 
   return (
@@ -79,11 +62,10 @@ export default function Hero() {
             </motion.h1>
 
             <motion.p
-              className="text-lg text-text-dim min-h-[1.75rem] mb-8"
+              className="text-lg text-text-dim leading-relaxed max-w-xl mb-8"
               {...fadeUp(0.2)}
             >
-              {text}
-              <span className="cursor" aria-hidden="true" />
+              Des sites web pour commerçants et indépendants, faits pour que tes clients te trouvent et te contactent.
             </motion.p>
 
             <motion.div
@@ -109,14 +91,19 @@ export default function Hero() {
               </a>
             </motion.div>
 
-            <motion.div
-              className="flex flex-wrap gap-8"
+            <motion.ul
+              className="flex flex-wrap gap-x-6 gap-y-2"
               {...fadeUp(0.4)}
             >
-              {STATS.map((s) => (
-                <StatCounter key={s.label} target={s.target} suffix={s.suffix} label={s.label} />
+              {COMMITMENTS.map((c) => (
+                <li key={c} className="flex items-center gap-2 text-sm text-text-dim">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} className="w-4 h-4 text-accent flex-shrink-0" aria-hidden="true">
+                    <path d="m5 13 4 4L19 7" />
+                  </svg>
+                  {c}
+                </li>
               ))}
-            </motion.div>
+            </motion.ul>
           </div>
 
           {/* Right col — glass console (hidden on mobile) */}

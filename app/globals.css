@@ -53,17 +53,6 @@ body {
   background-clip: text;
 }
 
-/* Cursor blink for typewriter */
-.cursor {
-  display: inline-block;
-  width: 2px;
-  height: 1.1em;
-  background: #22d3ee;
-  margin-left: 2px;
-  vertical-align: text-bottom;
-  animation: blink 1s step-end infinite;
-}
-
 /* Background grid */
 .bg-grid::before {
   content: '';
