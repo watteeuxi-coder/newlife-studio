@@ -48,6 +48,27 @@ Structure du site (multi-pages, spec `docs/superpowers/specs/2026-11-09-multi-pa
 - Dégradé `.grad-text` : `linear-gradient(135deg, #22d3ee, #7df0ff, #22d3ee)` sur 1–2 mots clés par titre.
 - Couleurs hors palette tolérées seulement dans les placeholders de la section Concepts (`Portfolio.tsx`).
 
+### Thème clair (en validation sur l'accueil uniquement)
+
+Les couleurs sont des variables CSS (`app/globals.css` : `:root` = sombre ci-dessus, `[data-theme='light']` = clair). `components/layout/ThemeRoot.tsx` choisit le thème par page (clair sur `/` seulement, côté serveur, sans flash). Utiliser les tokens (`text-text-*`, `bg-surface`, `border-line`, `border-line-strong`, `bg-void`, `text-accent`), jamais `white/x` ni d'hex en dur, dans tout composant affiché sur une page claire.
+
+| Token | Clair | Usage | Contraste |
+|---|---|---|---|
+| `void` | `#FAFAF7` | Fond | — |
+| `surface` / `night` | `#FFFFFF` | Cartes, champs | — |
+| `text-base` | `#0B1220` | Texte principal | 17,9:1 |
+| `text-dim` | `#3D4A5C` | Paragraphes | 8,6:1 |
+| `text-muted` | `#5B6779` | Légendes | 5,5:1 |
+| `accent` | `#0E7490` (cyan-strong) | Liens, accents, bouton principal (texte blanc) | 5,1:1 |
+| `accent-bright` | `#155E75` | Survol | 7,3:1 |
+| `accent-brand` | `#22D3EE` | Cyan d'identité : **déco uniquement**, jamais du texte sur clair | 1,7:1 |
+| `line` / `line-strong` | `#E3E7EB` / `#B8C0CA` | Bordures | déco |
+| `ok` / `ok-text` | `#16A34A` / `#15803D` | Disponibilité, score | 3,3 / 5,0:1 |
+| `pill-{cyan,green,amber,rose,blue,lime}-{bg,line,text}` | — | Pastilles douces (texte ≥ 5,2:1, pas d'opacité réduite) | ✅ |
+
+- Accent manuscrit du hero : **Caveat** 700 (`next/font`, chargée dans `Hero.tsx` uniquement).
+- Score « Performance mobile de ce site » du hero : `PERF_SCORE` dans `lib/config.ts`, **valeur mesurée** (Lighthouse mobile, médiane de 3) — à remesurer après chaque changement visuel de l'accueil. Lighthouse mobile de l'accueil : rester > 90.
+
 ## Polices (exactes)
 
 - **Space Grotesk** → `--font-display` → `font-display` (tout le site, titres et texte)
