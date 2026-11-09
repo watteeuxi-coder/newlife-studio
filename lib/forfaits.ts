@@ -46,7 +46,7 @@ export const PLANS: Plan[] = [
       "Site jusqu'à 5 pages",
       'Design premium animé',
       'SEO de base inclus',
-      'Intégration WhatsApp & réseaux',
+      'Intégration réseaux sociaux',
       'Formulaire avancé + Google Maps',
       'Livraison en 7 jours',
     ],
