@@ -1,13 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import { Caveat } from 'next/font/google'
 import { motion, useReducedMotion } from 'framer-motion'
 import { waLink, PERF_SCORE } from '@/lib/config'
 import WaIcon from '@/components/ui/WaIcon'
+import { handAccent } from '@/lib/fonts'
 
-// Police manuscrite réservée aux mots en accent du titre (chargée seulement là où le hero est utilisé)
-const caveat = Caveat({ subsets: ['latin'], weight: ['700'], display: 'swap' })
 
 // Cartes d'infos : une seule liste. Mobile = pastilles sous les boutons ; lg = cartes flottantes autour du titre.
 // La rotation est sur l'élément interne : framer-motion pilote le transform de l'élément externe (fondu).
@@ -123,11 +121,7 @@ export default function Hero() {
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-balance text-text-base mb-6">
               Une{' '}
-              <span
-                className={`${caveat.className} text-accent text-[1.2em] font-bold leading-none whitespace-nowrap bg-[linear-gradient(transparent_62%,rgba(34,211,238,0.35)_62%)] px-1`}
-              >
-                nouvelle vie
-              </span>{' '}
+              <span className={handAccent}>nouvelle vie</span>{' '}
               pour ton business en ligne
             </h1>
 

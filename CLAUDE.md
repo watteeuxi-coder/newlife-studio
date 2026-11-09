@@ -20,7 +20,7 @@ Site vitrine one-page du studio web freelance NEWLIFE STUDIO. Objectif du site :
 
 Structure du site (multi-pages, spec `docs/superpowers/specs/2026-11-09-multi-pages-design.md`) :
 - `app/layout.tsx` porte le commun : thème clair (`data-theme="light"`), bruit léger, `Header` (carte flottante), `<main>`, `ProjectCta` (bloc « Discuter de ton projet », WhatsApp seul sur `/contact`), `Footer`, bouton WhatsApp flottant. Page 404 : `app/not-found.tsx` (noindex).
-- Pages : `/` (Hero → Pour qui → Pourquoi moi → aperçu des concepts → Comment ça se passe → Inclus → 3 questions → Zones), `/offre` (Services → Forfaits (+ Maintenance, Sur-mesure) → FAQ), `/concepts` (3 démos, `Portfolio.tsx` : pas des clients), `/contact` (formulaire), `/a-propos` (texte d'Ilan, indexée), `/mentions-legales`, `/confidentialite` (en préparation, noindex, hors sitemap).
+- Pages : `/` (Hero → Pour qui → Pourquoi moi → aperçu des concepts → Comment ça se passe → Inclus → 3 questions → Zones), `/offre` (Services → Forfaits (+ Maintenance, Sur-mesure) → FAQ), `/concepts` (3 démos, `Portfolio.tsx` : pas des clients), `/contact` (formulaire), `/a-propos` (`About.tsx` : pastille, « Salut, moi c’est Ilan. », blocs icône + texte dont « Où je travaille » et « Mes engagements », indexée), `/mentions-legales`, `/confidentialite` (en préparation, noindex, hors sitemap).
 - Données des démos : `lib/projects.ts` (partagées entre `/concepts` et l'accueil).
 - Infos réelles validées par l'utilisateur : livré en 5 à 10 jours **après réception des contenus**, selon la formule ; réponse sous 24h ; acompte au démarrage, solde à la livraison ; **2 séries de retouches incluses** ; zone Rouen et alentours. Prix « à partir de » : Starter 299 €, Pro 499 €, Premium 799 € ; formules empilées (Pro et Premium incluent tout le Starter). **Maintenance 30 €/mois sans engagement** (hébergement et suivi, sauvegardes et mises à jour, petites modifications jusqu'à 30 min/mois, support prioritaire WhatsApp). **Sur-mesure sur devis** (prise de rendez-vous, espace client, automatisations, emails automatiques).
 - Données des forfaits et liste « Inclus » : `lib/forfaits.ts`. Questions fréquentes : `lib/faq.ts` (toutes sur /offre, `HOME_FAQ` sur l'accueil).
@@ -52,10 +52,11 @@ Couleurs en variables CSS (`app/globals.css`, bloc `[data-theme='light']`) expos
 **Fonds de section** (classes `tone-*`, alterner sans jamais deux identiques à la suite) : **pas de ligne de séparation**, chaque section commence par un fondu (96 px, 72 px en mobile) depuis la couleur de la précédente (`--prev`, `globals.css`). Le footer est en `tone-base`.
 - `tone-base` (#FAFAF7), `tone-white` (#FFFFFF), `tone-tint` (#F6FCFD + points et halo à 6 % ; contraste vérifié, pire cas 4,6:1).
 - Tête de section en 2 colonnes en desktop (titre / intro) : `section-head section-head--split`.
-- Cartes : `rounded-2xl border border-line bg-surface shadow-soft`, posées sur `tone-base` ou `tone-tint` de préférence.
+- Cartes : `rounded-2xl border border-line bg-surface shadow-soft`, posées sur `tone-base` ou `tone-tint` de préférence. Ajouter `spot` sur la carte et `spot-group` sur sa grille : halo cyan qui suit la souris (`components/layout/Spotlight.tsx`, desktop sans reduced-motion uniquement). Pas de spotlight sur le bloc final ni sur la carte du formulaire.
+- Icônes : **Lucide** (`lucide-react`, version fixée), trait 1.8, dans un carré `w-11 h-11 rounded-xl` teinté avec les couleurs `pill-*` ; étapes « Comment ça se passe » : carré plein `bg-accent text-white` + numéro en filigrane.
 - Grille uniquement dans le hero de l'accueil (`.hero-grid`, estompée vers le bas). `.grad-text` = dégradé cyan-strong → cyan-deep sur 1–2 mots clés.
 
-- Accent manuscrit du hero : **Caveat** 700 (`next/font`, chargée dans `Hero.tsx` uniquement).
+- Accent manuscrit : **Caveat** 700 via `handAccent` de `lib/fonts.ts` (« nouvelle vie » du hero, « Ilan » sur /a-propos), jamais animé (LCP).
 - Score « Performance mobile de ce site » du hero : `PERF_SCORE` dans `lib/config.ts`, **valeur mesurée** (Lighthouse mobile, médiane de 3) — à remesurer après chaque changement visuel de l'accueil. Lighthouse mobile : rester > 90 sur chaque page, accessibilité 100.
 - Titres de cartes : un niveau sous le titre de leur section (h1 de page → cartes en h2).
 - Image de partage `app/opengraph-image.tsx` : thème clair, slogan, « Studio web · Rouen et alentours » (pas de délai ni de mention de l'IA).
