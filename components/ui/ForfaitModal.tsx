@@ -9,6 +9,8 @@ export interface ModalPlan {
   name: string
   price: string
   features: string[]
+  /** Délai de livraison du forfait, en jours après réception des contenus */
+  days: number
 }
 
 interface Props {
@@ -16,11 +18,14 @@ interface Props {
   onClose: () => void
 }
 
-const TIMELINE = [
-  { day: 'J1', label: 'Brief' },
-  { day: 'J3–5', label: 'Maquette' },
-  { day: 'J7–10', label: 'Livraison' },
-]
+// Seuls le brief et la livraison ont une date réelle : pas de jour inventé pour la maquette
+function timeline(days: number) {
+  return [
+    { day: 'J1', label: 'Brief' },
+    { day: '', label: 'Maquette + 2 retouches' },
+    { day: `J${days}`, label: 'Livraison' },
+  ]
+}
 
 function CheckIcon() {
   return (
@@ -103,21 +108,25 @@ export default function ForfaitModal({ plan, onClose }: Props) {
                 Déroulement du projet
               </div>
               <div className="flex items-start">
-                {TIMELINE.map((step, i) => (
-                  <div key={step.day} className="flex-1 relative">
-                    {i < TIMELINE.length - 1 && (
+                {timeline(plan.days).map((step, i, steps) => (
+                  <div key={step.label} className="flex-1 relative">
+                    {i < steps.length - 1 && (
                       <div className="absolute top-3 left-1/2 w-full h-px bg-accent/30" />
                     )}
                     <div className="flex flex-col items-center gap-1.5 relative">
                       <div className="w-6 h-6 rounded-full border-2 border-accent bg-accent/20 flex items-center justify-center z-10">
                         <div className="w-2 h-2 rounded-full bg-accent" />
                       </div>
-                      <div className="text-xs font-bold text-accent">{step.day}</div>
+                      {/* Espace insécable : garde les libellés alignés quand l'étape n'a pas de jour */}
+                      <div className="text-xs font-bold text-accent">{step.day || ' '}</div>
                       <div className="text-xs text-text-muted text-center">{step.label}</div>
                     </div>
                   </div>
                 ))}
               </div>
+              <p className="text-xs text-text-muted text-center mt-4">
+                Jours comptés à partir de la réception de tes contenus.
+              </p>
             </div>
 
             {/* Features */}
