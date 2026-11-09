@@ -1,6 +1,5 @@
 import Services from '@/components/sections/Services'
 import Forfaits from '@/components/sections/Forfaits'
-import Pourquoi from '@/components/sections/Pourquoi'
 import Faq from '@/components/sections/Faq'
 import { pageMetadata } from '@/lib/seo'
 
@@ -16,7 +15,6 @@ export default function OffrePage() {
     <>
       <Services titleAs="h1" />
       <Forfaits />
-      <Pourquoi />
       <Faq />
     </>
   )

@@ -80,7 +80,7 @@ export default function Forfaits() {
           <span className="kicker justify-center">Forfaits</span>
           <h2>Des prix clairs, <span className="grad-text">sans surprise</span></h2>
           <p className="mx-auto">
-            Paiement en deux fois possible. Acompte au démarrage, solde à la livraison.
+            Des prix accessibles, sans abonnement caché. Paiement en deux fois possible : acompte au démarrage, solde à la livraison.
             Délais comptés à partir de la réception de tes contenus.
           </p>
         </motion.div>
