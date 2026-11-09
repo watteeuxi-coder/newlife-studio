@@ -1,75 +1,15 @@
 'use client'
 
-import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
-
-/**
- * Pour ajouter un projet : dépose une capture d'écran (1280×832 conseillé)
- * dans public/images/portfolio/ puis ajoute une entrée ici avec `image`.
- * Sans `image`, la carte affiche un placeholder dégradé avec l'initiale.
- */
-const PROJECTS = [
-  {
-    title: 'The Fade Room',
-    cat: 'Barbershop · Réservation en ligne',
-    url: 'https://barbershopv2.vercel.app',
-    image: '/images/portfolio/barbershop.png',
-    bg: 'radial-gradient(circle at 30% 20%, rgba(34,211,238,0.22), transparent 60%), linear-gradient(160deg,#0c1424,#0a0f1c)',
-  },
-  {
-    title: 'Alex Fit',
-    cat: 'Salle de sport · Programmes & coaching',
-    url: 'https://alex-fit.vercel.app',
-    image: '/images/portfolio/alex-fit.png',
-    bg: 'radial-gradient(circle at 30% 80%, rgba(94,230,168,0.22), transparent 60%), linear-gradient(160deg,#0a1612,#0a0f1c)',
-  },
-  {
-    title: 'Elite Immo',
-    cat: 'Immobilier · Chatbot & génération de leads',
-    url: 'https://elite-immo-five.vercel.app',
-    image: '/images/portfolio/elite-immo.png',
-    bg: 'radial-gradient(circle at 70% 80%, rgba(124,108,255,0.22), transparent 60%), linear-gradient(160deg,#100f1c,#0a0f1c)',
-  },
-]
+import { PROJECTS } from '@/lib/projects'
+import ProjectShot from '@/components/ui/ProjectShot'
 
 function ArrowIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5">
       <path d="M7 17 17 7M9 7h8v8" />
     </svg>
-  )
-}
-
-function ProjectShot({ title, image, bg }: { title: string; image?: string; bg: string }) {
-  return (
-    <div className="rounded-lg overflow-hidden border border-white/10 h-full flex flex-col">
-      {/* Browser chrome */}
-      <div className="flex items-center gap-1.5 px-3 py-2 bg-white/5 shrink-0">
-        <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
-        <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
-        <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
-      </div>
-      <div className="relative flex-1 overflow-hidden bg-night">
-        {image ? (
-          <Image
-            src={image}
-            alt={`Capture d'écran du site ${title}`}
-            fill
-            loading="lazy"
-            sizes="(min-width: 768px) 33vw, 100vw"
-            className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-          />
-        ) : (
-          <div
-            className="absolute inset-0 flex items-center justify-center"
-            style={{ background: bg }}
-          >
-            <span className="text-4xl font-bold text-white/15">{title.charAt(0)}</span>
-          </div>
-        )}
-      </div>
-    </div>
   )
 }
 
