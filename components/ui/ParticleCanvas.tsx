@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { usePathname } from 'next/navigation'
 
 interface Particle {
   x: number
@@ -17,6 +18,9 @@ const ACCENT_RGB = '34, 211, 238'
 export default function ParticleCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [enabled, setEnabled] = useState(false)
+  const pathname = usePathname()
+  // Pas de particules sur l'accueil en thème clair (lignes cyan sur blanc + coût CPU)
+  const active = enabled && pathname !== '/'
 
   // Désactivé sur petits écrans et si l'utilisateur préfère réduire les animations
   useEffect(() => {
@@ -33,7 +37,7 @@ export default function ParticleCanvas() {
   }, [])
 
   useEffect(() => {
-    if (!enabled) return
+    if (!active) return
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
@@ -129,9 +133,9 @@ export default function ParticleCanvas() {
       window.removeEventListener('resize', onResize)
       document.removeEventListener('visibilitychange', onVisibilityChange)
     }
-  }, [enabled])
+  }, [active])
 
-  if (!enabled) return null
+  if (!active) return null
 
   return (
     <canvas

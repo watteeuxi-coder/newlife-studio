@@ -34,9 +34,9 @@ export default function ConceptsPreview() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Tester la démo ${p.title}`}
-                className="group block rounded-2xl border border-white/[0.08] overflow-hidden hover:border-accent/25 transition-colors"
+                className="group block rounded-2xl border border-line overflow-hidden hover:border-accent/25 transition-colors"
               >
-                <div className="h-44 p-4" style={{ background: p.bg }}>
+                <div className="h-44 p-4 bg-void">
                   <ProjectShot title={p.title} image={p.image} bg={p.bg} sizes="(min-width: 768px) 33vw, 80vw" />
                 </div>
                 <div className="p-4">

@@ -99,9 +99,9 @@ export default function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-300 ${
         menuOpen
-          ? 'bg-void border-b border-white/10'
+          ? 'bg-void border-b border-line'
           : scrolled
-            ? 'bg-void/90 backdrop-blur-md border-b border-white/10'
+            ? 'bg-void/90 backdrop-blur-md border-b border-line'
             : ''
       }`}
     >

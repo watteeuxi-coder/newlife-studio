@@ -8,27 +8,46 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      // Couleurs thémables : valeurs dans app/globals.css (:root = sombre, [data-theme='light'] = clair)
       colors: {
         void: {
-          DEFAULT: '#05070d',
+          DEFAULT: 'rgb(var(--c-void) / <alpha-value>)',
           2: '#070b14',
         },
         night: {
-          DEFAULT: '#0b1120',
+          DEFAULT: 'rgb(var(--c-night) / <alpha-value>)',
           2: '#0e1729',
         },
         accent: {
-          DEFAULT: '#22d3ee',
-          bright: '#7df0ff',
+          DEFAULT: 'rgb(var(--c-accent) / <alpha-value>)',
+          bright: 'rgb(var(--c-accent-bright) / <alpha-value>)',
           deep: '#0a7d92',
+          // Cyan d'identité, toujours #22D3EE : déco uniquement (jamais du texte sur fond clair)
+          brand: '#22d3ee',
         },
-        'text-base': '#e9eef7',
-        'text-dim': '#aab6cc',
-        'text-muted': '#6f7e98',
+        'text-base': 'rgb(var(--c-ink) / <alpha-value>)',
+        'text-dim': 'rgb(var(--c-ink-2) / <alpha-value>)',
+        'text-muted': 'rgb(var(--c-ink-3) / <alpha-value>)',
+        // Bordures et cartes : l'opacité fait partie du thème (pas de modificateur /x)
+        line: 'rgb(var(--c-line) / var(--c-line-a))',
+        'line-strong': 'rgb(var(--c-line-strong) / var(--c-line-strong-a))',
+        surface: 'rgb(var(--c-surface) / var(--c-surface-a))',
+        // État « disponible » (thème clair)
+        ok: { DEFAULT: '#16a34a', text: '#15803d' },
+        // Pastilles douces (fond / bordure / texte) — contraste du texte ≥ 5,2:1
+        pill: {
+          'cyan-bg': '#ecfeff', 'cyan-line': '#a5f3fc', 'cyan-text': '#155e75',
+          'green-bg': '#ecfdf5', 'green-line': '#a7f3d0', 'green-text': '#047857',
+          'amber-bg': '#fffbeb', 'amber-line': '#fde68a', 'amber-text': '#92400e',
+          'rose-bg': '#fff1f2', 'rose-line': '#fecdd3', 'rose-text': '#9f1239',
+          'blue-bg': '#f0f9ff', 'blue-line': '#bae6fd', 'blue-text': '#075985',
+          'lime-bg': '#f7fee7', 'lime-line': '#d9f99d', 'lime-text': '#3f6212',
+        },
       },
       fontFamily: {
         display: ['var(--font-display)', 'sans-serif'],
         mono: ['var(--font-mono)', 'monospace'],
+        hand: ['var(--font-hand)', 'cursive'],
       },
       animation: {
         'aurora-1': 'aurora1 14s ease-in-out infinite alternate',

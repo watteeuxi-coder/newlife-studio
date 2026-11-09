@@ -48,7 +48,7 @@ export default function PourQui() {
         </motion.div>
 
         {/* Liste éditoriale plutôt que des cartes à icônes */}
-        <ul className="border-t border-white/[0.08]">
+        <ul className="border-t border-line">
           {PROFILES.map((p, i) => (
             <motion.li
               key={p.who}
@@ -56,7 +56,7 @@ export default function PourQui() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10% 0px' }}
               transition={{ duration: 0.5, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-              className="grid gap-2 md:grid-cols-[240px_1fr] md:gap-10 py-6 border-b border-white/[0.08]"
+              className="grid gap-2 md:grid-cols-[240px_1fr] md:gap-10 py-6 border-b border-line"
             >
               <div>
                 <h3 className="text-text-base text-lg font-semibold">{p.who}</h3>
