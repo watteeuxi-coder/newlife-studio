@@ -33,7 +33,6 @@ export default function ConceptsPreview() {
                 href={p.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Tester la démo ${p.title}`}
                 className="group block rounded-2xl border border-line overflow-hidden hover:border-accent/25 transition-colors"
               >
                 <div className="h-44 p-4 bg-void">
@@ -47,6 +46,8 @@ export default function ConceptsPreview() {
                     </span>
                   </div>
                   <p className="text-text-muted text-xs mt-1">{p.cat}</p>
+                  {/* Nom accessible = texte visible + précision (pas d'aria-label qui le remplacerait) */}
+                  <span className="sr-only">, tester la démo (nouvel onglet)</span>
                 </div>
               </a>
             </li>
