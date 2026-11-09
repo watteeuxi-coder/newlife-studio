@@ -11,8 +11,8 @@ export const SITE_CONFIG = {
  * Valeur MESURÉE uniquement (règle : aucun chiffre inventé) — à remesurer après chaque refonte visuelle.
  * Mesure : Lighthouse 12.6.1, mobile, médiane de 3 passages — de préférence sur l'URL de production.
  */
-// Mesuré le 2026-11-09 en PRODUCTION (https://newlife-studio.vercel.app/) : 96 / 97 / 97 → médiane 97
-export const PERF_SCORE = 97
+// Mesuré le 2026-11-09 (Lighthouse mobile, build de production en local) : 95 / 95 / 95 → 95. Valeur choisie par l’utilisateur.
+export const PERF_SCORE = 95
 
 export function waLink(): string {
   return `https://wa.me/${SITE_CONFIG.waNumber}?text=${encodeURIComponent(

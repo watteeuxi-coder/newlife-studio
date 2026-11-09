@@ -273,7 +273,7 @@ main > section:first-child:not(#top) {
 /* Hero : moins d'espace sous les pastilles en mobile */
 @media (max-width: 640px) {
   #top {
-    padding-bottom: 48px;
+    padding-bottom: 24px;
   }
 }
 
@@ -312,4 +312,27 @@ main > section:first-child:not(#top) {
 .spot-ready .spot:hover::after,
 .spot-ready .spot:hover::before {
   opacity: 1;
+}
+
+/* Bandeau qui défile en boucle (hero mobile). Deux copies du contenu → translateX(-50%) boucle sans saut.
+   Fondu sur les bords gauche et droit. En pause si prefers-reduced-motion. */
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 24s linear infinite;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation-play-state: paused;
+  }
 }

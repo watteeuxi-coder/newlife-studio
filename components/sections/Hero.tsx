@@ -3,11 +3,13 @@
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
 import { waLink, PERF_SCORE } from '@/lib/config'
+import { Send, PencilLine } from 'lucide-react'
 import WaIcon from '@/components/ui/WaIcon'
 import { handAccent } from '@/lib/fonts'
 
 
-// Cartes d'infos : une seule liste. Mobile = pastilles sous les boutons ; lg = cartes flottantes autour du titre.
+// Cartes d'infos. Mobile : elles encadrent le titre (2 au-dessus du petit texte, 2 sous le lien WhatsApp),
+// inclinées en sens opposés et débordant un peu vers les bords. lg : cartes flottantes autour du titre (inchangé).
 // La rotation est sur l'élément interne : framer-motion pilote le transform de l'élément externe (fondu).
 const FACT_POSITIONS = [
   'lg:left-0 lg:top-6',
@@ -15,15 +17,21 @@ const FACT_POSITIONS = [
   'lg:left-6 lg:bottom-4',
   'lg:right-8 lg:bottom-8',
 ]
-const FACT_TILTS = ['lg:-rotate-[4deg]', 'lg:rotate-[3deg]', 'lg:rotate-[2deg]', 'lg:-rotate-[3deg]']
+const FACT_TILTS = [
+  '-rotate-[3deg] lg:-rotate-[4deg]',
+  'rotate-[3deg] lg:rotate-[3deg]',
+  'rotate-[3deg] lg:rotate-[2deg]',
+  '-rotate-[3deg] lg:-rotate-[3deg]',
+]
 
 const factCard =
-  'inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1.5 text-sm text-text-dim ' +
-  'lg:rounded-2xl lg:px-4 lg:py-3 lg:gap-3 lg:shadow-[0_16px_40px_-16px_rgba(11,18,32,0.22)]'
+  'flex h-full items-center gap-2 rounded-xl border border-line bg-surface px-3 py-2.5 text-xs text-text-dim ' +
+  'shadow-[0_10px_24px_-14px_rgba(11,18,32,0.28)] ' +
+  'lg:inline-flex lg:h-auto lg:rounded-2xl lg:px-4 lg:py-3 lg:gap-3 lg:text-sm lg:shadow-[0_16px_40px_-16px_rgba(11,18,32,0.22)]'
 
 function ScoreRing({ score }: { score: number }) {
   return (
-    <span className="relative flex items-center justify-center w-4 h-4 lg:w-11 lg:h-11 shrink-0">
+    <span className="relative flex items-center justify-center w-5 h-5 lg:w-11 lg:h-11 shrink-0">
       <svg viewBox="0 0 40 40" className="absolute inset-0 -rotate-90" aria-hidden="true">
         <circle cx={20} cy={20} r={16} fill="none" strokeWidth={4} className="stroke-ok/20" />
         <circle
@@ -59,9 +67,18 @@ const ICONS = {
 }
 
 const FEATURES = [
-  { label: 'Code sur mesure', icon: ICONS.code, tone: 'bg-pill-cyan-bg border-pill-cyan-line text-pill-cyan-text' },
-  { label: 'Pensé pour mobile', icon: ICONS.phone, tone: 'bg-pill-green-bg border-pill-green-line text-pill-green-text' },
+  { label: 'Code sur mesure', icon: <Icon d={ICONS.code} />, tone: 'bg-pill-cyan-bg border-pill-cyan-line text-pill-cyan-text' },
+  { label: 'Pensé pour mobile', icon: <Icon d={ICONS.phone} />, tone: 'bg-pill-green-bg border-pill-green-line text-pill-green-text' },
 ]
+
+// Bandeau mobile : les mêmes + 2 infos vraies (inclus dans chaque site, cf. lib/forfaits.ts)
+const MARQUEE = [
+  ...FEATURES,
+  { label: 'Formulaire + WhatsApp', icon: <Send className="w-4 h-4 shrink-0" strokeWidth={2} aria-hidden="true" />, tone: 'bg-pill-amber-bg border-pill-amber-line text-pill-amber-text' },
+  { label: '2 retouches incluses', icon: <PencilLine className="w-4 h-4 shrink-0" strokeWidth={2} aria-hidden="true" />, tone: 'bg-pill-rose-bg border-pill-rose-line text-pill-rose-text' },
+]
+
+const pill = 'inline-flex items-center gap-2 whitespace-nowrap rounded-full border font-medium'
 
 export default function Hero() {
   const reduceMotion = useReducedMotion()
@@ -76,33 +93,49 @@ export default function Hero() {
           transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1], delay },
         }
 
+  // Textes courts en mobile (lg:hidden), textes complets en desktop (hidden lg:inline) — desktop inchangé
   const facts = [
     <>
       <ScoreRing score={PERF_SCORE} />
-      <span className="flex flex-wrap items-baseline gap-x-1 lg:flex-col lg:gap-0">
+      <span className="flex flex-col leading-tight lg:leading-normal">
         <span className="font-semibold text-text-base">{PERF_SCORE}/100</span>
-        <span className="lg:hidden" aria-hidden="true">·</span>
-        <span className="lg:text-xs lg:text-text-muted">Performance mobile de ce site</span>
+        <span className="lg:hidden">Performance</span>
+        <span className="hidden lg:inline lg:text-xs lg:text-text-muted">Performance mobile de ce site</span>
       </span>
     </>,
     <>
       <span className="text-accent"><Icon d={ICONS.clock} /></span>
-      <span className="font-medium text-text-base">Livré en 5 à 10 jours</span>
+      <span className="font-medium text-text-base lg:hidden">Livré en 5-10&nbsp;j</span>
+      <span className="font-medium text-text-base hidden lg:inline">Livré en 5 à 10 jours</span>
     </>,
     <>
-      <span className="flex flex-wrap items-center gap-x-2 lg:flex-col lg:items-start lg:gap-0.5">
-        <span className="font-medium text-text-base">Réponse sous 24h</span>
+      <span className="flex flex-col items-start leading-tight gap-0.5 lg:leading-normal">
+        <span className="font-medium text-text-base lg:hidden">Réponse 24h</span>
+        <span className="font-medium text-text-base hidden lg:inline">Réponse sous 24h</span>
         <span className="inline-flex items-center gap-1.5 text-xs text-ok-text">
           <span className="w-2 h-2 rounded-full bg-ok" aria-hidden="true" />
-          Dispo pour échanger
+          <span className="lg:hidden">Dispo</span>
+          <span className="hidden lg:inline">Dispo pour échanger</span>
         </span>
       </span>
     </>,
     <>
       <span className="text-accent"><Icon d={ICONS.pin} /></span>
-      <span className="font-medium text-text-base">Rouen et alentours</span>
+      <span className="font-medium text-text-base lg:hidden">Rouen &amp; alentours</span>
+      <span className="font-medium text-text-base hidden lg:inline">Rouen et alentours</span>
     </>,
   ]
+
+  // -mx-4 : les cartes débordent un peu vers les bords (la section est en overflow-hidden → pas de défilement horizontal)
+  const mobilePair = (idx: [number, number], delay: number, spacing: string) => (
+    <ul className={`lg:hidden flex justify-between gap-3 -mx-4 text-left ${spacing}`} aria-label="En bref">
+      {idx.map((i, k) => (
+        <motion.li key={i} className="flex-1 max-w-[11.5rem]" {...fade(delay + k * 0.12)}>
+          <div className={`${factCard} ${FACT_TILTS[i]}`}>{facts[i]}</div>
+        </motion.li>
+      ))}
+    </ul>
+  )
 
   return (
     // pt-20 : place pour le header flottant. Le bas suit l'espacement commun des sections (globals.css).
@@ -110,7 +143,10 @@ export default function Hero() {
       <div className="hero-grid" aria-hidden="true" />
       <div className="wrap relative">
         <div className="relative">
-          <div className="relative z-[1] max-w-2xl mx-auto text-center pt-10 sm:pt-14 lg:pt-28 lg:pb-28">
+          <div className="relative z-[1] max-w-2xl mx-auto text-center pt-4 sm:pt-14 lg:pt-28 lg:pb-28">
+            {/* Mobile : 2 cartes au-dessus du petit texte */}
+            {mobilePair([0, 1], 0.3, 'mb-7')}
+
             <motion.p
               className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-accent mb-6"
               {...fade(0)}
@@ -129,7 +165,8 @@ export default function Hero() {
               Des sites web pour commerçants et indépendants, faits pour que tes clients te trouvent et te contactent.
             </motion.p>
 
-            <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-3" {...fade(0.2)}>
+            {/* Mobile : un seul gros bouton, WhatsApp en lien plus léger dessous. Desktop : 2 boutons côte à côte. */}
+            <motion.div className="flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-3" {...fade(0.2)}>
               <Link
                 href="/contact"
                 className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-full bg-accent text-white font-semibold hover:bg-accent-bright active:scale-[0.98] transition-all"
@@ -140,15 +177,20 @@ export default function Hero() {
                 href={waLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-line-strong bg-surface text-text-base font-semibold hover:border-accent active:scale-[0.98] transition-all"
+                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-4 text-sm font-semibold text-text-base hover:text-accent transition-all lg:min-h-0 lg:px-6 lg:py-3 lg:text-base lg:rounded-full lg:border lg:border-line-strong lg:bg-surface lg:hover:text-text-base lg:hover:border-accent active:scale-[0.98]"
               >
                 <WaIcon className="w-5 h-5 text-ok" />
-                WhatsApp
+                <span className="lg:hidden">Ou écris-moi sur WhatsApp</span>
+                <span className="hidden lg:inline">WhatsApp</span>
               </a>
             </motion.div>
+
+            {/* Mobile : 2 cartes sous le lien WhatsApp */}
+            {mobilePair([2, 3], 0.45, 'mt-5')}
           </div>
 
-          <ul className="relative mt-8 flex flex-wrap justify-center gap-2 lg:static lg:mt-0" aria-label="En bref">
+          {/* Desktop : cartes flottantes autour du titre (inchangé) */}
+          <ul className="hidden lg:block" aria-label="En bref">
             {facts.map((content, i) => (
               <motion.li key={i} className={`lg:absolute ${FACT_POSITIONS[i]}`} {...fade(0.35 + i * 0.12)}>
                 <div className={`${factCard} ${FACT_TILTS[i]}`}>{content}</div>
@@ -157,19 +199,31 @@ export default function Hero() {
           </ul>
         </div>
 
-        {/* Pastilles colorées sous le hero */}
-        {/* « Local, à Rouen » retiré : doublon de la carte « Rouen et alentours » */}
-        <ul className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-6 sm:mt-10 lg:mt-4">
+        {/* Desktop : pastilles fixes (inchangé) */}
+        <ul className="hidden lg:flex flex-wrap justify-center gap-3 mt-4">
           {FEATURES.map((f) => (
-            <li
-              key={f.label}
-              className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs sm:px-4 sm:py-2 sm:text-sm font-medium ${f.tone}`}
-            >
-              <Icon d={f.icon} />
+            <li key={f.label} className={`${pill} px-4 py-2 text-sm ${f.tone}`}>
+              {f.icon}
               {f.label}
             </li>
           ))}
         </ul>
+
+        {/* Mobile : bandeau qui défile en boucle (CSS, globals.css), 2e copie masquée aux lecteurs d'écran */}
+        <div className="marquee lg:hidden mt-6 -mx-6">
+          <div className="marquee-track">
+            {[0, 1].map((copy) => (
+              <ul key={copy} className="flex gap-2 pr-2" aria-hidden={copy === 1 ? true : undefined}>
+                {MARQUEE.map((f) => (
+                  <li key={f.label} className={`${pill} text-xs px-3 py-1.5 ${f.tone}`}>
+                    {f.icon}
+                    {f.label}
+                  </li>
+                ))}
+              </ul>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   )
