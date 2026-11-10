@@ -5,7 +5,8 @@ import { pageMetadata } from '@/lib/seo'
 
 export const metadata = pageMetadata({
   title: 'Confidentialité',
-  description: 'Politique de confidentialité du site NEWLIFE STUDIO.',
+  description:
+    'Politique de confidentialité de NEWLIFE STUDIO : les données envoyées via le formulaire de contact, pourquoi je les utilise, combien de temps et tes droits.',
   path: '/confidentialite',
   noindex: !privacyReady(),
 })

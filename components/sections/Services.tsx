@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { revealHead, revealItem } from '@/lib/motion'
 import { waLink } from '@/lib/config'
@@ -116,7 +117,7 @@ export default function Services({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | '
           {...revealHead}
         >
           <span className="kicker">Mes services</span>
-          <Title>Tout ce qu&rsquo;il faut pour <span className="grad-text">exister en ligne</span></Title>
+          <Title>Site vitrine, e-commerce, refonte&nbsp;: <span className="grad-text">tout pour exister en ligne</span></Title>
           <p>Du premier site à la boutique qui tourne 24h/24 — je construis, je modernise et je fais grandir ta présence web.</p>
         </motion.div>
 
@@ -126,6 +127,10 @@ export default function Services({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | '
           ))}
           <CtaCard Heading={Title === 'h1' ? 'h2' : 'h3'} />
         </div>
+
+        <Link href="/concepts" className="inline-flex items-center min-h-[44px] text-accent font-semibold hover:text-accent-bright transition-colors mt-6">
+          Voir des exemples de sites vitrine →
+        </Link>
       </div>
     </section>
   )

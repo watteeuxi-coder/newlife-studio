@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Users, Store, Handshake, MapPin, BadgeCheck, Check, type LucideIcon } from 'lucide-react'
 import { revealHead, revealItem } from '@/lib/motion'
@@ -72,6 +73,11 @@ export default function About({ greeting, intro, blocks }: { greeting: string; i
               </motion.div>
             )
           })}
+
+          <nav aria-label="Pour aller plus loin" className="flex flex-col sm:flex-row gap-x-8 pt-8 border-t border-line">
+            <Link href="/offre" className="inline-flex items-center min-h-[44px] text-accent font-semibold hover:text-accent-bright transition-colors">Voir mes offres et tarifs →</Link>
+            <Link href="/concepts" className="inline-flex items-center min-h-[44px] text-accent font-semibold hover:text-accent-bright transition-colors">Voir mes sites de démo →</Link>
+          </nav>
         </div>
       </div>
     </section>

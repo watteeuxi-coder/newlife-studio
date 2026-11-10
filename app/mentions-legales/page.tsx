@@ -5,7 +5,8 @@ import { pageMetadata } from '@/lib/seo'
 
 export const metadata = pageMetadata({
   title: 'Mentions légales',
-  description: 'Mentions légales du site NEWLIFE STUDIO.',
+  description:
+    'Mentions légales du site NEWLIFE STUDIO, studio de création de sites web à Rouen et alentours : éditeur du site, hébergement et propriété intellectuelle.',
   path: '/mentions-legales',
   noindex: !legalReady(),
 })

@@ -2,9 +2,9 @@ import Portfolio from '@/components/sections/Portfolio'
 import { pageMetadata } from '@/lib/seo'
 
 export const metadata = pageMetadata({
-  title: 'Mes concepts',
+  title: 'Exemples de sites vitrine par métier',
   description:
-    "Trois sites de démonstration — barbershop, salle de sport, immobilier — pour voir ce que je peux construire pour ton activité.",
+    'Trois sites de démo pour un barbershop, une salle de sport et une agence immobilière : réservation en ligne, coaching, chatbot. Ce que je peux créer pour toi.',
   path: '/concepts',
 })
 

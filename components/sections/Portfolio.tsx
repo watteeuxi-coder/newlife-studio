@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { revealHead, revealItem } from '@/lib/motion'
 import { PROJECTS } from '@/lib/projects'
@@ -24,7 +25,7 @@ export default function Portfolio({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 
           {...revealHead}
         >
           <span className="kicker">Mes concepts</span>
-          <Title>Trois métiers, <span className="grad-text">trois sites de démo</span></Title>
+          <Title>Exemples de sites vitrine&nbsp;: <span className="grad-text">trois métiers, trois démos</span></Title>
           <p>
             Les premiers avis clients arrivent bientôt. En attendant, voilà ce que je sais faire.
             Clique sur un site pour le tester.
@@ -46,7 +47,7 @@ export default function Portfolio({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 
                 aria-label={`Tester la démo ${p.title}`}
                 className="relative block h-52 p-5 bg-void"
               >
-                <ProjectShot title={p.title} image={p.image} bg={p.bg} />
+                <ProjectShot title={p.title} cat={p.cat} image={p.image} bg={p.bg} />
               </a>
               {/* Meta */}
               <div className="flex items-center justify-between p-5 mt-auto">
@@ -73,6 +74,10 @@ export default function Portfolio({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 
             </motion.article>
           ))}
         </div>
+
+        <Link href="/offre#forfaits" className="inline-flex items-center min-h-[44px] text-accent font-semibold hover:text-accent-bright transition-colors mt-6">
+          Voir les tarifs des sites vitrine →
+        </Link>
       </div>
     </section>
   )

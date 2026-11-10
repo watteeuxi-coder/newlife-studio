@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
-import { waLink, PERF_SCORE } from '@/lib/config'
+import { waLink, PERF_FLOOR } from '@/lib/config'
 import { Send, PencilLine } from 'lucide-react'
 import WaIcon from '@/components/ui/WaIcon'
 import { handAccent } from '@/lib/fonts'
@@ -46,7 +46,7 @@ function ScoreRing({ score }: { score: number }) {
           className="stroke-ok"
         />
       </svg>
-      <span className="hidden lg:block relative font-mono text-xs font-bold text-ok-text">{score}</span>
+      <span className="hidden lg:block relative font-mono text-[11px] font-bold text-ok-text">{score}+</span>
     </span>
   )
 }
@@ -96,10 +96,12 @@ export default function Hero() {
   // Textes courts en mobile (lg:hidden), textes complets en desktop (hidden lg:inline) — desktop inchangé
   const facts = [
     <>
-      <ScoreRing score={PERF_SCORE} />
+      <ScoreRing score={PERF_FLOOR} />
       <span className="flex flex-col leading-tight lg:leading-normal">
-        <span className="font-semibold text-text-base">{PERF_SCORE}/100</span>
-        <span className="lg:hidden">Performance</span>
+        <span className="font-semibold text-text-base">{PERF_FLOOR}+/100</span>
+        {/* « · » lu par les lecteurs d'écran ; à l'écran, les deux lignes suffisent */}
+        <span className="sr-only"> · </span>
+        <span className="lg:hidden">Performance mobile</span>
         <span className="hidden lg:inline lg:text-xs lg:text-text-muted">Performance mobile de ce site</span>
       </span>
     </>,
@@ -147,15 +149,13 @@ export default function Hero() {
             {/* Mobile : 2 cartes au-dessus du petit texte */}
             {mobilePair([0, 1], 0.3, 'mb-7')}
 
-            <motion.p
-              className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-accent mb-6"
-              {...fade(0)}
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-accent-brand" aria-hidden="true" />
-              Studio web · Rouen et alentours
-            </motion.p>
-
+            {/* h1 = mots-clés (petite ligne) + slogan. Jamais animé : c'est l'élément LCP */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-balance text-text-base mb-6">
+              <span className="flex items-center justify-center gap-2 text-xs leading-4 font-semibold tracking-widest uppercase text-accent mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent-brand" aria-hidden="true" />
+                Création de site web à Rouen
+                <span className="sr-only"> : </span>
+              </span>
               Une{' '}
               <span className={handAccent}>nouvelle vie</span>{' '}
               pour ton business en ligne

@@ -27,7 +27,8 @@ Structure du site (multi-pages, spec `docs/superpowers/specs/2026-11-09-multi-pa
 - Textes de `/a-propos`, `/mentions-legales`, `/confidentialite` : `lib/content.ts`. Un champ à `null` = info pas encore fournie → la page reste « en préparation » (noindex, hors sitemap) ; dès que tout est rempli, elle s'affiche et devient indexable automatiquement.
 - Formules du formulaire de contact : `lib/formules.ts` (validées aussi côté API, transmises dans l'email). Les boutons des forfaits mènent à `/contact?formule=starter|pro|premium|maintenance|sur-mesure`, qui présélectionne la formule (absent ou inconnu → « Je ne sais pas encore »).
 - Email reçu : `lib/contact-email.ts` — email du prospect en `reply_to` + lien mailto, téléphone en lien `tel:`.
-- Liste des pages : `lib/nav.ts`. Metadata d'une page : `pageMetadata()` de `lib/seo.ts`. Un seul h1 par page (prop `titleAs="h1"` sur la première section). La 1re section d'une page (hors hero) reçoit une marge haute qui compense le header fixe (`globals.css`).
+- Liste des pages : `lib/nav.ts`. Metadata d'une page : `pageMetadata()` de `lib/seo.ts`. Title de page < 60 caractères (suffixe « — NEWLIFE STUDIO » compris), description 140–160, « Rouen » quand c'est pertinent.
+- Données structurées : `lib/schema.ts` (`ProfessionalService` dans le layout, `FAQPage` sur /offre), via `components/layout/JsonLd.tsx`. Infos vraies uniquement, pas d'adresse ni de SIRET tant qu'ils ne sont pas fournis. Les réponses de la FAQ restent dans le HTML même repliées (lisibles par Google). Un seul h1 par page (prop `titleAs="h1"` sur la première section). La 1re section d'une page (hors hero) reçoit une marge haute qui compense le header fixe (`globals.css`).
 
 ## Palette (exacte) — thème clair, tout le site
 
@@ -57,7 +58,7 @@ Couleurs en variables CSS (`app/globals.css`, bloc `[data-theme='light']`) expos
 - Grille uniquement dans le hero de l'accueil (`.hero-grid`, estompée vers le bas). `.grad-text` = dégradé cyan-strong → cyan-deep sur 1–2 mots clés.
 
 - Accent manuscrit : **Caveat** 700 via `handAccent` de `lib/fonts.ts` (« nouvelle vie » du hero, « Ilan » sur /a-propos), jamais animé (LCP).
-- Score « Performance mobile de ce site » du hero : `PERF_SCORE` dans `lib/config.ts`, **valeur mesurée** (Lighthouse mobile, médiane de 3) — à remesurer après chaque changement visuel de l'accueil. Lighthouse mobile : rester > 90 sur chaque page, accessibilité 100.
+- Score du hero : « 90+/100 · Performance mobile (de ce site) », plancher `PERF_FLOOR` dans `lib/config.ts` (choix de l'utilisateur, plus de chiffre exact). Doit rester vrai : remesurer (Lighthouse mobile, médiane de 3) après chaque changement visuel de l'accueil, ≥ 90 obligatoire. Lighthouse mobile : rester > 90 sur chaque page, accessibilité 100.
 - Titres de cartes : un niveau sous le titre de leur section (h1 de page → cartes en h2).
 - Image de partage `app/opengraph-image.tsx` : thème clair, slogan, « Studio web · Rouen et alentours » (pas de délai ni de mention de l'IA).
 

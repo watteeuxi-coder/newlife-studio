@@ -2,13 +2,15 @@ import Image from 'next/image'
 
 interface Props {
   title: string
+  /** Métier et fonctionnalités, repris dans le texte alternatif */
+  cat?: string
   image?: string
   bg: string
   sizes?: string
 }
 
 /** Capture d'un site dans un cadre de navigateur (placeholder dégradé si pas d'image). */
-export default function ProjectShot({ title, image, bg, sizes = '(min-width: 768px) 33vw, 100vw' }: Props) {
+export default function ProjectShot({ title, cat, image, bg, sizes = '(min-width: 768px) 33vw, 100vw' }: Props) {
   return (
     <div className="rounded-lg overflow-hidden border border-line h-full flex flex-col">
       {/* Browser chrome */}
@@ -21,7 +23,7 @@ export default function ProjectShot({ title, image, bg, sizes = '(min-width: 768
         {image ? (
           <Image
             src={image}
-            alt={`Capture d'écran du site ${title}`}
+            alt={`Page d’accueil du site de démo ${title}${cat ? ` (${cat.replace(' · ', ', ')})` : ''}`}
             fill
             loading="lazy"
             sizes={sizes}

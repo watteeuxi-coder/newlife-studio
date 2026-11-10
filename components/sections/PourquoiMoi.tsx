@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { TrendingUp, MessageCircle, MapPin } from 'lucide-react'
 import { revealHead, revealItem } from '@/lib/motion'
@@ -49,6 +50,10 @@ export default function PourquoiMoi() {
             </motion.li>
           ))}
         </ul>
+
+        <Link href="/a-propos" className="inline-flex items-center min-h-[44px] text-accent font-semibold hover:text-accent-bright transition-colors mt-6">
+          Découvrir mon parcours →
+        </Link>
       </div>
     </section>
   )
