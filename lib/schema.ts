@@ -18,7 +18,7 @@ export function businessJsonLd() {
     '@id': `${url}/#business`,
     name: 'NEWLIFE STUDIO',
     description:
-      'Création de sites web pour les commerçants, artisans et indépendants de Rouen et ses alentours : site vitrine, e-commerce, refonte et maintenance.',
+      'Création de sites web pour les commerçants, artisans et indépendants de Rouen et ses alentours : site vitrine, refonte, référencement et maintenance.',
     url,
     image: `${url}/opengraph-image`,
     email: SITE_CONFIG.email,

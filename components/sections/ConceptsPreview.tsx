@@ -23,11 +23,9 @@ export default function ConceptsPreview() {
         {/* scroll-px-6 = px-6 : sinon le snap colle la 1re carte au bord de l'écran */}
         <ul className="spot-group flex gap-4 overflow-x-auto snap-x snap-mandatory -mx-6 px-6 scroll-px-6 pb-2 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:mx-0 md:px-0 md:pb-0">
           {PROJECTS.map((p, i) => (
-            <motion.li key={p.title} {...revealItem(i)} className="snap-start shrink-0 w-[80%] sm:w-[55%] md:w-auto">
-              <a
-                href={p.url}
-                target="_blank"
-                rel="noopener noreferrer"
+            <motion.li key={p.slug} {...revealItem(i)} className="snap-start shrink-0 w-[80%] sm:w-[55%] md:w-auto">
+              <Link
+                href={`/concepts/${p.slug}`}
                 className="spot group block rounded-2xl border border-line overflow-hidden hover:border-accent/25 transition-colors"
               >
                 <div className="h-44 p-4 bg-void">
@@ -41,10 +39,11 @@ export default function ConceptsPreview() {
                     </span>
                   </div>
                   <p className="text-text-muted text-xs mt-1">{p.cat}</p>
-                  {/* Nom accessible = texte visible + précision (pas d'aria-label qui le remplacerait) */}
-                  <span className="sr-only">, tester la démo (nouvel onglet)</span>
+                  <span className="inline-flex items-center mt-3 text-accent text-sm font-semibold group-hover:text-accent-bright transition-colors">
+                    Voir le concept →
+                  </span>
                 </div>
-              </a>
+              </Link>
             </motion.li>
           ))}
         </ul>

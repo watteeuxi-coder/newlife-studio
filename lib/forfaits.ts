@@ -58,11 +58,10 @@ export const PLANS: Plan[] = [
     tag: "L'expérience complète, taillée pour vendre et durer.",
     includes: 'Pro',
     features: [
-      'Site complet ou e-commerce',
+      'Site complet jusqu’à 10 pages',
       'Animations cinématiques',
       'SEO avancé & optimisation conversion',
-      'Intégrations avancées (CRM, paiement)',
-      'Formation incluse',
+      'Accompagnement à la prise en main : je t’explique comment gérer ton site',
       'Livraison en 10 jours',
     ],
     featured: false,
@@ -83,5 +82,5 @@ export const MAINTENANCE = {
 
 export const SUR_MESURE = {
   price: 'Sur devis',
-  features: ['Prise de rendez-vous', 'Espace client', 'Automatisations', 'Emails automatiques'],
+  features: ['Boutique en ligne et paiement', 'Prise de rendez-vous', 'Espace client', 'Automatisations', 'Emails automatiques'],
 }
