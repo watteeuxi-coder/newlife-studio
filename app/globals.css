@@ -3,8 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --font-display: 'Space Grotesk';
-  --font-mono: 'JetBrains Mono';
+  /* Police du texte et des titres : police système (rendu réel du site depuis juin 2026, aucun téléchargement).
+     --font-mono vient de next/font (JetBrains Mono, app/layout.tsx) : ne pas la redéfinir ici. */
+  --font-display: -apple-system, BlinkMacSystemFont, sans-serif;
   --accent-rgb: 34, 211, 238;
   --glow-soft: 0 0 0 1px rgba(var(--accent-rgb), 0.18),
                0 24px 70px -28px rgba(var(--accent-rgb), 0.45);
@@ -267,6 +268,33 @@ main > section:first-child:not(#top) {
   .section-head--split > p {
     grid-column: 2;
     grid-row: 1 / span 2;
+  }
+}
+
+/* Hero : cartes d'infos en fondu CSS, lancé dès le 1er affichage (pas besoin du JavaScript).
+   Délai max 0,24 s + 0,3 s → tout est visible 0,54 s après le 1er affichage. Reduced-motion : affichées d'emblée. */
+.hero-fact {
+  animation: hero-fact-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes hero-fact-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-fact {
+    animation: none;
+  }
+}
+
+/* Hero desktop : moins de vide sous les pastilles (≈ 90px jusqu'au titre de la section suivante, au lieu de 192px) */
+#top {
+  padding-bottom: 24px;
+}
+@media (min-width: 641px) {
+  #top + section {
+    padding-top: 64px;
   }
 }
 
