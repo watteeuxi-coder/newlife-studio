@@ -2,7 +2,12 @@ import type { Metadata } from 'next'
 
 const SITE_NAME = 'NEWLIFE STUDIO'
 // Le openGraph d'une page remplace celui du layout : sans ça, l'image de partage (app/opengraph-image.tsx) disparaît
-const OG_IMAGE = '/opengraph-image'
+const OG_IMAGE = {
+  url: '/opengraph-image',
+  width: 1200,
+  height: 630,
+  alt: 'NEWLIFE STUDIO — Une nouvelle vie pour ton business en ligne',
+}
 
 interface PageSeo {
   title: string
@@ -15,7 +20,8 @@ interface PageSeo {
 export function pageMetadata({ title, description, path, noindex = false }: PageSeo): Metadata {
   const fullTitle = `${title} — ${SITE_NAME}`
   return {
-    title,
+    // absolute : le template du layout ne s'applique pas à la page d'accueil (même segment)
+    title: { absolute: fullTitle },
     description,
     alternates: { canonical: path },
     openGraph: {

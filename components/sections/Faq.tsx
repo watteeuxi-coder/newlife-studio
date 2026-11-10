@@ -1,12 +1,14 @@
 'use client'
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useId, useState } from 'react'
+import { motion } from 'framer-motion'
 import { revealHead, revealItem } from '@/lib/motion'
 import { FAQ, type FaqEntry } from '@/lib/faq'
 
 export function FaqItem({ item, index }: { item: FaqEntry; index: number }) {
   const [open, setOpen] = useState(false)
+  const uid = useId()
+  const panelId = `${uid}-a`
 
   return (
     <motion.div
@@ -14,6 +16,7 @@ export function FaqItem({ item, index }: { item: FaqEntry; index: number }) {
       className="spot rounded-xl border border-line bg-surface overflow-hidden shadow-soft"
     >
       <button
+        aria-controls={panelId}
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left hover:bg-void transition-colors"
@@ -30,21 +33,19 @@ export function FaqItem({ item, index }: { item: FaqEntry; index: number }) {
         </motion.span>
       </button>
 
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden"
-          >
-            <div className="px-6 pb-5 text-text-dim text-sm leading-relaxed border-t border-line pt-4">
-              {item.a}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Réponse toujours présente dans le HTML (lisible par Google, balisage FAQPage sur /offre),
+          masquée (visibility: hidden → hors lecteur d'écran) une fois repliée */}
+      <motion.div
+        id={panelId}
+        initial={false}
+        animate={open ? { height: 'auto', opacity: 1, visibility: 'visible' } : { height: 0, opacity: 0, transitionEnd: { visibility: 'hidden' } }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        className="overflow-hidden"
+      >
+        <div className="px-6 pb-5 text-text-dim text-sm leading-relaxed border-t border-line pt-4">
+          {item.a}
+        </div>
+      </motion.div>
     </motion.div>
   )
 }

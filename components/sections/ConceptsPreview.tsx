@@ -31,7 +31,7 @@ export default function ConceptsPreview() {
                 className="spot group block rounded-2xl border border-line overflow-hidden hover:border-accent/25 transition-colors"
               >
                 <div className="h-44 p-4 bg-void">
-                  <ProjectShot title={p.title} image={p.image} bg={p.bg} sizes="(min-width: 768px) 33vw, 80vw" />
+                  <ProjectShot title={p.title} cat={p.cat} image={p.image} bg={p.bg} sizes="(min-width: 768px) 33vw, 80vw" />
                 </div>
                 <div className="p-4">
                   <div className="flex items-center gap-2">

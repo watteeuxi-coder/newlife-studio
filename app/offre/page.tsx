@@ -1,12 +1,15 @@
 import Services from '@/components/sections/Services'
 import Forfaits from '@/components/sections/Forfaits'
 import Faq from '@/components/sections/Faq'
+import JsonLd from '@/components/layout/JsonLd'
 import { pageMetadata } from '@/lib/seo'
+import { FAQ } from '@/lib/faq'
+import { faqJsonLd } from '@/lib/schema'
 
 export const metadata = pageMetadata({
-  title: 'Offre & tarifs',
+  title: 'Tarifs site vitrine à Rouen, dès 299 €',
   description:
-    'Sites vitrine, e-commerce, refonte, SEO et maintenance. Forfaits dès 299 €, livrés en 5 à 10 jours, paiement en 2 fois.',
+    'Site vitrine, e-commerce ou refonte à Rouen : forfaits dès 299 €, 2 séries de retouches incluses, paiement en deux fois. Maintenance 30 €/mois, sans engagement.',
   path: '/offre',
 })
 
@@ -16,6 +19,8 @@ export default function OffrePage() {
       <Services titleAs="h1" />
       <Forfaits />
       <Faq />
+      {/* FAQ complète uniquement ici (l'accueil en reprend 3 : pas de doublon de balisage) */}
+      <JsonLd data={faqJsonLd(FAQ)} />
     </>
   )
 }

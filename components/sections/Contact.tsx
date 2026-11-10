@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { revealHead } from '@/lib/motion'
 import { waLink, SITE_CONFIG } from '@/lib/config'
@@ -17,7 +18,7 @@ export default function Contact({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 'h
         >
           <span className="kicker justify-center">Contact</span>
           <Title className="text-3xl sm:text-4xl font-bold text-text-base mb-4 leading-tight">
-            Prêt à donner une nouvelle vie<br className="hidden sm:block" /> à ton business ?
+            Ton projet de site web à Rouen&nbsp;?<br className="hidden sm:block" /> On en parle.
           </Title>
           <p className="text-text-dim mb-8 max-w-lg mx-auto leading-relaxed">
             Le plus rapide : WhatsApp. Sinon, laisse-moi un message ici et je te réponds sous 24h.
@@ -64,6 +65,11 @@ export default function Contact({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 'h
             </p>
           </div>
         </motion.div>
+
+        <nav aria-label="Avant de m’écrire" className="flex flex-col sm:flex-row items-center justify-center gap-x-8 mt-8">
+          <Link href="/offre" className="inline-flex items-center min-h-[44px] text-accent font-semibold hover:text-accent-bright transition-colors">Voir les tarifs →</Link>
+          <Link href="/concepts" className="inline-flex items-center min-h-[44px] text-accent font-semibold hover:text-accent-bright transition-colors">Voir des exemples de sites →</Link>
+        </nav>
       </div>
     </section>
   )

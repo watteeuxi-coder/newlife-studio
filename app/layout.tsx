@@ -7,6 +7,8 @@ import Footer from '@/components/layout/Footer'
 import ProjectCta from '@/components/layout/ProjectCta'
 import MotionProvider from '@/components/layout/MotionProvider'
 import Spotlight from '@/components/layout/Spotlight'
+import JsonLd from '@/components/layout/JsonLd'
+import { businessJsonLd } from '@/lib/schema'
 import './globals.css'
 
 const spaceGrotesk = Space_Grotesk({
@@ -21,37 +23,17 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 })
 
-const HOME_DESCRIPTION =
-  'Création de sites web à Rouen et ses alentours pour commerçants, artisans et indépendants. Sites vitrine, e-commerce, refonte.'
-
+// Valeurs par défaut : chaque page définit son title, sa description et son canonical (pageMetadata, lib/seo.ts)
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_CONFIG.siteUrl),
   title: {
-    default: 'NEWLIFE STUDIO — Une nouvelle vie pour ton business en ligne',
+    default: 'Création de site web à Rouen — NEWLIFE STUDIO',
     template: '%s — NEWLIFE STUDIO',
   },
-  description: HOME_DESCRIPTION,
-  keywords: [
-    'création site web',
-    'site vitrine',
-    'freelance web',
-    'refonte site',
-    'studio web',
-  ],
-  alternates: { canonical: '/' },
-  openGraph: {
-    title: 'NEWLIFE STUDIO — Nouvelle vie pour ton business en ligne',
-    description: HOME_DESCRIPTION,
-    url: '/',
-    siteName: 'NEWLIFE STUDIO',
-    locale: 'fr_FR',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'NEWLIFE STUDIO — Nouvelle vie pour ton business en ligne',
-    description: HOME_DESCRIPTION,
-  },
+  description:
+    'Création de site web à Rouen et alentours pour commerçants, artisans et indépendants. Site vitrine dès 299 €, design sur mesure, pensé mobile. Réponse sous 24h.',
+  applicationName: 'NEWLIFE STUDIO',
+  openGraph: { siteName: 'NEWLIFE STUDIO', locale: 'fr_FR', type: 'website' },
   robots: { index: true, follow: true },
 }
 
@@ -63,6 +45,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr" className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
       <body>
+        {/* Fiche entreprise pour Google (lib/schema.ts) : infos vraies uniquement, pas d'adresse */}
+        <JsonLd data={businessJsonLd()} />
         {/* Thème clair sur tout le site (tokens dans globals.css) */}
         <div data-theme="light">
           <MotionProvider>

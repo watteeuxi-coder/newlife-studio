@@ -4,9 +4,9 @@ import { ABOUT, aboutReady } from '@/lib/content'
 import { pageMetadata } from '@/lib/seo'
 
 export const metadata = pageMetadata({
-  title: 'À propos',
+  title: 'Ilan, créateur de sites web à Rouen',
   description:
-    'Ilan, créateur de sites web pour les commerçants, artisans et indépendants de Rouen et ses alentours.',
+    'Moi c’est Ilan : je crée des sites web pour les commerçants, artisans et indépendants de Rouen, Bois-Guillaume, Mont-Saint-Aignan, Bihorel et Darnétal.',
   path: '/a-propos',
   noindex: !aboutReady(),
 })

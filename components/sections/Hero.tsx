@@ -147,15 +147,13 @@ export default function Hero() {
             {/* Mobile : 2 cartes au-dessus du petit texte */}
             {mobilePair([0, 1], 0.3, 'mb-7')}
 
-            <motion.p
-              className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-accent mb-6"
-              {...fade(0)}
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-accent-brand" aria-hidden="true" />
-              Studio web · Rouen et alentours
-            </motion.p>
-
+            {/* h1 = mots-clés (petite ligne) + slogan. Jamais animé : c'est l'élément LCP */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-balance text-text-base mb-6">
+              <span className="flex items-center justify-center gap-2 text-xs leading-4 font-semibold tracking-widest uppercase text-accent mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent-brand" aria-hidden="true" />
+                Création de site web à Rouen
+                <span className="sr-only"> : </span>
+              </span>
               Une{' '}
               <span className={handAccent}>nouvelle vie</span>{' '}
               pour ton business en ligne
