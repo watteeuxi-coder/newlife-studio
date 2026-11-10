@@ -46,8 +46,8 @@ export type LiquidNavbarProps = {
   /** index de la page active, -1 = aucune */
   active: number
   onChange?: (index: number, item: LiquidNavItem) => void
-  /** true : icônes seules ; "below-lg" : icônes seules sous 1024 px */
-  compact?: boolean | "below-lg"
+  /** true : icônes seules ; "below-lg" : icônes seules sous 1024 px ; "stacked" : icône + petit libellé dessous (barre d'appli) */
+  compact?: boolean | "below-lg" | "stacked"
   /** dessine l'eau en WebGL (sinon goutte CSS) */
   webgl?: boolean
   /** réfraction du fond (Chrome uniquement) */
@@ -102,6 +102,8 @@ const NIMBUS_CSS = `
 .nimbus-nav[data-compact="true"] .nimbus-item{padding:0 13px}
 .nimbus-nav[data-compact="true"] .nimbus-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media (max-width:1023px){.nimbus-nav[data-compact="below-lg"] .nimbus-item{padding:0 13px}.nimbus-nav[data-compact="below-lg"] .nimbus-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
+.nimbus-nav[data-compact="stacked"]{--n-tint:rgba(255,255,255,.8);gap:0;padding:5px}
+.nimbus-nav[data-compact="stacked"] .nimbus-item{flex-direction:column;gap:3px;height:54px;min-width:60px;padding:0 6px;font-size:11px;font-weight:600;letter-spacing:0}
 @media (prefers-reduced-motion:reduce){.nv-ico svg,.nv-ico::before,.nv-ico::after{animation:none!important;transition:none}}
 `
 

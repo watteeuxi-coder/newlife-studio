@@ -270,6 +270,33 @@ main > section:first-child:not(#top) {
   }
 }
 
+/* Hero : cartes d'infos en fondu CSS, lancé dès le 1er affichage (pas besoin du JavaScript).
+   Délai max 0,24 s + 0,3 s → tout est visible 0,54 s après le 1er affichage. Reduced-motion : affichées d'emblée. */
+.hero-fact {
+  animation: hero-fact-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes hero-fact-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-fact {
+    animation: none;
+  }
+}
+
+/* Hero desktop : moins de vide sous les pastilles (≈ 90px jusqu'au titre de la section suivante, au lieu de 192px) */
+#top {
+  padding-bottom: 24px;
+}
+@media (min-width: 641px) {
+  #top + section {
+    padding-top: 64px;
+  }
+}
+
 /* Hero : moins d'espace sous les pastilles en mobile */
 @media (max-width: 640px) {
   #top {

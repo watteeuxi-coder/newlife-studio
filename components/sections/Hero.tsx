@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { motion, useReducedMotion } from 'framer-motion'
 import { waLink, PERF_FLOOR } from '@/lib/config'
 import { Send, PencilLine } from 'lucide-react'
 import WaIcon from '@/components/ui/WaIcon'
@@ -10,7 +9,7 @@ import { handAccent } from '@/lib/fonts'
 
 // Cartes d'infos. Mobile : elles encadrent le titre (2 au-dessus du petit texte, 2 sous le lien WhatsApp),
 // inclinées en sens opposés et débordant un peu vers les bords. lg : cartes flottantes autour du titre (inchangé).
-// La rotation est sur l'élément interne : framer-motion pilote le transform de l'élément externe (fondu).
+// La rotation est sur l'élément interne : l'animation CSS d'apparition pilote le transform de l'élément externe.
 const FACT_POSITIONS = [
   'lg:left-0 lg:top-6',
   'lg:right-0 lg:top-12',
@@ -81,17 +80,10 @@ const MARQUEE = [
 const pill = 'inline-flex items-center gap-2 whitespace-nowrap rounded-full border font-medium'
 
 export default function Hero() {
-  const reduceMotion = useReducedMotion()
-
-  // Fondu léger (opacité + 8px). Le h1 n'est jamais animé : c'est l'élément LCP.
-  const fade = (delay: number) =>
-    reduceMotion
-      ? {}
-      : {
-          initial: { opacity: 0, y: 8 },
-          animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1], delay },
-        }
+  // Titre, sous-titre et boutons : affichés tout de suite (pas de fondu, LCP).
+  // Cartes : fondu CSS (.hero-fact, globals.css) qui démarre au 1er affichage, sans attendre le JavaScript.
+  // Délais 0 à 0,24 s + 0,3 s d'animation → tout est visible 0,54 s après le 1er affichage.
+  const fade = (delay: number) => ({ className: 'hero-fact', style: { animationDelay: `${delay}s` } })
 
   // Textes courts en mobile (lg:hidden), textes complets en desktop (hidden lg:inline) — desktop inchangé
   const facts = [
@@ -132,9 +124,9 @@ export default function Hero() {
   const mobilePair = (idx: [number, number], delay: number, spacing: string) => (
     <ul className={`lg:hidden flex justify-between gap-3 -mx-4 text-left ${spacing}`} aria-label="En bref">
       {idx.map((i, k) => (
-        <motion.li key={i} className="flex-1 max-w-[11.5rem]" {...fade(delay + k * 0.12)}>
+        <li key={i} className={`flex-1 max-w-[11.5rem] ${fade(0).className}`} style={fade(delay + k * 0.08).style}>
           <div className={`${factCard} ${FACT_TILTS[i]}`}>{facts[i]}</div>
-        </motion.li>
+        </li>
       ))}
     </ul>
   )
@@ -147,7 +139,7 @@ export default function Hero() {
         <div className="relative">
           <div className="relative z-[1] max-w-2xl mx-auto text-center pt-4 sm:pt-14 lg:pt-28 lg:pb-28">
             {/* Mobile : 2 cartes au-dessus du petit texte */}
-            {mobilePair([0, 1], 0.3, 'mb-7')}
+            {mobilePair([0, 1], 0, 'mb-7')}
 
             {/* h1 = mots-clés (petite ligne) + slogan. Jamais animé : c'est l'élément LCP */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-balance text-text-base mb-6">
@@ -161,12 +153,12 @@ export default function Hero() {
               pour ton business en ligne
             </h1>
 
-            <motion.p className="text-lg text-text-dim leading-relaxed max-w-xl mx-auto mb-8" {...fade(0.1)}>
+            <p className="text-lg text-text-dim leading-relaxed max-w-xl mx-auto mb-8">
               Des sites web pour commerçants et indépendants, faits pour que tes clients te trouvent et te contactent.
-            </motion.p>
+            </p>
 
             {/* Mobile : un seul gros bouton, WhatsApp en lien plus léger dessous. Desktop : 2 boutons côte à côte. */}
-            <motion.div className="flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-3" {...fade(0.2)}>
+            <div className="flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-3">
               <Link
                 href="/contact"
                 className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-full bg-accent text-white font-semibold hover:bg-accent-bright active:scale-[0.98] transition-all"
@@ -183,18 +175,18 @@ export default function Hero() {
                 <span className="lg:hidden">Ou écris-moi sur WhatsApp</span>
                 <span className="hidden lg:inline">WhatsApp</span>
               </a>
-            </motion.div>
+            </div>
 
             {/* Mobile : 2 cartes sous le lien WhatsApp */}
-            {mobilePair([2, 3], 0.45, 'mt-5')}
+            {mobilePair([2, 3], 0.16, 'mt-5')}
           </div>
 
           {/* Desktop : cartes flottantes autour du titre (inchangé) */}
           <ul className="hidden lg:block" aria-label="En bref">
             {facts.map((content, i) => (
-              <motion.li key={i} className={`lg:absolute ${FACT_POSITIONS[i]}`} {...fade(0.35 + i * 0.12)}>
+              <li key={i} className={`lg:absolute ${FACT_POSITIONS[i]} ${fade(0).className}`} style={fade(i * 0.08).style}>
                 <div className={`${factCard} ${FACT_TILTS[i]}`}>{content}</div>
-              </motion.li>
+              </li>
             ))}
           </ul>
         </div>

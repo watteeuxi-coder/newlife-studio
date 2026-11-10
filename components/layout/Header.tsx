@@ -76,7 +76,7 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile : barre façon appli en bas, icônes seules, goutte en CSS (pas de WebGL) */}
+      {/* Mobile : barre façon appli en bas, icône + petit libellé, goutte en CSS (pas de WebGL) */}
       <div
         className="md:hidden fixed inset-x-0 z-40 flex justify-center pointer-events-none"
         style={{ bottom: 'calc(12px + env(safe-area-inset-bottom, 0px))' }}
@@ -85,7 +85,7 @@ export default function Header() {
           items={ITEMS}
           active={active}
           onChange={(i) => setPending(i)}
-          compact
+          compact="stacked"
           className="pointer-events-auto"
         />
       </div>
