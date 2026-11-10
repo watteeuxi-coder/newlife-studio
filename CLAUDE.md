@@ -58,7 +58,7 @@ Couleurs en variables CSS (`app/globals.css`, bloc `[data-theme='light']`) expos
 - Grille uniquement dans le hero de l'accueil (`.hero-grid`, estompée vers le bas). `.grad-text` = dégradé cyan-strong → cyan-deep sur 1–2 mots clés.
 
 - Accent manuscrit : **Caveat** 700 via `handAccent` de `lib/fonts.ts` (« nouvelle vie » du hero, « Ilan » sur /a-propos), jamais animé (LCP).
-- Score « Performance mobile de ce site » du hero : `PERF_SCORE` dans `lib/config.ts`, **valeur mesurée** (Lighthouse mobile, médiane de 3) — à remesurer après chaque changement visuel de l'accueil. Lighthouse mobile : rester > 90 sur chaque page, accessibilité 100.
+- Score du hero : « 90+/100 · Performance mobile (de ce site) », plancher `PERF_FLOOR` dans `lib/config.ts` (choix de l'utilisateur, plus de chiffre exact). Doit rester vrai : remesurer (Lighthouse mobile, médiane de 3) après chaque changement visuel de l'accueil, ≥ 90 obligatoire. Lighthouse mobile : rester > 90 sur chaque page, accessibilité 100.
 - Titres de cartes : un niveau sous le titre de leur section (h1 de page → cartes en h2).
 - Image de partage `app/opengraph-image.tsx` : thème clair, slogan, « Studio web · Rouen et alentours » (pas de délai ni de mention de l'IA).
 

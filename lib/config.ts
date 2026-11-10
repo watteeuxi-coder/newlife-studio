@@ -7,12 +7,12 @@ export const SITE_CONFIG = {
 } as const
 
 /**
- * Score Lighthouse « Performance » mobile de l'accueil de CE site, affiché dans le hero.
- * Valeur MESURÉE uniquement (règle : aucun chiffre inventé) — à remesurer après chaque refonte visuelle.
- * Mesure : Lighthouse 12.6.1, mobile, médiane de 3 passages — de préférence sur l'URL de production.
+ * Performance mobile de CE site, affichée dans le hero sous la forme « 90+/100 » (choix de l'utilisateur, 2026-11-10) :
+ * un plancher plutôt qu'un chiffre exact, pour ne pas le changer à chaque mesure.
+ * Doit rester VRAI : Lighthouse mobile (médiane de 3) ≥ 90 sur l'accueil. Dernière mesure : 94 (2026-11-10).
+ * Si une mesure passe sous 90, corriger le site (ou ce texte) avant de publier.
  */
-// Mesuré le 2026-11-09 (Lighthouse mobile, build de production en local) : 95 / 95 / 95 → 95. Valeur choisie par l’utilisateur.
-export const PERF_SCORE = 95
+export const PERF_FLOOR = 90
 
 export function waLink(): string {
   return `https://wa.me/${SITE_CONFIG.waNumber}?text=${encodeURIComponent(
