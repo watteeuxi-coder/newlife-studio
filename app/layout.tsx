@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Space_Grotesk, JetBrains_Mono } from 'next/font/google'
+import { JetBrains_Mono } from 'next/font/google'
 import { SITE_CONFIG } from '@/lib/config'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
@@ -10,16 +10,14 @@ import JsonLd from '@/components/layout/JsonLd'
 import { businessJsonLd } from '@/lib/schema'
 import './globals.css'
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-display',
-  display: 'swap',
-})
-
+// Petits numéros et codes postaux, jamais dans le titre : pas de préchargement.
+// Elle se charge seulement quand du texte en font-mono s'affiche. Le texte et les titres sont en police
+// système (--font-display, globals.css) : rien à télécharger pour le titre de l'accueil.
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
   display: 'swap',
+  preload: false,
 })
 
 // Valeurs par défaut : chaque page définit son title, sa description et son canonical (pageMetadata, lib/seo.ts)
@@ -42,7 +40,7 @@ export const viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
+    <html lang="fr" className={jetbrainsMono.variable}>
       <body>
         {/* Fiche entreprise pour Google (lib/schema.ts) : infos vraies uniquement, pas d'adresse */}
         <JsonLd data={businessJsonLd()} />

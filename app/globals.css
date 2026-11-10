@@ -3,8 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --font-display: 'Space Grotesk';
-  --font-mono: 'JetBrains Mono';
+  /* Police du texte et des titres : police système (rendu réel du site depuis juin 2026, aucun téléchargement).
+     --font-mono vient de next/font (JetBrains Mono, app/layout.tsx) : ne pas la redéfinir ici. */
+  --font-display: -apple-system, BlinkMacSystemFont, sans-serif;
   --accent-rgb: 34, 211, 238;
   --glow-soft: 0 0 0 1px rgba(var(--accent-rgb), 0.18),
                0 24px 70px -28px rgba(var(--accent-rgb), 0.45);

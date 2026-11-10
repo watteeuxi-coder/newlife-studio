@@ -65,8 +65,9 @@ Couleurs en variables CSS (`app/globals.css`, bloc `[data-theme='light']`) expos
 
 ## Polices (exactes)
 
-- **Space Grotesk** → `--font-display` → `font-display` (tout le site, titres et texte)
-- **JetBrains Mono** → `--font-mono` → `font-mono` (numéros `01/02/03`, détails « techniques »)
+- **Police système** (`-apple-system, BlinkMacSystemFont, sans-serif`) → `--font-display` → `font-display` (tout le site, titres et texte). C'est le rendu réel du site depuis juin 2026 : Space Grotesk était déclarée mais écrasée par `globals.css`, jamais affichée. Retirée le 2026-11-10 (22 Ko préchargés pour rien). La remettre changerait l'apparence de tous les titres : à décider avec l'utilisateur.
+- **JetBrains Mono** → `--font-mono` → `font-mono` (numéros `01/02/03`, détails « techniques »), sans préchargement. Ne pas redéfinir `--font-mono` dans `globals.css`.
+- **Caveat 700** (accent manuscrit) : fichier local réduit aux lettres de « nouvelle vie » et « Ilan » (`app/fonts/caveat-700-accent.woff2`, 4,9 Ko, préchargé). Nouveau mot en Caveat → régénérer le fichier (voir `lib/fonts.ts`).
 - Les fichiers `app/fonts/Geist*.woff` sont des restes du template, non utilisés.
 
 ## Animations existantes
