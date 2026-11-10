@@ -14,7 +14,7 @@ export const FAQ = [
   },
   {
     q: 'Pourrai-je modifier mon site moi-même ?',
-    a: "Oui. Je peux te livrer une solution facile à modifier et te former. Si tu préfères ne pas t'en occuper, la maintenance à 30 €/mois, sans engagement, couvre les petites modifications (textes, photos, horaires) jusqu'à 30 min par mois.",
+    a: "Oui. Je peux te livrer une solution facile à modifier et je t'explique comment faire. Si tu préfères ne pas t'en occuper, la maintenance à 30 €/mois, sans engagement, couvre les petites modifications (textes, photos, horaires) jusqu'à 30 min par mois.",
   },
   {
     q: 'Comment se passe le paiement ?',

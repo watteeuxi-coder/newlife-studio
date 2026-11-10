@@ -9,7 +9,7 @@ import { faqJsonLd } from '@/lib/schema'
 export const metadata = pageMetadata({
   title: 'Tarifs site vitrine à Rouen, dès 299 €',
   description:
-    'Site vitrine, e-commerce ou refonte à Rouen : forfaits dès 299 €, 2 séries de retouches incluses, paiement en deux fois. Maintenance 30 €/mois, sans engagement.',
+    'Site vitrine ou refonte à Rouen : forfaits dès 299 €, 2 séries de retouches incluses, paiement en deux fois. Boutique en ligne sur devis. Maintenance 30 €/mois.',
   path: '/offre',
 })
 

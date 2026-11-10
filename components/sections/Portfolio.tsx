@@ -8,7 +8,7 @@ import ProjectShot from '@/components/ui/ProjectShot'
 
 function ArrowIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-4 h-4" aria-hidden="true">
       <path d="M7 17 17 7M9 7h8v8" />
     </svg>
   )
@@ -28,48 +28,49 @@ export default function Portfolio({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 
           <Title>Exemples de sites vitrine&nbsp;: <span className="grad-text">trois métiers, trois démos</span></Title>
           <p>
             Les premiers avis clients arrivent bientôt. En attendant, voilà ce que je sais faire.
-            Clique sur un site pour le tester.
+            Ouvre un concept pour voir le besoin et ce que j&rsquo;ai construit, ou teste directement la démo.
           </p>
         </motion.div>
 
         <div className="spot-group grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
           {PROJECTS.map((p, i) => (
             <motion.article
-              key={p.title}
+              key={p.slug}
               {...revealItem(i)}
               className="spot group flex flex-col rounded-2xl border border-line bg-surface overflow-hidden shadow-soft hover:border-accent/40 hover:-translate-y-1 transition-all duration-300"
             >
-              {/* Screenshot */}
-              <a
-                href={p.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Tester la démo ${p.title}`}
-                className="relative block h-52 p-5 bg-void"
-              >
+              {/* Capture → page du concept */}
+              <Link href={`/concepts/${p.slug}`} tabIndex={-1} aria-hidden="true" className="relative block h-52 p-5 bg-void">
                 <ProjectShot title={p.title} cat={p.cat} image={p.image} bg={p.bg} />
-              </a>
+              </Link>
               {/* Meta */}
-              <div className="flex items-center justify-between p-5 mt-auto">
-                <div>
-                  <div className="flex items-center gap-2">
-                    {/* Un cran sous le titre de section (h1 sur /concepts → h2) */}
-                    <CardHeading className="text-text-base font-semibold">{p.title}</CardHeading>
-                    <span className="px-2 py-0.5 rounded-full border border-accent/30 text-accent text-[10px] font-semibold uppercase tracking-wider">
-                      Démo
-                    </span>
-                  </div>
-                  <div className="text-text-muted text-xs mt-1">{p.cat}</div>
+              <div className="p-5 mt-auto">
+                <div className="flex items-center gap-2">
+                  {/* Un cran sous le titre de section (h1 sur /concepts → h2) */}
+                  <CardHeading className="text-text-base font-semibold">{p.title}</CardHeading>
+                  <span className="px-2 py-0.5 rounded-full border border-accent/30 text-accent text-[10px] font-semibold uppercase tracking-wider">
+                    Démo
+                  </span>
                 </div>
-                <a
-                  href={p.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Tester la démo ${p.title}`}
-                  className="text-text-muted group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200"
-                >
-                  <ArrowIcon />
-                </a>
+                <div className="text-text-muted text-xs mt-1">{p.cat}</div>
+                <div className="flex flex-wrap items-center justify-between gap-x-4 mt-3">
+                  <Link
+                    href={`/concepts/${p.slug}`}
+                    className="inline-flex items-center min-h-[44px] text-accent text-sm font-semibold hover:text-accent-bright transition-colors"
+                  >
+                    Voir le concept →<span className="sr-only"> {p.title}</span>
+                  </Link>
+                  <a
+                    href={p.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 min-h-[44px] text-text-dim text-sm font-semibold hover:text-text-base transition-colors"
+                  >
+                    Tester la démo
+                    <ArrowIcon />
+                    <span className="sr-only"> {p.title} (nouvel onglet)</span>
+                  </a>
+                </div>
               </div>
             </motion.article>
           ))}
