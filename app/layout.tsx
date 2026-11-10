@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Space_Grotesk, JetBrains_Mono } from 'next/font/google'
 import { SITE_CONFIG } from '@/lib/config'
-import WhatsAppButton from '@/components/ui/WhatsAppButton'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import ProjectCta from '@/components/layout/ProjectCta'
@@ -58,8 +57,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <ProjectCta />
             <Footer />
 
-            {/* Bouton WhatsApp flottant (mobile) */}
-            <WhatsAppButton />
             <Spotlight />
           </MotionProvider>
         </div>
