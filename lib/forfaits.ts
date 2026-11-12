@@ -25,7 +25,7 @@ export const PLANS: Plan[] = [
   {
     name: 'Starter',
     price: '299 €',
-    tag: 'Idéal pour lancer ton activité avec une présence pro.',
+    tag: 'Une page pour présenter ton activité et te faire contacter.',
     includes: null,
     features: [
       'Site vitrine 1 page',
@@ -40,7 +40,7 @@ export const PLANS: Plan[] = [
   {
     name: 'Pro',
     price: '499 €',
-    tag: 'Pour une présence complète qui convertit vraiment.',
+    tag: 'Plusieurs pages pour tout montrer : tes services, tes prix, ta zone.',
     includes: 'Starter',
     features: [
       "Site jusqu'à 5 pages",
@@ -55,12 +55,12 @@ export const PLANS: Plan[] = [
   {
     name: 'Premium',
     price: '799 €',
-    tag: "L'expérience complète, taillée pour vendre et durer.",
+    tag: 'Un site complet, et je t’explique comment le gérer.',
     includes: 'Pro',
     features: [
       'Site complet jusqu’à 10 pages',
       'Animations cinématiques',
-      'SEO avancé & optimisation conversion',
+      'SEO avancé et parcours de contact travaillé',
       'Accompagnement à la prise en main : je t’explique comment gérer ton site',
       'Livraison en 10 jours',
     ],

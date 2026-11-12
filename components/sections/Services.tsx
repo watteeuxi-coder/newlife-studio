@@ -9,7 +9,7 @@ import { revealHead, revealItem } from '@/lib/motion'
 const SERVICES: { title: string; desc: string; Icon: LucideIcon; tone: string; note?: string }[] = [
   {
     title: 'Site vitrine',
-    desc: 'Un site élégant qui présente ton activité et inspire confiance dès la première seconde.',
+    desc: 'Un site clair qui présente ton activité, tes prix et tes horaires, avec un moyen simple de te contacter.',
     Icon: Monitor,
     tone: 'bg-pill-cyan-bg border-pill-cyan-line text-pill-cyan-text',
   },
@@ -22,13 +22,13 @@ const SERVICES: { title: string; desc: string; Icon: LucideIcon; tone: string; n
   },
   {
     title: 'Refonte',
-    desc: 'Je modernise ton site existant pour le rendre rapide, beau et réellement efficace.',
+    desc: 'Je reprends ton site actuel : un design à jour, rapide sur téléphone, avec des boutons de contact bien visibles.',
     Icon: RefreshCw,
     tone: 'bg-pill-amber-bg border-pill-amber-line text-pill-amber-text',
   },
   {
     title: 'SEO',
-    desc: 'Je te rends visible sur Google pour attirer des clients qualifiés, sans dépendre de la pub.',
+    desc: 'Je soigne ce que Google lit sur ton site : titres, descriptions, ta ville et tes services. Pas de promesse de 1re place, mais des bases solides.',
     Icon: Search,
     tone: 'bg-pill-rose-bg border-pill-rose-line text-pill-rose-text',
   },
