@@ -16,8 +16,7 @@ export const metadata = pageMetadata({
 export default function OffrePage() {
   return (
     <>
-      {/* FAQ complète uniquement ici (l'accueil en reprend 3 : pas de doublon de balisage).
-          JSON-LD en premier : la dernière section doit rester le dernier enfant de <main> (fondu du bloc final, globals.css) */}
+      {/* FAQ complète uniquement ici (l'accueil en reprend 3 : pas de doublon de balisage) */}
       <JsonLd data={faqJsonLd(FAQ)} />
       <Services titleAs="h1" />
       <Forfaits />

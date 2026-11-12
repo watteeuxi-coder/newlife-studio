@@ -46,7 +46,6 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      {/* JSON-LD en premier : la dernière section doit rester le dernier enfant de <main> (fondu du bloc final, globals.css) */}
       <JsonLd
         data={breadcrumbJsonLd([
           { name: 'Concepts', path: '/concepts' },
