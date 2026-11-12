@@ -3,6 +3,7 @@ import { aboutReady } from '@/lib/content'
 import { ZONES } from '@/lib/zones'
 import { PLANS, MAINTENANCE } from '@/lib/forfaits'
 import type { FaqEntry } from '@/lib/faq'
+import type { Metier } from '@/lib/metiers'
 
 /**
  * Données structurées (JSON-LD) pour Google. Règle du projet : uniquement des infos vraies.
@@ -92,5 +93,30 @@ export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
       name: it.name,
       item: `${url}${it.path}`,
     })),
+  }
+}
+
+/** Page par métier : le service, rattaché à l'entreprise du layout (@id), avec la zone et le prix de départ. */
+export function serviceJsonLd(m: Metier) {
+  const url = SITE_CONFIG.siteUrl
+  const plan = PLANS.find((p) => p.name === m.formule.name)
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: `${m.serviceName} à Rouen`,
+    serviceType: 'Création de site web',
+    description: m.seo.description,
+    url: `${url}/${m.slug}`,
+    provider: { '@id': `${url}/#business` },
+    areaServed: ZONES.map((z) => ({ '@type': 'City', name: z.city })),
+    ...(plan
+      ? {
+          offers: {
+            '@type': 'Offer',
+            name: `Forfait ${plan.name}`,
+            priceSpecification: { '@type': 'PriceSpecification', minPrice: euros(plan.price), priceCurrency: 'EUR' },
+          },
+        }
+      : {}),
   }
 }
