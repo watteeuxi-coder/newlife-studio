@@ -74,10 +74,10 @@ export default function Services({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | '
       <div className="wrap">
         <motion.div className="section-head" {...revealHead}>
           <span className="kicker">Mes services</span>
-          <Title>Site vitrine, refonte, SEO&nbsp;: <span className="grad-text">tout pour exister en ligne</span></Title>
+          <Title>Site vitrine à Rouen&nbsp;: <span className="grad-text">tout pour exister en ligne</span></Title>
           <p>
-            Du premier site vitrine à la refonte de ton site actuel&nbsp;: je construis, je modernise et je t&rsquo;aide à
-            être trouvé sur Google.
+            Pour les commerçants, artisans et indépendants de Rouen et des alentours&nbsp;: du premier site vitrine à la
+            refonte de ton site actuel, je construis, je modernise et je t&rsquo;aide à être trouvé sur Google.
           </p>
         </motion.div>
 
