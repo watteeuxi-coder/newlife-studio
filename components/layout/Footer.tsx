@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Phone } from 'lucide-react'
+import { Mail, Phone } from 'lucide-react'
 import { waLink, telLink, PHONE, SITE_CONFIG } from '@/lib/config'
 import { InstagramIcon, TikTokIcon } from '@/components/ui/SocialIcons'
 import { PAGES, LEGAL_PAGES } from '@/lib/nav'
@@ -59,7 +59,8 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href={`mailto:${SITE_CONFIG.email}`} className={`${linkClass} break-all`}>
+              <a href={`mailto:${SITE_CONFIG.email}`} className={`${linkClass} gap-2 break-all`}>
+                <Mail className="w-4 h-4 text-accent shrink-0" strokeWidth={1.8} aria-hidden="true" />
                 {SITE_CONFIG.email}
               </a>
             </li>
