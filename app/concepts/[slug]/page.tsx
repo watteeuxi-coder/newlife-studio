@@ -6,6 +6,7 @@ import { PROJECTS, getProject } from '@/lib/projects'
 import { pageMetadata } from '@/lib/seo'
 import { PLANS, SUR_MESURE } from '@/lib/forfaits'
 import { formuleSlug } from '@/lib/formules'
+import { METIERS } from '@/lib/metiers'
 import { breadcrumbJsonLd } from '@/lib/schema'
 import JsonLd from '@/components/layout/JsonLd'
 
@@ -43,6 +44,7 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
   const p = getProject(params.slug)
   if (!p) notFound()
   const others = PROJECTS.filter((o) => o.slug !== p.slug)
+  const metier = METIERS.find((m) => m.demo === p.slug)
 
   return (
     <>
@@ -134,6 +136,11 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
             <span className="kicker">À Rouen</span>
             <h2 className="text-2xl sm:text-3xl font-bold text-text-base mb-4">{p.local.title}</h2>
             <p className="text-text-dim leading-relaxed">{p.local.text}</p>
+            {metier && (
+              <Link href={`/${metier.slug}`} className={`${linkClass} mt-4`}>
+                Tout savoir&nbsp;: {metier.serviceName.toLowerCase()} à Rouen →
+              </Link>
+            )}
           </div>
           <div className="rounded-2xl border border-line bg-void p-6 sm:p-7">
             <p className="text-xs font-semibold uppercase tracking-widest text-text-muted mb-2">Formule conseillée</p>

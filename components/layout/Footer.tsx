@@ -4,6 +4,7 @@ import { waLink, telLink, PHONE, SITE_CONFIG } from '@/lib/config'
 import { InstagramIcon, TikTokIcon } from '@/components/ui/SocialIcons'
 import { PAGES, LEGAL_PAGES } from '@/lib/nav'
 import { ZONES } from '@/lib/zones'
+import { METIERS } from '@/lib/metiers'
 import WaIcon from '@/components/ui/WaIcon'
 
 const linkClass =
@@ -13,7 +14,7 @@ export default function Footer() {
   return (
     // pb-28 sur mobile : la barre de navigation du bas ne recouvre pas les derniers liens
     <footer className="tone-base relative z-[1] pt-12 pb-28 md:pb-10">
-      <div className="wrap grid gap-10 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.2fr_1.2fr]">
+      <div className="wrap grid gap-10 md:grid-cols-2 lg:grid-cols-[1.3fr_0.8fr_1fr_1.1fr_1.1fr]">
         <div>
           <Link href="/" className="inline-flex items-center gap-2" aria-label="NEWLIFE STUDIO — Accueil">
             <span className="w-6 h-6 text-accent">
@@ -38,6 +39,17 @@ export default function Footer() {
             {PAGES.map((p) => (
               <li key={p.href}>
                 <Link href={p.href} className={linkClass}>{p.label}</Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <nav aria-label="Sites par métier">
+          <p className="text-xs font-semibold uppercase tracking-widest text-text-muted mb-2">Par métier</p>
+          <ul>
+            {METIERS.map((m) => (
+              <li key={m.slug}>
+                <Link href={`/${m.slug}`} className={linkClass}>{m.label}</Link>
               </li>
             ))}
           </ul>

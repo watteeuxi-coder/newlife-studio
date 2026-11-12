@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Store, Hammer, Dumbbell, House, type LucideIcon } from 'lucide-react'
 import { revealHead, revealItem } from '@/lib/motion'
@@ -7,6 +8,8 @@ import { revealHead, revealItem } from '@/lib/motion'
 const PROFILES = [
   {
     who: 'Commerçants',
+    href: '/site-web-barbershop-rouen',
+    linkLabel: 'Exemple : site pour barbershop',
     Icon: Store as LucideIcon,
     tone: 'bg-pill-cyan-bg border-pill-cyan-line text-pill-cyan-text',
     examples: 'Boutique, barbershop, restaurant…',
@@ -14,6 +17,8 @@ const PROFILES = [
   },
   {
     who: 'Artisans',
+    href: '/site-web-artisan-rouen',
+    linkLabel: 'Site web pour artisan',
     Icon: Hammer as LucideIcon,
     tone: 'bg-pill-green-bg border-pill-green-line text-pill-green-text',
     examples: null,
@@ -21,6 +26,8 @@ const PROFILES = [
   },
   {
     who: 'Coachs',
+    href: '/site-web-coach-sportif-rouen',
+    linkLabel: 'Site web pour coach',
     Icon: Dumbbell as LucideIcon,
     tone: 'bg-pill-amber-bg border-pill-amber-line text-pill-amber-text',
     examples: null,
@@ -28,6 +35,8 @@ const PROFILES = [
   },
   {
     who: 'Immobilier',
+    href: '/site-web-agent-immobilier-rouen',
+    linkLabel: 'Site web pour l’immobilier',
     Icon: House as LucideIcon,
     tone: 'bg-pill-rose-bg border-pill-rose-line text-pill-rose-text',
     examples: null,
@@ -66,6 +75,9 @@ export default function PourQui() {
                 {p.examples && <p className="text-text-muted text-xs mt-1">{p.examples}</p>}
               </div>
               <p className="text-text-dim leading-relaxed mt-3">{p.text}</p>
+              <Link href={p.href} className="inline-flex items-center min-h-[44px] mt-2 text-accent font-semibold hover:text-accent-bright transition-colors">
+                {p.linkLabel} →
+              </Link>
             </motion.li>
           ))}
         </ul>
