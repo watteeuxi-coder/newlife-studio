@@ -4,7 +4,22 @@ export const SITE_CONFIG = {
   waText:
     "Bonjour Ilan ! Je viens de ton site et j'aimerais te parler de mon projet.",
   email: 'newlifee2k26@gmail.com',
+  /** Comptes pros (validés par l'utilisateur le 2026-11-12) : footer + `sameAs` des données structurées */
+  social: {
+    instagram: { handle: '@newlifecode01', url: 'https://www.instagram.com/newlifecode01/' },
+    tiktok: { handle: '@nwlife01', url: 'https://www.tiktok.com/@nwlife01' },
+  },
 } as const
+
+/** Téléphone = même numéro que WhatsApp (dérivé de waNumber : les deux ne peuvent pas diverger). */
+export const PHONE = {
+  /** Format international pour `tel:` et les données structurées : +33769892000 */
+  e164: `+${SITE_CONFIG.waNumber}`,
+  /** Format affiché : 07 69 89 20 00 */
+  display: `0${SITE_CONFIG.waNumber.slice(2)}`.replace(/(\d{2})(?=\d)/g, '$1 '),
+}
+
+export const telLink = () => `tel:${PHONE.e164}`
 
 /**
  * Performance mobile de CE site, affichée dans le hero sous la forme « 90+/100 » (choix de l'utilisateur, 2026-11-10) :

@@ -143,14 +143,14 @@ body {
 .tone-tint + footer {
   --prev: var(--bg-tint);
 }
-/* Bloc final (hors <main>) : il suit la dernière section de la page */
-main:has(> .tone-base:last-child) + section {
+/* Bloc final (hors <main>) : il suit la dernière section de la page (of-type : les <script> JSON-LD ne comptent pas) */
+main:has(> section.tone-base:last-of-type) + section {
   --prev: var(--bg-base);
 }
-main:has(> .tone-white:last-child) + section {
+main:has(> section.tone-white:last-of-type) + section {
   --prev: var(--bg-white);
 }
-main:has(> .tone-tint:last-child) + section {
+main:has(> section.tone-tint:last-of-type) + section {
   --prev: var(--bg-tint);
 }
 
@@ -197,12 +197,12 @@ section {
 }
 
 /* 1re section d'une page : compense le header fixe (h-16 = 64px). Le hero (#top) gère son propre pt-16. */
-main > section:first-child:not(#top) {
+main > section:first-of-type:not(#top) {
   padding-top: calc(64px + 64px);
 }
 
 @media (max-width: 640px) {
-  main > section:first-child:not(#top) {
+  main > section:first-of-type:not(#top) {
     padding-top: calc(64px + 40px);
   }
 }

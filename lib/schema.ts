@@ -1,7 +1,9 @@
-import { SITE_CONFIG, waLink } from '@/lib/config'
+import { SITE_CONFIG, PHONE, waLink } from '@/lib/config'
+import { aboutReady } from '@/lib/content'
 import { ZONES } from '@/lib/zones'
 import { PLANS, MAINTENANCE } from '@/lib/forfaits'
 import type { FaqEntry } from '@/lib/faq'
+import type { Metier } from '@/lib/metiers'
 
 /**
  * Données structurées (JSON-LD) pour Google. Règle du projet : uniquement des infos vraies.
@@ -21,8 +23,17 @@ export function businessJsonLd() {
       'Création de sites web pour les commerçants, artisans et indépendants de Rouen et ses alentours : site vitrine, refonte, référencement et maintenance.',
     url,
     image: `${url}/opengraph-image`,
+    logo: `${url}/apple-icon`,
     email: SITE_CONFIG.email,
-    founder: { '@type': 'Person', name: 'Ilan' },
+    telephone: PHONE.e164,
+    // Fourchette des forfaits (le sur-mesure est sur devis)
+    priceRange: `${euros(PLANS[0].price)} € – ${euros(PLANS[PLANS.length - 1].price)} €`,
+    sameAs: [SITE_CONFIG.social.instagram.url, SITE_CONFIG.social.tiktok.url],
+    founder: {
+      '@type': 'Person',
+      name: 'Ilan',
+      ...(aboutReady() ? { url: `${url}/a-propos` } : {}),
+    },
     areaServed: ZONES.map((z) => ({
       '@type': 'City',
       name: z.city,
@@ -32,6 +43,7 @@ export function businessJsonLd() {
       '@type': 'ContactPoint',
       contactType: 'customer service',
       email: SITE_CONFIG.email,
+      telephone: PHONE.e164,
       url: waLink(),
       availableLanguage: 'French',
     },
@@ -66,5 +78,45 @@ export function faqJsonLd(items: FaqEntry[]) {
       name: f.q,
       acceptedAnswer: { '@type': 'Answer', text: f.a },
     })),
+  }
+}
+
+/** Fil d'Ariane (BreadcrumbList). `path` relatif, ex. '/concepts'. L'accueil est ajouté en premier. */
+export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
+  const url = SITE_CONFIG.siteUrl
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [{ name: 'Accueil', path: '' }, ...items].map((it, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: it.name,
+      item: `${url}${it.path}`,
+    })),
+  }
+}
+
+/** Page par métier : le service, rattaché à l'entreprise du layout (@id), avec la zone et le prix de départ. */
+export function serviceJsonLd(m: Metier) {
+  const url = SITE_CONFIG.siteUrl
+  const plan = PLANS.find((p) => p.name === m.formule.name)
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: `${m.serviceName} à Rouen`,
+    serviceType: 'Création de site web',
+    description: m.seo.description,
+    url: `${url}/${m.slug}`,
+    provider: { '@id': `${url}/#business` },
+    areaServed: ZONES.map((z) => ({ '@type': 'City', name: z.city })),
+    ...(plan
+      ? {
+          offers: {
+            '@type': 'Offer',
+            name: `Forfait ${plan.name}`,
+            priceSpecification: { '@type': 'PriceSpecification', minPrice: euros(plan.price), priceCurrency: 'EUR' },
+          },
+        }
+      : {}),
   }
 }

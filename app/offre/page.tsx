@@ -16,11 +16,11 @@ export const metadata = pageMetadata({
 export default function OffrePage() {
   return (
     <>
+      {/* FAQ complète uniquement ici (l'accueil en reprend 3 : pas de doublon de balisage) */}
+      <JsonLd data={faqJsonLd(FAQ)} />
       <Services titleAs="h1" />
       <Forfaits />
       <Faq />
-      {/* FAQ complète uniquement ici (l'accueil en reprend 3 : pas de doublon de balisage) */}
-      <JsonLd data={faqJsonLd(FAQ)} />
     </>
   )
 }

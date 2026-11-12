@@ -1,7 +1,10 @@
 import Link from 'next/link'
-import { waLink, SITE_CONFIG } from '@/lib/config'
+import { Mail, Phone } from 'lucide-react'
+import { waLink, telLink, PHONE, SITE_CONFIG } from '@/lib/config'
+import { InstagramIcon, TikTokIcon } from '@/components/ui/SocialIcons'
 import { PAGES, LEGAL_PAGES } from '@/lib/nav'
 import { ZONES } from '@/lib/zones'
+import { METIERS } from '@/lib/metiers'
 import WaIcon from '@/components/ui/WaIcon'
 
 const linkClass =
@@ -11,7 +14,7 @@ export default function Footer() {
   return (
     // pb-28 sur mobile : la barre de navigation du bas ne recouvre pas les derniers liens
     <footer className="tone-base relative z-[1] pt-12 pb-28 md:pb-10">
-      <div className="wrap grid gap-10 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.2fr_1.2fr]">
+      <div className="wrap grid gap-10 md:grid-cols-2 lg:grid-cols-[1.3fr_0.8fr_1fr_1.1fr_1.1fr]">
         <div>
           <Link href="/" className="inline-flex items-center gap-2" aria-label="NEWLIFE STUDIO — Accueil">
             <span className="w-6 h-6 text-accent">
@@ -41,6 +44,17 @@ export default function Footer() {
           </ul>
         </nav>
 
+        <nav aria-label="Sites par métier">
+          <p className="text-xs font-semibold uppercase tracking-widest text-text-muted mb-2">Par métier</p>
+          <ul>
+            {METIERS.map((m) => (
+              <li key={m.slug}>
+                <Link href={`/${m.slug}`} className={linkClass}>{m.label}</Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
         <div>
           <p className="text-xs font-semibold uppercase tracking-widest text-text-muted mb-2">Contact</p>
           <ul>
@@ -51,8 +65,27 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href={`mailto:${SITE_CONFIG.email}`} className={`${linkClass} break-all`}>
+              <a href={telLink()} className={`${linkClass} gap-2`}>
+                <Phone className="w-4 h-4 text-accent" strokeWidth={1.8} aria-hidden="true" />
+                {PHONE.display}
+              </a>
+            </li>
+            <li>
+              <a href={`mailto:${SITE_CONFIG.email}`} className={`${linkClass} gap-2 break-all`}>
+                <Mail className="w-4 h-4 text-accent shrink-0" strokeWidth={1.8} aria-hidden="true" />
                 {SITE_CONFIG.email}
+              </a>
+            </li>
+            <li>
+              <a href={SITE_CONFIG.social.instagram.url} target="_blank" rel="noopener noreferrer" className={`${linkClass} gap-2`}>
+                <InstagramIcon className="w-4 h-4 text-accent" />
+                Instagram<span className="sr-only"> {SITE_CONFIG.social.instagram.handle} (nouvel onglet)</span>
+              </a>
+            </li>
+            <li>
+              <a href={SITE_CONFIG.social.tiktok.url} target="_blank" rel="noopener noreferrer" className={`${linkClass} gap-2`}>
+                <TikTokIcon className="w-4 h-4 text-accent" />
+                TikTok<span className="sr-only"> {SITE_CONFIG.social.tiktok.handle} (nouvel onglet)</span>
               </a>
             </li>
           </ul>

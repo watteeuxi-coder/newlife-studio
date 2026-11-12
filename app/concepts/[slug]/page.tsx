@@ -4,6 +4,11 @@ import { Check, ArrowUpRight } from 'lucide-react'
 import ProjectShot from '@/components/ui/ProjectShot'
 import { PROJECTS, getProject } from '@/lib/projects'
 import { pageMetadata } from '@/lib/seo'
+import { PLANS, SUR_MESURE } from '@/lib/forfaits'
+import { formuleSlug } from '@/lib/formules'
+import { METIERS } from '@/lib/metiers'
+import { breadcrumbJsonLd } from '@/lib/schema'
+import JsonLd from '@/components/layout/JsonLd'
 
 // Une page par démo, générée au build. Rien d'inventé : textes dans lib/projects.ts.
 export const dynamicParams = false
@@ -39,9 +44,16 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
   const p = getProject(params.slug)
   if (!p) notFound()
   const others = PROJECTS.filter((o) => o.slug !== p.slug)
+  const metier = METIERS.find((m) => m.demo === p.slug)
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Concepts', path: '/concepts' },
+          { name: p.title, path: `/concepts/${p.slug}` },
+        ])}
+      />
       {/* En-tête : pas d'animation (h1 = élément LCP) */}
       <section className="tone-base">
         <div className="wrap">
@@ -117,6 +129,43 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
           </div>
         </div>
       </section>
+      {/* Pour quel pro de Rouen + formule conseillée */}
+      <section className="tone-white">
+        <div className="wrap grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:gap-16 lg:items-start">
+          <div>
+            <span className="kicker">À Rouen</span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-text-base mb-4">{p.local.title}</h2>
+            <p className="text-text-dim leading-relaxed">{p.local.text}</p>
+            {metier && (
+              <Link href={`/${metier.slug}`} className={`${linkClass} mt-4`}>
+                Tout savoir&nbsp;: {metier.serviceName.toLowerCase()} à Rouen →
+              </Link>
+            )}
+          </div>
+          <div className="rounded-2xl border border-line bg-void p-6 sm:p-7">
+            <p className="text-xs font-semibold uppercase tracking-widest text-text-muted mb-2">Formule conseillée</p>
+            <p className="text-text-base font-semibold text-xl">
+              {p.formule.name}{' '}
+              <span className="text-text-dim font-normal text-base">
+                · {p.formule.name === 'Sur-mesure' ? SUR_MESURE.price : `à partir de ${PLANS.find((pl) => pl.name === p.formule.name)?.price}`}
+              </span>
+            </p>
+            <p className="text-text-dim text-sm leading-relaxed mt-3">{p.formule.why}</p>
+            <div className="mt-5 flex flex-col sm:flex-row sm:items-center gap-x-6 gap-y-2">
+              <Link
+                href={`/contact?formule=${formuleSlug(p.formule.name)}`}
+                className="inline-flex items-center justify-center min-h-[44px] px-5 rounded-full bg-accent text-white font-semibold hover:bg-accent-bright transition-colors"
+              >
+                Discuter de ton projet<span className="sr-only"> (formule {p.formule.name})</span>
+              </Link>
+              <Link href="/offre#forfaits" className={linkClass}>
+                Comparer les formules →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </>
   )
 }
