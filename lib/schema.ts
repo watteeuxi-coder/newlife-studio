@@ -1,4 +1,5 @@
-import { SITE_CONFIG, waLink } from '@/lib/config'
+import { SITE_CONFIG, PHONE, waLink } from '@/lib/config'
+import { aboutReady } from '@/lib/content'
 import { ZONES } from '@/lib/zones'
 import { PLANS, MAINTENANCE } from '@/lib/forfaits'
 import type { FaqEntry } from '@/lib/faq'
@@ -21,8 +22,17 @@ export function businessJsonLd() {
       'Création de sites web pour les commerçants, artisans et indépendants de Rouen et ses alentours : site vitrine, refonte, référencement et maintenance.',
     url,
     image: `${url}/opengraph-image`,
+    logo: `${url}/apple-icon`,
     email: SITE_CONFIG.email,
-    founder: { '@type': 'Person', name: 'Ilan' },
+    telephone: PHONE.e164,
+    // Fourchette des forfaits (le sur-mesure est sur devis)
+    priceRange: `${euros(PLANS[0].price)} € – ${euros(PLANS[PLANS.length - 1].price)} €`,
+    sameAs: [SITE_CONFIG.social.instagram.url, SITE_CONFIG.social.tiktok.url],
+    founder: {
+      '@type': 'Person',
+      name: 'Ilan',
+      ...(aboutReady() ? { url: `${url}/a-propos` } : {}),
+    },
     areaServed: ZONES.map((z) => ({
       '@type': 'City',
       name: z.city,
@@ -32,6 +42,7 @@ export function businessJsonLd() {
       '@type': 'ContactPoint',
       contactType: 'customer service',
       email: SITE_CONFIG.email,
+      telephone: PHONE.e164,
       url: waLink(),
       availableLanguage: 'French',
     },
