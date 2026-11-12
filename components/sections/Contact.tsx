@@ -3,7 +3,8 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { revealHead } from '@/lib/motion'
-import { waLink, SITE_CONFIG } from '@/lib/config'
+import { Phone } from 'lucide-react'
+import { waLink, telLink, PHONE, SITE_CONFIG } from '@/lib/config'
 import ContactForm from '@/components/ui/ContactForm'
 
 export default function Contact({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 'h2' }) {
@@ -55,6 +56,10 @@ export default function Contact({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 'h
                 <path d="m3 7 9 6 9-6" />
               </svg>
               {SITE_CONFIG.email}
+            </a>
+            <a href={telLink()} className="inline-flex items-center gap-2 min-h-[44px] hover:text-text-base transition-colors">
+              <Phone className="w-4 h-4 shrink-0" strokeWidth={1.8} aria-hidden="true" />
+              {PHONE.display}
             </a>
             <p className="inline-flex items-center gap-2 min-h-[44px]">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-4 h-4 shrink-0" aria-hidden="true">

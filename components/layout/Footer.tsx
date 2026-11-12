@@ -1,5 +1,7 @@
 import Link from 'next/link'
-import { waLink, SITE_CONFIG } from '@/lib/config'
+import { Phone } from 'lucide-react'
+import { waLink, telLink, PHONE, SITE_CONFIG } from '@/lib/config'
+import { InstagramIcon, TikTokIcon } from '@/components/ui/SocialIcons'
 import { PAGES, LEGAL_PAGES } from '@/lib/nav'
 import { ZONES } from '@/lib/zones'
 import WaIcon from '@/components/ui/WaIcon'
@@ -51,8 +53,26 @@ export default function Footer() {
               </a>
             </li>
             <li>
+              <a href={telLink()} className={`${linkClass} gap-2`}>
+                <Phone className="w-4 h-4 text-accent" strokeWidth={1.8} aria-hidden="true" />
+                {PHONE.display}
+              </a>
+            </li>
+            <li>
               <a href={`mailto:${SITE_CONFIG.email}`} className={`${linkClass} break-all`}>
                 {SITE_CONFIG.email}
+              </a>
+            </li>
+            <li>
+              <a href={SITE_CONFIG.social.instagram.url} target="_blank" rel="noopener noreferrer" className={`${linkClass} gap-2`}>
+                <InstagramIcon className="w-4 h-4 text-accent" />
+                Instagram<span className="sr-only"> {SITE_CONFIG.social.instagram.handle} (nouvel onglet)</span>
+              </a>
+            </li>
+            <li>
+              <a href={SITE_CONFIG.social.tiktok.url} target="_blank" rel="noopener noreferrer" className={`${linkClass} gap-2`}>
+                <TikTokIcon className="w-4 h-4 text-accent" />
+                TikTok<span className="sr-only"> {SITE_CONFIG.social.tiktok.handle} (nouvel onglet)</span>
               </a>
             </li>
           </ul>
