@@ -1,5 +1,7 @@
 import Portfolio from '@/components/sections/Portfolio'
+import JsonLd from '@/components/layout/JsonLd'
 import { pageMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd } from '@/lib/schema'
 
 export const metadata = pageMetadata({
   title: 'Exemples de sites vitrine par métier',
@@ -9,5 +11,10 @@ export const metadata = pageMetadata({
 })
 
 export default function ConceptsPage() {
-  return <Portfolio titleAs="h1" />
+  return (
+    <>
+      <Portfolio titleAs="h1" />
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Concepts', path: '/concepts' }])} />
+    </>
+  )
 }

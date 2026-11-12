@@ -4,6 +4,8 @@ import { Check, ArrowUpRight } from 'lucide-react'
 import ProjectShot from '@/components/ui/ProjectShot'
 import { PROJECTS, getProject } from '@/lib/projects'
 import { pageMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd } from '@/lib/schema'
+import JsonLd from '@/components/layout/JsonLd'
 
 // Une page par démo, générée au build. Rien d'inventé : textes dans lib/projects.ts.
 export const dynamicParams = false
@@ -117,6 +119,12 @@ export default function ConceptPage({ params }: { params: { slug: string } }) {
           </div>
         </div>
       </section>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Concepts', path: '/concepts' },
+          { name: p.title, path: `/concepts/${p.slug}` },
+        ])}
+      />
     </>
   )
 }

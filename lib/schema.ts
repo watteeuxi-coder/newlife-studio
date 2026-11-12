@@ -79,3 +79,18 @@ export function faqJsonLd(items: FaqEntry[]) {
     })),
   }
 }
+
+/** Fil d'Ariane (BreadcrumbList). `path` relatif, ex. '/concepts'. L'accueil est ajouté en premier. */
+export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
+  const url = SITE_CONFIG.siteUrl
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [{ name: 'Accueil', path: '' }, ...items].map((it, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: it.name,
+      item: `${url}${it.path}`,
+    })),
+  }
+}
