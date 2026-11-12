@@ -26,6 +26,10 @@ export interface Project {
   built: string[]
   /** Captures supplémentaires (la 1re capture est `image`) */
   shots: Shot[]
+  /** Pour quel pro de Rouen ce type de site est fait (adressé au visiteur, rien d'inventé) */
+  local: { title: string; text: string }
+  /** Formule conseillée pour un site de ce type, et pourquoi */
+  formule: { name: 'Pro' | 'Sur-mesure'; why: string }
   seo: { title: string; description: string }
 }
 
@@ -53,6 +57,14 @@ export const PROJECTS: Project[] = [
       { src: '/images/concepts/the-fade-room-prestations.png', alt: 'Page des prestations de The Fade Room : coupes et barbe avec durée, prix et bouton Réserver' },
       { src: '/images/concepts/the-fade-room-contact.png', alt: 'Page contact de The Fade Room : formulaire, adresse et horaires de la semaine' },
     ],
+    local: {
+      title: 'Pour ton barbershop à Rouen',
+      text: 'Tu tiens un barbershop ou un salon de coiffure à Rouen ou dans les alentours ? Ce type de site met tes prestations, tes prix et tes horaires au même endroit, avec un bouton qui ouvre WhatsApp pour réserver. Tu mets le lien dans ta bio Instagram, et tes clients ont leurs réponses avant de t’écrire.',
+    },
+    formule: {
+      name: 'Pro',
+      why: 'Accueil, prestations, galerie et contact : 4 pages. La formule Pro va jusqu’à 5 pages et ajoute Google Maps, pour qu’on trouve ton salon facilement.',
+    },
     seo: {
       title: 'The Fade Room, concept de site barbershop',
       description:
@@ -82,6 +94,14 @@ export const PROJECTS: Project[] = [
       { src: '/images/concepts/alex-fit-formules.png', alt: 'Les 3 formules de coaching d’Alex Fit, Starter, Pro et Elite, avec leur prix mensuel' },
       { src: '/images/concepts/alex-fit-transformations.png', alt: 'Galerie avant/après d’Alex Fit avec filtres par objectif : perte de poids, prise de masse, remise en forme' },
     ],
+    local: {
+      title: 'Pour ton activité de coach à Rouen',
+      text: 'Tu es coach sportif à Rouen ou dans les alentours ? Un site comme celui-ci présente ta méthode, tes formules et tes prix, et le formulaire te dit tout de suite quel objectif a la personne. Tu réponds aux demandes sérieuses, sans répéter les mêmes infos en DM.',
+    },
+    formule: {
+      name: 'Pro',
+      why: '4 pages, des animations et un formulaire selon l’objectif : c’est la formule Pro (jusqu’à 5 pages, design animé, formulaire avancé).',
+    },
     seo: {
       title: 'Alex Fit, concept de site de coach sportif',
       description:
@@ -111,6 +131,14 @@ export const PROJECTS: Project[] = [
       { src: '/images/concepts/elite-immo-assistant.png', alt: 'Assistant d’Elite Immo qui pose ses questions au futur locataire pour constituer son dossier' },
       { src: '/images/concepts/elite-immo-agenda.png', alt: 'Agenda des visites d’Elite Immo en vue mois, avec le résumé de la semaine' },
     ],
+    local: {
+      title: 'Pour ton agence immobilière à Rouen',
+      text: 'Tu es agent ou mandataire immobilier à Rouen ou dans les alentours ? Pour présenter tes biens, ton secteur et recevoir des demandes déjà détaillées, un site vitrine suffit. Si tu passes des heures à trier les dossiers locataires, un outil comme celui de cette démo peut faire ce tri pour toi.',
+    },
+    formule: {
+      name: 'Sur-mesure',
+      why: 'L’assistant, le tableau de bord et l’agenda de cette démo sont du sur-mesure : on en parle et je te fais un devis. Pour un site vitrine seul, la formule Pro suffit.',
+    },
     seo: {
       title: 'Elite Immo, concept pour agent immobilier',
       description:

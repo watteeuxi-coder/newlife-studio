@@ -13,8 +13,9 @@ export const metadata = pageMetadata({
 export default function ConceptsPage() {
   return (
     <>
-      <Portfolio titleAs="h1" />
+      {/* JSON-LD en premier : la dernière section reste le dernier enfant de <main> (fondu du bloc final) */}
       <JsonLd data={breadcrumbJsonLd([{ name: 'Concepts', path: '/concepts' }])} />
+      <Portfolio titleAs="h1" />
     </>
   )
 }
