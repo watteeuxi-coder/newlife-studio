@@ -27,8 +27,7 @@ export default function PolitiqueConfidentialitePage() {
   if (!privacyReady()) return <PagePending title="Politique de confidentialité" />
 
   const { editeur } = LEGAL
-  const [user, domain] = editeur.email.split('@')
-  const email = <ProtectedEmail user={user} domain={domain} />
+  const email = <ProtectedEmail />
 
   return (
     <TextPage title="Politique de confidentialité" intro="Ce que je fais des informations que tu m’envoies, en clair.">

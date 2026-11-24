@@ -1,5 +1,5 @@
 import { SITE_CONFIG, PHONE, waLink } from '@/lib/config'
-import { aboutReady } from '@/lib/content'
+import { aboutReady, LEGAL } from '@/lib/content'
 import { ZONES } from '@/lib/zones'
 import { PLANS, MAINTENANCE } from '@/lib/forfaits'
 import type { FaqEntry } from '@/lib/faq'
@@ -7,7 +7,9 @@ import type { Metier } from '@/lib/metiers'
 
 /**
  * Données structurées (JSON-LD) pour Google. Règle du projet : uniquement des infos vraies.
- * Pas d'adresse ni de SIRET tant qu'ils ne sont pas fournis (lib/content.ts) : entreprise « à zone desservie ».
+ * Entreprise « à zone desservie » : SIREN + commune seulement (choix de l'utilisateur, 2026-11-24) ;
+ * l'adresse complète reste uniquement dans les mentions légales.
+ * Pas d'email : il est protégé contre les robots (ProtectedEmail), le JSON-LD l'exposerait en clair.
  */
 
 const euros = (price: string) => Number(price.replace(/[^\d]/g, ''))
@@ -24,8 +26,14 @@ export function businessJsonLd() {
     url,
     image: `${url}/opengraph-image`,
     logo: `${url}/apple-icon`,
-    email: SITE_CONFIG.email,
     telephone: PHONE.e164,
+    identifier: { '@type': 'PropertyValue', propertyID: 'SIREN', value: LEGAL.editeur.siren?.replace(/\s/g, '') },
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Martainville-Épreville',
+      addressRegion: 'Normandie',
+      addressCountry: 'FR',
+    },
     // Fourchette des forfaits (le sur-mesure est sur devis)
     priceRange: `${euros(PLANS[0].price)} € – ${euros(PLANS[PLANS.length - 1].price)} €`,
     sameAs: [SITE_CONFIG.social.instagram.url, SITE_CONFIG.social.tiktok.url],
@@ -42,7 +50,6 @@ export function businessJsonLd() {
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer service',
-      email: SITE_CONFIG.email,
       telephone: PHONE.e164,
       url: waLink(),
       availableLanguage: 'French',

@@ -18,7 +18,6 @@ export default function MentionsLegalesPage() {
   if (!legalReady()) return <PagePending title="Mentions légales" />
 
   const { editeur, hebergeur } = LEGAL
-  const [user, domain] = editeur.email.split('@')
 
   return (
     <TextPage title="Mentions légales">
@@ -36,7 +35,7 @@ export default function MentionsLegalesPage() {
           {editeur.tva}
         </p>
         <p>
-          Email : <ProtectedEmail user={user} domain={domain} />
+          Email : <ProtectedEmail />
           <br />
           Téléphone : <a href={telLink()}>{PHONE.display}</a>
         </p>

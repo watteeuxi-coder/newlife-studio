@@ -1,9 +1,16 @@
+/**
+ * Email en deux morceaux : l'adresse complète n'apparaît jamais telle quelle dans le HTML ni dans le JavaScript
+ * envoyé au navigateur (anti-robots). À l'écran, toujours passer par <ProtectedEmail /> (components/ui).
+ */
+export const EMAIL_PARTS = { user: 'newlifee2k26', domain: 'gmail.com' } as const
+
 export const SITE_CONFIG = {
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://newlife-studio.vercel.app',
   waNumber: '33769892000',
   waText:
     "Bonjour Ilan ! Je viens de ton site et j'aimerais te parler de mon projet.",
-  email: 'newlifee2k26@gmail.com',
+  /** Usage serveur uniquement (envoi du formulaire) : ne jamais l'afficher directement */
+  email: `${EMAIL_PARTS.user}@${EMAIL_PARTS.domain}`,
   /** Comptes pros (validés par l'utilisateur le 2026-11-12) : footer + `sameAs` des données structurées */
   social: {
     instagram: { handle: '@newlifecode01', url: 'https://www.instagram.com/newlifecode01/' },

@@ -4,7 +4,8 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { revealHead } from '@/lib/motion'
 import { Phone } from 'lucide-react'
-import { waLink, telLink, PHONE, SITE_CONFIG } from '@/lib/config'
+import { waLink, telLink, PHONE } from '@/lib/config'
+import ProtectedEmail from '@/components/ui/ProtectedEmail'
 import ContactForm from '@/components/ui/ContactForm'
 
 export default function Contact({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 'h2' }) {
@@ -47,16 +48,12 @@ export default function Contact({ titleAs: Title = 'h2' }: { titleAs?: 'h1' | 'h
           <ContactForm />
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-x-8 gap-y-1 mt-8 text-sm text-text-dim">
-            <a
-              href={`mailto:${SITE_CONFIG.email}`}
-              className="inline-flex items-center gap-2 min-h-[44px] hover:text-text-base transition-colors break-all"
-            >
+            <ProtectedEmail className="inline-flex items-center gap-2 min-h-[44px] hover:text-text-base transition-colors break-all">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-4 h-4 shrink-0" aria-hidden="true">
                 <rect x={3} y={5} width={18} height={14} rx={2} />
                 <path d="m3 7 9 6 9-6" />
               </svg>
-              {SITE_CONFIG.email}
-            </a>
+            </ProtectedEmail>
             <a href={telLink()} className="inline-flex items-center gap-2 min-h-[44px] hover:text-text-base transition-colors">
               <Phone className="w-4 h-4 shrink-0" strokeWidth={1.8} aria-hidden="true" />
               {PHONE.display}

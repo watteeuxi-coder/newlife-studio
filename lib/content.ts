@@ -1,5 +1,3 @@
-import { SITE_CONFIG } from '@/lib/config'
-
 /**
  * Contenus fournis par l'utilisateur pour /a-propos, /mentions-legales et /politique-confidentialite.
  * Règle du projet : rien d'inventé. Un champ à `null` = info pas encore fournie.
@@ -61,7 +59,6 @@ export const LEGAL = {
     rcs: 'RCS Rouen' as string | null,
     tva: 'TVA non applicable, art. 293 B du CGI' as string | null,
     adresse: '7 Résidence du Manoir, 76116 Martainville-Épreville, France' as string | null,
-    email: SITE_CONFIG.email,
   },
   directeurPublication: 'Ilan Figueira Watteeux' as string | null,
   mediation: 'En cours de désignation.' as string | null,

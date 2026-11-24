@@ -7,6 +7,7 @@ import { ZONES } from '@/lib/zones'
 import { LEGAL } from '@/lib/content'
 import { METIERS } from '@/lib/metiers'
 import WaIcon from '@/components/ui/WaIcon'
+import ProtectedEmail from '@/components/ui/ProtectedEmail'
 
 const linkClass =
   'flex items-center min-h-[44px] md:min-h-0 md:py-1.5 text-sm text-text-dim hover:text-text-base transition-colors'
@@ -72,10 +73,9 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href={`mailto:${SITE_CONFIG.email}`} className={`${linkClass} gap-2 break-all`}>
+              <ProtectedEmail className={`${linkClass} gap-2 break-all`}>
                 <Mail className="w-4 h-4 text-accent shrink-0" strokeWidth={1.8} aria-hidden="true" />
-                {SITE_CONFIG.email}
-              </a>
+              </ProtectedEmail>
             </li>
             <li>
               <a href={SITE_CONFIG.social.instagram.url} target="_blank" rel="noopener noreferrer" className={`${linkClass} gap-2`}>
