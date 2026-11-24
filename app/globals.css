@@ -106,6 +106,15 @@ body {
   mask-image: linear-gradient(to bottom, #000 35%, transparent 95%);
   pointer-events: none;
 }
+/* Desktop : quadrillage 2× plus discret, visible seulement au centre derrière le titre
+   (fondu radial vers les bords et le bas). Mobile inchangé. */
+@media (min-width: 1024px) {
+  .hero-grid {
+    opacity: 0.5;
+    -webkit-mask-image: radial-gradient(ellipse 55% 50% at 50% 32%, #000 35%, transparent 100%);
+    mask-image: radial-gradient(ellipse 55% 50% at 50% 32%, #000 35%, transparent 100%);
+  }
+}
 
 /* Fonds alternés des sections, reliés par un fondu (plus de ligne de séparation).
    Écart volontairement très léger entre les 3 fonds. Chaque section commence par un dégradé
