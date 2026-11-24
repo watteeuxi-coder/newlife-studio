@@ -102,18 +102,14 @@ body {
     linear-gradient(var(--grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid) 1px, transparent 1px);
   background-size: 50px 50px;
-  -webkit-mask-image: linear-gradient(to bottom, #000 35%, transparent 95%);
-  mask-image: linear-gradient(to bottom, #000 35%, transparent 95%);
+  /* Quadrillage 2× plus discret, visible seulement au centre derrière le titre
+     (fondu radial vers les bords et le bas), à toutes les tailles d'écran.
+     --grid-y : hauteur du centre du fondu = hauteur du titre dans le hero. */
+  --grid-y: 32%;
+  opacity: 0.5;
+  -webkit-mask-image: radial-gradient(ellipse 55% 50% at 50% var(--grid-y), #000 35%, transparent 100%);
+  mask-image: radial-gradient(ellipse 55% 50% at 50% var(--grid-y), #000 35%, transparent 100%);
   pointer-events: none;
-}
-/* Desktop : quadrillage 2× plus discret, visible seulement au centre derrière le titre
-   (fondu radial vers les bords et le bas). Mobile inchangé. */
-@media (min-width: 1024px) {
-  .hero-grid {
-    opacity: 0.5;
-    -webkit-mask-image: radial-gradient(ellipse 55% 50% at 50% 32%, #000 35%, transparent 100%);
-    mask-image: radial-gradient(ellipse 55% 50% at 50% 32%, #000 35%, transparent 100%);
-  }
 }
 
 /* Fonds alternés des sections, reliés par un fondu (plus de ligne de séparation).
