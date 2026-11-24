@@ -10,7 +10,7 @@ export const PAGES: PageLink[] = [
 
 export const LEGAL_PAGES: PageLink[] = [
   { href: '/mentions-legales', label: 'Mentions légales' },
-  { href: '/confidentialite', label: 'Confidentialité' },
+  { href: '/politique-confidentialite', label: 'Politique de confidentialité' },
 ]
 
 export function isActivePage(pathname: string, href: string): boolean {

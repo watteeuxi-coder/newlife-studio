@@ -1,7 +1,5 @@
-import { SITE_CONFIG } from '@/lib/config'
-
 /**
- * Contenus fournis par l'utilisateur pour /a-propos, /mentions-legales et /confidentialite.
+ * Contenus fournis par l'utilisateur pour /a-propos, /mentions-legales et /politique-confidentialite.
  * Règle du projet : rien d'inventé. Un champ à `null` = info pas encore fournie.
  * Tant qu'un champ requis est à null, la page affiche « Page en préparation » (noindex, hors sitemap).
  */
@@ -43,34 +41,47 @@ export const ABOUT = {
   ] as { title: string; paragraphs: string[] }[] | null,
 }
 
+/** Date de dernière mise à jour des mentions légales et de la politique de confidentialité (ISO). */
+export const LEGAL_UPDATED = '2026-11-24'
+
+/** « 24 novembre 2026 » */
+export const formatDateFr = (iso: string) =>
+  new Date(`${iso}T00:00:00Z`).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
+
+// Infos fournies par l'utilisateur le 2026-11-24
 export const LEGAL = {
   editeur: {
     /** Nom et prénom, ou raison sociale */
-    nom: null as string | null,
-    /** Ex. micro-entreprise, SASU… */
-    statut: null as string | null,
-    siret: null as string | null,
-    adresse: null as string | null,
-    email: SITE_CONFIG.email,
+    nom: 'Ilan Figueira Watteeux' as string | null,
+    statut: 'entrepreneur individuel (micro-entrepreneur)' as string | null,
+    nomCommercial: 'NEWLIFE STUDIO' as string | null,
+    siren: '133 281 436' as string | null,
+    rcs: 'RCS Rouen' as string | null,
+    tva: 'TVA non applicable, art. 293 B du CGI' as string | null,
+    adresse: '7 Résidence du Manoir, 76116 Martainville-Épreville, France' as string | null,
   },
-  directeurPublication: null as string | null,
-  // Le site est déployé sur Vercel. Adresse à confirmer sur https://vercel.com/legal avant publication.
+  directeurPublication: 'Ilan Figueira Watteeux' as string | null,
+  mediation: 'En cours de désignation.' as string | null,
+  // Hébergeur trouvé dans le code (vercel.json). Adresse : Privacy Notice de Vercel (vercel.com/legal/privacy-notice).
   hebergeur: {
     nom: 'Vercel Inc.',
-    adresse: '440 N Barranca Ave #4133, Covina, CA 91723, États-Unis',
+    adresse: '440 N Barranca Avenue #4133, Covina, CA 91723, États-Unis',
     site: 'https://vercel.com',
   },
 }
 
 export const PRIVACY = {
-  /** Durée de conservation des messages reçus via le formulaire (ex. « 3 ans après le dernier échange ») */
-  conservation: null as string | null,
+  /** Durée de conservation des messages reçus via le formulaire */
+  conservation:
+    'Le temps de traiter ta demande, puis 3 ans après notre dernier échange. Ensuite, elles sont supprimées.' as string | null,
 }
 
 export const aboutReady = (): boolean => ABOUT.intro !== null && ABOUT.sections !== null
 
 export const legalReady = (): boolean =>
-  Object.values(LEGAL.editeur).every((v) => v !== null) && LEGAL.directeurPublication !== null
+  Object.values(LEGAL.editeur).every((v) => v !== null) &&
+  LEGAL.directeurPublication !== null &&
+  LEGAL.mediation !== null
 
 // La politique de confidentialité nomme le responsable du traitement → dépend aussi des mentions légales
 export const privacyReady = (): boolean => legalReady() && PRIVACY.conservation !== null

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { SITE_CONFIG } from '@/lib/config'
-import { aboutReady, legalReady, privacyReady } from '@/lib/content'
+import { aboutReady, legalReady, privacyReady, LEGAL_UPDATED } from '@/lib/content'
 import { PROJECTS } from '@/lib/projects'
 import { METIERS } from '@/lib/metiers'
 
@@ -15,8 +15,8 @@ const ROUTES = [
   ...METIERS.map((m) => ({ path: `/${m.slug}`, priority: 0.8, ready: true, updated: '2026-11-12' })),
   { path: '/contact', priority: 0.8, ready: true, updated: '2026-11-12' },
   { path: '/a-propos', priority: 0.5, ready: aboutReady(), updated: '2026-11-10' },
-  { path: '/mentions-legales', priority: 0.1, ready: legalReady(), updated: '2026-11-10' },
-  { path: '/confidentialite', priority: 0.1, ready: privacyReady(), updated: '2026-11-10' },
+  { path: '/mentions-legales', priority: 0.1, ready: legalReady(), updated: LEGAL_UPDATED },
+  { path: '/politique-confidentialite', priority: 0.1, ready: privacyReady(), updated: LEGAL_UPDATED },
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {
