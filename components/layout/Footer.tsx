@@ -4,6 +4,7 @@ import { waLink, telLink, PHONE, SITE_CONFIG } from '@/lib/config'
 import { InstagramIcon, TikTokIcon } from '@/components/ui/SocialIcons'
 import { PAGES, LEGAL_PAGES } from '@/lib/nav'
 import { ZONES } from '@/lib/zones'
+import { LEGAL } from '@/lib/content'
 import { METIERS } from '@/lib/metiers'
 import WaIcon from '@/components/ui/WaIcon'
 
@@ -105,7 +106,7 @@ export default function Footer() {
 
       <div className="wrap mt-10">
         <div className="pt-6 border-t border-line flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs text-text-muted">
-          <p>© 2026 NEWLIFE STUDIO</p>
+          <p>© 2026 NEWLIFE STUDIO – SIREN {LEGAL.editeur.siren}</p>
           <ul className="flex gap-6">
             {LEGAL_PAGES.map((p) => (
               <li key={p.href}>
