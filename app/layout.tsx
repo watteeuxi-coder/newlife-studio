@@ -32,6 +32,15 @@ export const metadata: Metadata = {
   applicationName: 'NEWLIFE STUDIO',
   openGraph: { siteName: 'NEWLIFE STUDIO', locale: 'fr_FR', type: 'website' },
   robots: { index: true, follow: true },
+  // Icônes générées par scripts/generate-icons.mjs (public/). Le manifest (app/manifest.ts) est lié automatiquement.
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: '48x48' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: { url: '/apple-touch-icon.png', sizes: '180x180' },
+  },
+  appleWebApp: { title: 'NEWLIFE', capable: true, statusBarStyle: 'default' },
 }
 
 export const viewport = {

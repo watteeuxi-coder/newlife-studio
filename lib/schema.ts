@@ -25,7 +25,7 @@ export function businessJsonLd() {
       'Création de sites web pour les commerçants, artisans et indépendants de Rouen et ses alentours : site vitrine, refonte, référencement et maintenance.',
     url,
     image: `${url}/opengraph-image`,
-    logo: `${url}/apple-icon`,
+    logo: `${url}/icon-512.png`,
     telephone: PHONE.e164,
     identifier: { '@type': 'PropertyValue', propertyID: 'SIREN', value: LEGAL.editeur.siren?.replace(/\s/g, '') },
     address: {
