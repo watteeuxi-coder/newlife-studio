@@ -188,23 +188,19 @@ export default function Hero() {
           </ul>
         </div>
 
-        {/* Desktop : les 4 pastilles, fixes (la place suffit, pas besoin de défilement) */}
-        <ul className="hidden lg:flex flex-wrap justify-center gap-3 mt-4">
-          {BADGES.map((f) => (
-            <li key={f.label} className={`${pill} px-4 py-2 text-sm ${f.tone}`}>
-              {f.icon}
-              {f.label}
-            </li>
-          ))}
-        </ul>
-
-        {/* Mobile : bandeau qui défile en boucle (CSS, globals.css), 2e copie masquée aux lecteurs d'écran */}
-        <div className="marquee lg:hidden mt-6 -mx-6">
+        {/* Bandeau des 4 pastilles en boucle (CSS, globals.css), mobile et desktop (900 px max, centré) :
+            fondu sur les bords, pause au survol, fixe si reduced-motion. 2e copie masquée aux lecteurs d'écran. */}
+        <div className="marquee mt-6 lg:mt-4 -mx-6 lg:mx-auto lg:max-w-[900px]">
           <div className="marquee-track">
             {[0, 1].map((copy) => (
-              <ul key={copy} className="flex gap-2 pr-2" aria-hidden={copy === 1 ? true : undefined}>
-                {BADGES.map((f) => (
-                  <li key={f.label} className={`${pill} text-xs px-3 py-1.5 ${f.tone}`}>
+              <ul key={copy} className="flex gap-2 pr-2 lg:gap-3 lg:pr-3" aria-hidden={copy === 1 ? true : undefined}>
+                {/* Pastilles × 2 par copie : une copie reste plus large que le bandeau (900 px), pas de trou en fin de boucle */}
+                {[...BADGES, ...BADGES].map((f, i) => (
+                  <li
+                    key={i}
+                    aria-hidden={i >= BADGES.length ? true : undefined}
+                    className={`${pill} text-xs px-3 py-1.5 lg:text-sm lg:px-4 lg:py-2 ${f.tone}`}
+                  >
                     {f.icon}
                     {f.label}
                   </li>
