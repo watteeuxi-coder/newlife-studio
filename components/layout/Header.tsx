@@ -7,6 +7,7 @@ import { House, Tag, LayoutGrid, User, Mail } from 'lucide-react'
 import { waLink } from '@/lib/config'
 import { PAGES, isActivePage } from '@/lib/nav'
 import WaIcon from '@/components/ui/WaIcon'
+import Logo from '@/components/ui/Logo'
 import { LiquidNavbar, type LiquidNavItem, type NimbusFx } from '@/components/ui/liquid-glass-navbar'
 
 // Icône Lucide + petite scène jouée au clic, par page (ordre de lib/nav.ts)
@@ -22,22 +23,6 @@ const ITEMS: LiquidNavItem[] = PAGES.map((p) => {
   const { Icon, fx } = ICONS[p.href]
   return { label: p.label, href: p.href, fx, icon: <Icon width={18} height={18} strokeWidth={1.8} aria-hidden="true" /> }
 })
-
-function Logo() {
-  return (
-    <Link href="/" className="flex items-center gap-2 shrink-0" aria-label="NEWLIFE STUDIO — Accueil">
-      <span className="w-7 h-7 text-accent flex-shrink-0">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M12 2L12 22M5 9L12 2L19 9" />
-          <path d="M5 15L12 22L19 15" opacity={0.5} />
-        </svg>
-      </span>
-      <span className="text-text-base text-sm font-semibold tracking-wide">
-        <strong>NEWLIFE</strong> <span className="font-normal text-text-dim">STUDIO</span>
-      </span>
-    </Link>
-  )
-}
 
 /**
  * Desktop : carte flottante — logo, pilule « liquid glass » au centre, WhatsApp à droite.

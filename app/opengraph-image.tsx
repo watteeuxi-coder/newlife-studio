@@ -25,18 +25,9 @@ export default function OgImage() {
       >
         {/* Logo */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginBottom: 36 }}>
-          <svg
-            width="56"
-            height="56"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#0E7490"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M12 2L12 22M5 9L12 2L19 9" />
-            <path d="M5 15L12 22L19 15" opacity="0.5" />
+          <svg width="62" height="58" viewBox="18 16 56 52">
+            <path d="M24 62V24l36 38V30" fill="none" stroke="#0B1220" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M52 30l8-8 8 8" fill="none" stroke="#06b6d4" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           <div style={{ display: 'flex', fontSize: 40, letterSpacing: 2 }}>
             <span style={{ color: '#0B1220', fontWeight: 700 }}>NEWLIFE</span>

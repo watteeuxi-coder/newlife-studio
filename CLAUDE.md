@@ -65,10 +65,16 @@ Couleurs en variables CSS (`app/globals.css`, bloc `[data-theme='light']`) expos
 
 ## Polices (exactes)
 
-- **Police système** (`-apple-system, BlinkMacSystemFont, sans-serif`) → `--font-display` → `font-display` (tout le site, titres et texte). C'est le rendu réel du site depuis juin 2026 : Space Grotesk était déclarée mais écrasée par `globals.css`, jamais affichée. Retirée le 2026-11-10 (22 Ko préchargés pour rien). La remettre changerait l'apparence de tous les titres : à décider avec l'utilisateur.
+- **Police système** (`-apple-system, BlinkMacSystemFont, sans-serif`) → `--font-display` → `font-display` (tout le site, titres et texte). Space Grotesk n'est **pas** utilisée pour le texte (retirée le 2026-11-10).
+- **Space Grotesk 700/400 — logo uniquement** (`logoFont` de `lib/fonts.ts`) : fichiers locaux réduits aux lettres « NEWLIFSTUDO » (`app/fonts/space-grotesk-{700,400}-logo.woff2`, 1,3 Ko chacun, préchargés). Nouvelle lettre dans le logo → régénérer les fichiers.
 - **JetBrains Mono** → `--font-mono` → `font-mono` (numéros `01/02/03`, détails « techniques »), sans préchargement. Ne pas redéfinir `--font-mono` dans `globals.css`.
 - **Caveat 700** (accent manuscrit) : fichier local réduit aux lettres de « nouvelle vie » et « Ilan » (`app/fonts/caveat-700-accent.woff2`, 4,9 Ko, préchargé). Nouveau mot en Caveat → régénérer le fichier (voir `lib/fonts.ts`).
 - Les fichiers `app/fonts/Geist*.woff` sont des restes du template, non utilisés.
+
+## Logo et icônes
+
+- Logo (piste A, 2026-11-24) : `components/ui/Logo.tsx` — symbole « N » + flèche cyan `#06b6d4`, « NEWLIFE » (Space Grotesk 700) + « STUDIO » fin et espacé. `variant="light"` (défaut, fond clair : header, footer) ou `"dark"` (version inversée, fond sombre).
+- Icônes dans `public/` (favicon.svg/.ico, apple-touch-icon, icon-192/512, icon-maskable-512), générées par `node scripts/generate-icons.mjs` (fond `#0b1220`). Manifest : `app/manifest.ts` (site installable, `short_name` « NEWLIFE »). Icônes et `apple-mobile-web-app-title` déclarés dans `app/layout.tsx`.
 
 ## Animations existantes
 

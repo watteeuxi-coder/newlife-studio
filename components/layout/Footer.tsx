@@ -7,6 +7,7 @@ import { ZONES } from '@/lib/zones'
 import { LEGAL } from '@/lib/content'
 import { METIERS } from '@/lib/metiers'
 import WaIcon from '@/components/ui/WaIcon'
+import Logo from '@/components/ui/Logo'
 import ProtectedEmail from '@/components/ui/ProtectedEmail'
 
 const linkClass =
@@ -18,18 +19,7 @@ export default function Footer() {
     <footer className="tone-base relative z-[1] pt-12 pb-28 md:pb-10">
       <div className="wrap grid gap-10 md:grid-cols-2 lg:grid-cols-[1.3fr_0.8fr_1fr_1.1fr_1.1fr]">
         <div>
-          <Link href="/" className="inline-flex items-center gap-2" aria-label="NEWLIFE STUDIO — Accueil">
-            <span className="w-6 h-6 text-accent">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M12 2L12 22M5 9L12 2L19 9" />
-                <path d="M5 15L12 22L19 15" opacity={0.5} />
-              </svg>
-            </span>
-            <span className="text-text-base text-sm font-semibold">
-              <strong>NEWLIFE</strong>{' '}
-              <span className="font-normal text-text-dim">STUDIO</span>
-            </span>
-          </Link>
+          <Logo />
           <p className="text-text-muted text-sm mt-3 max-w-xs leading-relaxed">
             Une nouvelle vie pour ton business en ligne.
           </p>
