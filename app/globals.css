@@ -357,15 +357,37 @@ main > section:first-of-type:not(#top) {
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee 24s linear infinite;
+  animation: marquee 48s linear infinite; /* 48 s pour 8 pastilles par copie = même vitesse qu'avant */
 }
 @keyframes marquee {
   to {
     transform: translateX(-50%);
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track {
+/* Pause au survol (souris uniquement) */
+@media (hover: hover) {
+  .marquee:hover .marquee-track {
     animation-play-state: paused;
+  }
+}
+/* Mouvement réduit : pastilles fixes, centrées, sans fondu ni 2e copie */
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .marquee-track {
+    animation: none;
+    width: auto;
+    justify-content: center;
+  }
+  .marquee-track > ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-right: 0;
+  }
+  .marquee-track > ul[aria-hidden],
+  .marquee-track li[aria-hidden] {
+    display: none;
   }
 }

@@ -65,14 +65,10 @@ const ICONS = {
   phone: 'M8 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm3 15h2',
 }
 
-const FEATURES = [
+// Pastilles du hero (mêmes 4 sur mobile et desktop) : infos vraies, incluses dans chaque site (cf. lib/forfaits.ts)
+const BADGES = [
   { label: 'Code sur mesure', icon: <Icon d={ICONS.code} />, tone: 'bg-pill-cyan-bg border-pill-cyan-line text-pill-cyan-text' },
   { label: 'Pensé pour mobile', icon: <Icon d={ICONS.phone} />, tone: 'bg-pill-green-bg border-pill-green-line text-pill-green-text' },
-]
-
-// Bandeau mobile : les mêmes + 2 infos vraies (inclus dans chaque site, cf. lib/forfaits.ts)
-const MARQUEE = [
-  ...FEATURES,
   { label: 'Formulaire + WhatsApp', icon: <Send className="w-4 h-4 shrink-0" strokeWidth={2} aria-hidden="true" />, tone: 'bg-pill-amber-bg border-pill-amber-line text-pill-amber-text' },
   { label: '2 retouches incluses', icon: <PencilLine className="w-4 h-4 shrink-0" strokeWidth={2} aria-hidden="true" />, tone: 'bg-pill-rose-bg border-pill-rose-line text-pill-rose-text' },
 ]
@@ -192,23 +188,19 @@ export default function Hero() {
           </ul>
         </div>
 
-        {/* Desktop : pastilles fixes (inchangé) */}
-        <ul className="hidden lg:flex flex-wrap justify-center gap-3 mt-4">
-          {FEATURES.map((f) => (
-            <li key={f.label} className={`${pill} px-4 py-2 text-sm ${f.tone}`}>
-              {f.icon}
-              {f.label}
-            </li>
-          ))}
-        </ul>
-
-        {/* Mobile : bandeau qui défile en boucle (CSS, globals.css), 2e copie masquée aux lecteurs d'écran */}
-        <div className="marquee lg:hidden mt-6 -mx-6">
+        {/* Bandeau des 4 pastilles en boucle (CSS, globals.css), mobile et desktop (900 px max, centré) :
+            fondu sur les bords, pause au survol, fixe si reduced-motion. 2e copie masquée aux lecteurs d'écran. */}
+        <div className="marquee mt-6 lg:mt-4 -mx-6 lg:mx-auto lg:max-w-[900px]">
           <div className="marquee-track">
             {[0, 1].map((copy) => (
-              <ul key={copy} className="flex gap-2 pr-2" aria-hidden={copy === 1 ? true : undefined}>
-                {MARQUEE.map((f) => (
-                  <li key={f.label} className={`${pill} text-xs px-3 py-1.5 ${f.tone}`}>
+              <ul key={copy} className="flex gap-2 pr-2 lg:gap-3 lg:pr-3" aria-hidden={copy === 1 ? true : undefined}>
+                {/* Pastilles × 2 par copie : une copie reste plus large que le bandeau (900 px), pas de trou en fin de boucle */}
+                {[...BADGES, ...BADGES].map((f, i) => (
+                  <li
+                    key={i}
+                    aria-hidden={i >= BADGES.length ? true : undefined}
+                    className={`${pill} text-xs px-3 py-1.5 lg:text-sm lg:px-4 lg:py-2 ${f.tone}`}
+                  >
                     {f.icon}
                     {f.label}
                   </li>
