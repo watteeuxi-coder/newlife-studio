@@ -149,7 +149,8 @@ export default function Hero() {
                 <span className="sr-only"> : </span>
               </span>
               Une{' '}
-              <span className={handAccent}>nouvelle vie</span>{' '}
+              {/* me-[0.15em] : le « e » de Caveat déborde de sa boîte et collait à « pour ». L'espace reste le point de coupure */}
+              <span className={`${handAccent} me-[0.15em]`}>nouvelle vie</span>{' '}
               pour ton business en ligne
             </h1>
 
